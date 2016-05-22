@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        {% extends "guratorapp/base.html" %}
+        {% load extras %}
+        {%  block title %}Help{% endblock %}
+        {%  block script %}
+        {%  endblock %}
+        {%  block body %}
+        {%  include "guratorapp/menu.html" %}
+        <h1>Help &amp; Contact</h1>
+        <p>Call us at <a href="tel:+4917662346071">+49-176-6234-6071</a> or send an email to <a href="mailto:halims@in.tum.de">halims@in.tum.de</a>.</p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <p><img width="176" height="225" src="/static/georg2012.gif"></p>
+                    </td>
+                    <td>
+                        <p><img width="178" height="225" src="/static/safey.jpg"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><a href="http://www11.in.tum.de/lehrstuhl/personen/grohg/">Georg Groh</a><br>
+                            <span class="tiny">Dipl.-Phys. Dipl.-Inform. Dr. rer. nat. PD</span>
+                        </p>
+                    </td>
+                    <td>
+                        <p>Safey A.Halim<br>
+                            <span class="tiny">M.Sc.</span>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {%  endblock %}
+    </body>
+</html>

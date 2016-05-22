@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+{% extends "guratorapp/base.html" %}
+{% load extras %}
+{% load i18n %}
+{%  block title %}{% trans "Survey With User" %}{% endblock %}
+
+{%  block script %}
+    $(function() {
+    $( "#sli_tie_strength" ).slider();
+    $( "#sli_tie_strength" ).on( "slidechange", function( event, ui ) { $("#id_tie_strength").val($( "#sli_tie_strength" ).slider( "value" )); } );
+    $( "#sli_tie_strength" ).slider( "option", "max", 100 );
+    $( "#sli_tie_strength" ).slider( "option", "min", 0 );
+    $( "#sli_tie_strength" ).slider( "value", 50 );
+    $("#id_tie_strength").hide()
+
+    $( "#sli_sympathy" ).slider();
+    $( "#sli_sympathy" ).on( "slidechange", function( event, ui ) { $("#id_sympathy").val($( "#sli_sympathy" ).slider( "value" )); } );
+    $( "#sli_sympathy" ).slider( "option", "max", 100 );
+    $( "#sli_sympathy" ).slider( "option", "min", 0 );
+    $( "#sli_sympathy" ).slider( "value", 50 );
+    $("#id_sympathy").hide()
+    
+    $( "#sli_social_similarity" ).slider();
+    $( "#sli_social_similarity" ).on( "slidechange", function( event, ui ) { $("#id_social_similarity").val($( "#sli_social_similarity" ).slider( "value" )); } );
+    $( "#sli_social_similarity" ).slider( "option", "max", 100 );
+    $( "#sli_social_similarity" ).slider( "option", "min", 0 );
+    $( "#sli_social_similarity" ).slider( "value", 50 );
+    $("#id_social_similarity").hide()
+    
+    $( "#sli_social_context_similarity" ).slider();
+    $( "#sli_social_context_similarity" ).on( "slidechange", function( event, ui ) { $("#id_social_context_similarity").val($( "#sli_social_context_similarity" ).slider( "value" )); } );
+    $( "#sli_social_context_similarity" ).slider( "option", "max", 100 );
+    $( "#sli_social_context_similarity" ).slider( "option", "min", 0 );
+    $( "#sli_social_context_similarity" ).slider( "value", 50 );
+    $("#id_social_context_similarity").hide()
+
+    $( "#sli_social_capital" ).slider();
+    $( "#sli_social_capital" ).on( "slidechange", function( event, ui ) { $("#id_social_capital").val($( "#sli_social_capital" ).slider( "value" )); } );
+    $( "#sli_social_capital" ).slider( "option", "max", 100 );
+    $( "#sli_social_capital" ).slider( "option", "min", 0 );
+    $( "#sli_social_capital" ).slider( "value", 50 );
+    $("#id_social_capital").hide()
+    
+    $( "#sli_social_hierarchy" ).slider();
+    $( "#sli_social_hierarchy" ).on( "slidechange", function( event, ui ) { $("#id_social_hierarchy").val($( "#sli_social_hierarchy" ).slider( "value" )); } );
+    $( "#sli_social_hierarchy" ).slider( "option", "max", 100 );
+    $( "#sli_social_hierarchy" ).slider( "option", "min", 0 );
+    $( "#sli_social_hierarchy" ).slider( "value", 50 );
+    $("#id_social_hierarchy").hide()
+    
+    $( "#sli_domain_expertise" ).slider();
+    $( "#sli_domain_expertise" ).on( "slidechange", function( event, ui ) { $("#id_domain_expertise").val($( "#sli_domain_expertise" ).slider( "value" )); } );
+    $( "#sli_domain_expertise" ).slider( "option", "max", 100 );
+    $( "#sli_domain_expertise" ).slider( "option", "min", 0 );
+    $( "#sli_domain_expertise" ).slider( "value", 50 );
+    $("#id_domain_expertise").hide()
+    
+    $( document ).tooltip();
+  });
+
+
+{%  endblock %}
+{%  block body %}
+
+    <p>
+        {% blocktrans %}We kindly ask you to do this quick survey for the participant you chose..."<i>{{ query_text }}</i>". All your <strong>answers are kept confidential</strong>, it is <strong>guaranteed that your contact won't be able to see</strong> them. <a href="/help/">We</a> (as the organizers) <strong>will never know your real name</strong>. Please be aware that <strong>you can not change/edit your answers after submitting</strong> this form.
+        {%  endblocktrans %}
+    </p>
+
+
+    <form action="/user_survey/" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <p>
+        {% blocktrans %} You are doing the survey for the participant:{% endblocktrans %}
+            <table class="real">
+               <td colspan="4">
+                    <img width="70" height="70" src={{target_participant.picture.name|get_image_path}}>
+                </td>
+                <td colspan="4">
+                    <label>{{target_participant.name}}</label>
+                    <input type="hidden" name="target_participant_id" value="{{target_participant.id}}">
+                </td>
+            </table>
+    </p>
+    
+    <table class="real">
+     <tr class="overline-dotted">
+        <td>{% blocktrans %}Would you <strong>help this person no matter what</strong>, i.e. in <strong>any situation</strong>?{% endblocktrans %}</td>
+         <td>{% blocktrans %}No{% endblocktrans %}</td>
+         <td><div id="sli_social_capital" style="width:200px;"></div>{{ form.social_capital }}</td>
+         <td>{% blocktrans %}Yes{% endblocktrans %}</td>
+
+        <td class="error">
+            {{ form.social_capital.errors.as_text }}
+        </td>
+    </tr>
+
+    <tr class="overline-dotted">
+        <td>
+            {% blocktrans %}How <strong>strong is your relationship this person</strong>?{% endblocktrans %}
+        </td>
+        <td>{% blocktrans %}Weak{% endblocktrans %}</td>
+         <td><div id="sli_tie_strength" style="width:200px;"></div>{{ form.tie_strength }}</td>
+         <td>{% blocktrans %}Strong{% endblocktrans %}</td>
+        <td class="error">
+            {{ form.tie_strength.errors.as_text }}
+        </td>
+    </tr>
+
+      <tr class="overline-dotted">
+        <td colspan="1">
+            {% blocktrans %}How <strong>similar</strong> is this person to you in terms of personality and lifestyles</strong>?{% endblocktrans %}
+        </td>
+         <td>{% blocktrans %}Very different{% endblocktrans %}</td>
+         <td><div id="sli_social_similarity" style="width:200px;"></div>{{ form.social_similarity }}</td>
+         <td>{% blocktrans %}Very similar{% endblocktrans %}</td>
+        <td class="error">
+            {{ form.social_similarity.errors.as_text }}
+        </td>
+    </tr>
+    
+    <tr class="overline-dotted">
+        <td colspan="1">
+            {% blocktrans %}How <strong>similar</strong> are your <strong>social contexts</strong>? <span class="tooltip" title="Social context is defined by the social setting you are living in: Sharing the same workplace, school, course, friends, etc. with a friend would imply similar social contexts.">What is Social Context?</span>{% endblocktrans %}
+        </td>
+         <td>{% blocktrans %}Very different{% endblocktrans %}</td>
+         <td><div id="sli_social_context_similarity" style="width:200px;"></div>{{ form.social_context_similarity }}</td>
+         <td>{% blocktrans %}Very similar{%  endblocktrans %}</td>
+        <td class="error">
+            {{ form.social_context_similarity.errors.as_text }}
+        </td>
+    </tr>
+
+    <tr class="overline-dotted">
+        <td colspan="1">
+            {% blocktrans %}How much <strong>sympathy</strong> do you have for the other person? (all information you provide will stay private, i.e. no other user will be able to see it){% endblocktrans %}
+        </td>
+         <td>{% blocktrans %}Not likeable at all{% endblocktrans %}</td>
+         <td><div id="sli_sympathy" style="width:200px;"></div>{{ form.sympathy }}</td>
+         <td>{% blocktrans %}Highly likeable{% endblocktrans %}</td>
+        <td class="error">
+            {{ form.sympathy.errors.as_text }}
+        </td>
+    </tr>
+    
+    <tr class="overline-dotted">
+         <td>{% blocktrans %}Where do you consider this person in the social hierarchy (compared to yourself)? <span class="tooltip" title="A person who holds a higher position in the social hierarchy is a person for whom you hold greater respect. For example: a parent - an older person - a person who had some influence on you or your life - a role model. He could be also a normal friend (peer of yours), but you hold him in higher respect because of personal qualities, life achievement, fame, and so on...">What does this mean?</span>{% endblocktrans %}</td>
+         <td>{% blocktrans %}Lower{% endblocktrans %}</td>
+         <td><div id="sli_social_hierarchy" style="width:200px;"></div>{{ form.social_hierarchy }}</td>
+         <td>{% blocktrans %}Higher{% endblocktrans %}</td>
+
+        <td class="error">
+            {{ form.social_hierarchy.errors.as_text }}
+        </td>
+    </tr>
+    
+    <tr class="overline-dotted">
+        <td>{% blocktrans %} Rate this person's expertise when it comes to knowing good restaurants in Munich, taste in food, etc...<span class="tooltip" title="In other words, if this person recommends a certain restaurant to you (provided that you like that cuisine), to which extent you trust his/her judgement?!">Hint</span>{% endblocktrans %}</td>
+         <td>{% blocktrans %}Low Expertise{% endblocktrans %}</td>
+         <td><div id="sli_domain_expertise" style="width:200px;"></div>{{ form.domain_expertise }}</td>
+         <td>{% blocktrans %}High Expertise{% endblocktrans %}</td>
+
+        <td class="error">
+            {{ form.domain_expertise.errors.as_text }}
+        </td>
+    </tr>
+
+    </table>
+
+    <input type="submit" />
+    </form>
+
+
+
+{%  endblock %}

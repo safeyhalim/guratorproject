@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% extends "guratorapp/base.html" %}
+{% block title %} Personality Test {% endblock%}
+{%  block body %}
+<h1> Personality Test</h1>
+<h2> Thomas-Kilmann Conflict Model </h2>
+<p>Please read the following situation, then choose the appropriate answer from the choices below...</>
+<p>All your <strong>answers are kept confidential</strong>, it is <strong>guaranteed that no one will be able to see</strong> them. Please be aware that <strong>you can not change/edit your answers after submitting</strong> this form.</p>
+<br>
+<p>
+<font color="blue">
+Picture yourself in a situation where your wishes differ from that of another person.
+For each of the following 30 statements, choose either A or B as the one
+which best describes how you would respond. Sometimes neither the A or B statement
+is typical of your response but try to choose the one that would seem most likely to be
+your instinctive response in that situation.
+</font>
+</p>
+<form action="/personality_test/" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <table class="real">
+        <tbody>
+        {% for question in form %}
+            <tr>
+                <td clospan="2">
+                    <label>{{question.label}}</label>
+                </td>
+                 <td colspan="4">
+                    <label>{{question.0}}</label>
+                </td>
+                <td colspan="4">
+                    <label>{{question.1}}</label>
+                </td>
+                <td class="error">{{ question.errors.as_text }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <input type="submit">
+</form>
+{%  endblock %}

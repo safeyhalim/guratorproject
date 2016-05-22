@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        {% extends "guratorapp/base.html" %}
+        {% load extras %}
+        {%  block title %}Social Computing Experiment{% endblock %}
+        {%  block script %}
+        {%  endblock %}
+        {%  block body %}
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="{{ participant.picture.name|get_image_path }}">
+                        <p class="tiny"><a href="/settings/">Edit settings</a></p>
+                    </td>
+                    <td>
+                        <h2>Welcome, {{ user.username }}!</h2>
+                        <p>This is the main page of the web system for the Social Computing Experiment. You can find the introduction slides <a href="/static/150520_Introduction_to_Experiment_v6.pdf" target="_blank">here</a>.
+                            In case of questions <a href="/help/">do not hesitate to reach out to us</a>.
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <img src="/static/img/sep.jpg">
+        <h2>Results</h2>
+        <p>Your exercise was graded with <strong>{{ participant.grade }}</strong>. In case of any questions, feel free to send an email to <a href="mailto:halims@in.tum.de">halims@in.tum.de</a>.</p>
+        {%  endblock %}
+    </body>
+</html>

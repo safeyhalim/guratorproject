@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% extends "guratorapp/base.html" %}
+{% load extras %}
+{% block title %} Select User {% endblock%}
+{% block script%}
+$(function() {
+    $('input[type=checkbox]').change(function(e){
+       if ($('input[type=checkbox]:checked').length > {{max_participants_in_group}}) {
+            $(this).prop('checked', false)
+            alert("You can only choose " + {{max_participants_in_group}} + " participants");
+       }
+    });
+});
+
+function check_input(element) {
+    if (element.value == "") {
+        $('#'+element.id)[0].className="error";
+    } else {
+        $('#'+element.id)[0].className="ok";
+    }
+}
+
+$(function() {
+    $('#form_id').on('submit', function () {
+        if($('#group_name_id').val() == ""){
+            $('#group_name_id')[0].className = "error";
+            return false;
+        } else if ($('input[type=checkbox]:checked').length < {{max_participants_in_group}}){
+            $('#error_message_id').html("Error: Please select " + {{max_participants_in_group}} + " participants!");
+            return false;
+        } else {
+            return true;
+        }
+    });
+});
+
+{% endblock %}
+{%  block body %}
+<h1> Select User for Test</h1>
+<font color="blue">
+Create a group. WARNING:
+</font>
+</p>
+<div style="color:red;" id="error_message_id"></div>
+<form id="form_id" action="/create_group/" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <p>
+        <b>You still can create {{num_remaining}} groups!</b>
+    </p>
+    <table class="real">
+        <tbody>
+        <tr>
+            <td colspan="4">
+                <b>Please Enter Group Name: *</b>
+            </td>
+            <td colspan="6">
+                <input id="group_name_id" name="group_name" type="text" onblur="check_input(this);" />
+            </td>
+        </tr>
+        {% for target_participant in target_participants %}
+            <tr>
+                 <td colspan="4">
+                    <img width="70" height="70" src={{target_participant.picture.name|get_image_path}}>
+                </td>
+                <td colspan="4">
+                    <label>{{target_participant.name}}</label>
+                </td>
+                <td colspan="4">
+                    <input class="single-checkbox" type="checkbox" name="participant_{{target_participant.id}}" />
+                </td>
+                <td class="error">{{ target_participant.errors.as_text }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <input type="submit" />
+</form>
+{%  endblock %}

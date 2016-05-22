@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% extends "guratorapp/base.html" %}
+{% load extras %}
+{% block title %} Select Restaurant {% endblock%}
+{%  block body %}
+<h1> Select Restaurant to Review </h1>
+<font color="blue">
+Select restaurant to review...
+</font>
+</p>
+<form action="/select_restaurant/" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <p>
+        <b>You still have to review {{num_remaining_restaurants}} restaurants!</b>
+    </p>
+    <table class="real">
+        <tbody>
+        {% for restaurant in restaurants %}
+            <tr>
+                <td colspan="2">
+                    <label>{{forloop.counter}}</label>
+                </td>
+                 <td colspan="4">
+                    <img width="70" height="70" src={{restaurant.image_url}}>
+                </td>
+                <td colspan="4">
+                    <label>{{restaurant.name}}</label>
+                </td>
+                <td colspan="4">
+                    <button type="submit" name="submitBtn" value="{{restaurant.id}}"> Review restaurant</button>
+                </td>
+                <td class="error">{{ restaurant.errors.as_text }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
+{%  endblock %}

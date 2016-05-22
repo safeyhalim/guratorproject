@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% extends "guratorapp/base.html" %}
+{% load extras %}
+{% block title %} Select User {% endblock%}
+{%  block body %}
+<h1> Select Group </h1>
+<font color="blue">
+<b>Do the restaurant survey with one of your groups</b>
+</font>
+</p>
+<form action="/select_group/" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <table class="real">
+        <tbody>
+        {% for group in groups %}
+            <tr>
+                <td colspan="4">
+                    <label>{{group.name}}</label>
+                </td>
+                <td colspan="4">
+                    <button type="submit" name="submitBtn" value="{{group.id}}">Select this group</button>
+                </td>
+                <td class="error">{{ group.errors.as_text }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
+{%  endblock %}

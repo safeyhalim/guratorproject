@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{%  if not popup %}
+    <div id="menu">
+<ul id="jsddm">
+    <li><a href="/home/">Home</a></li>
+    <!--
+    <li><a href="/manual_query/">Manual</a>
+        <ul>
+            <li><a href="/manual_query/">Manual Queries</a></li>
+        </ul>
+    </li>
+    <li>
+        {% if menu.1 > 0 or menu.0 > 0 %}
+        <b><a href="#">Automatic ({{ menu.0|add:menu.1 }})</a></b>
+        {% else %}
+        <a href="#">Automatic</a>
+        {% endif %}
+        <ul>
+            <li>
+                <a href="/automatic_query/">Automatic Queries</a></li>
+            <li>
+                {%  if menu.0 > 0 %}
+                <b><a href="/data_requests/">Data requests ({{ menu.0 }})</a></b>
+                {% else %}
+                <a href="/data_requests/">Data requests</a>
+                {%  endif %}
+            </li>
+            <li>
+            {%if menu.1 > 0 %}
+                <b><a href="/automatic_query_responses/">Responses ({{ menu.1 }})</a></b>
+            {% else %}
+                 <a href="/automatic_query_responses/">Responses</a>
+            {% endif %}
+            </li>
+        </ul>
+
+    </li>
+    -->
+    <li><a href="/settings/">Settings</a></li>
+    <li><a href="/help/">Help & Contact</a></li>
+     <li>
+        {% if menu.personality_test_done == False %}
+            <a href="/personality_test/">Personality Test</a>
+        {% else %}
+            <a><strike>Personality Test</strike></a>
+            <li>
+                {% if menu.user_survey_done == False %}
+                    <a href="/select_user/">Select User</a>
+                {% else %}
+                    <a><strike>Select User</strike></a>
+                     <li>
+                        {% if menu.restaurant_survey_done == False %}
+                            <a href="/select_restaurant/">Select Restaurant</a>
+                        {% else %}
+                            <a><strike>Select Restaurant</strike></a>
+                            <li>
+                                {% if menu.group_creation_done == False %}
+                                    <a href="/create_group/">Create Group</a>
+                                {% else %}
+                                    <a><strike>Create Group</strike></a>
+                                    <li>
+                                        {% if menu.group_restaurant_survey_done == False %}
+                                            <a href="/select_group/">Select Group</a>
+                                        {% else %}
+                                            <a><strike>Select Group</strike></a>
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                    </li>
+                {% endif %}s
+            </li>
+        {% endif %}
+    </li>
+    <li><a href="/logout/">Logout</a></li>
+</ul>
+</div>
+{%  endif %}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% extends "guratorapp/base.html" %}
+{% load extras %}
+
+{%  block title %}Edit settings{% endblock %}
+
+{%  block script %}
+{%  endblock %}
+{%  block body %}
+    {%  include "guratorapp/menu.html" %}
+<h1>Settings</h1>
+
+<p>For security reasons your current password is required before any changes get applied. In case of additional changes, please <a href="/help/">contact us</a>.</p>
+<form action="/settings/" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+    {{ form.non_field_errors }}
+    <table class="real">
+        <tr>
+            <td class="right"><span title="Please add a profile photo so that other students can identify you easier" class="tooltip">Profile photo:</span></td>
+            <td>{{ form.picture }}</td>
+            <td class="error">{{ form.picture.errors.as_text }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="2">
+                {{ form.delete_picture }} Delete profile picture
+            </td>
+        </tr>
+        <tr>
+            <td class="right">{{ form.email.label_tag }}</td>
+            <td>{{ form.email }}</td>
+            <td class="error">{{ form.email.errors.as_text }}</td>
+        </tr>
+
+        <tr>
+            <td class="right">Current/Old password:</td>
+            <td>{{ form.password_old }}</td>
+            <td class="error">{{ form.password_old.errors.as_text }}</td>
+        </tr>
+        <tr>
+            <td class="right">{{ form.password_new1.label_tag }}</td>
+            <td>{{ form.password_new1 }}</td>
+            <td class="error">{{ form.password_new1.errors.as_text }}</td>
+        </tr>
+        <tr>
+            <td class="right">{{ form.password_new2.label_tag }}</td>
+            <td>{{ form.password_new2 }}</td>
+            <td class="error">{{ form.password_new2.errors.as_text }}</td>
+        </tr>
+
+         <tr>
+            <td class="right">Please enter the coordinates of your main place of residence <span class="tiny"><a target="_blank" href="/static/doc/gps.html">How do I get this?</a></span></td>
+            <td>Lat: {{ form.gps_lat }} Long: {{ form.gps_long }}</td>
+            <td class="error">{{ form.gps_lat.errors.as_text }} {{ form.gps_long.errors.as_text }}</td>
+        </tr>
+
+        <tr>
+            <td class="right">{{ form.country.label_tag }}</td>
+            <td> {{ form.country }} </td>
+            <td class="error">{{ form.country.errors.as_text }}</td>
+        </tr>
+
+        <tr>
+            <td colspan="3" class="right">
+                <input type="submit" value="Save changes" />
+            </td>
+        </tr>
+    </table>
+
+
+</form>
+
+{%  endblock %}

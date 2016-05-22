@@ -1,0 +1,8 @@
+/__init__.pyc
+/admin.pyc
+/apps.pyc
+/forms.pyc
+/models.pyc
+/views.pyc
+/uploads/img/*
+

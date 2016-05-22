@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+{% extends "guratorapp/base.html" %}
+{% load extras %}
+{% load i18n %}
+{%  block title %}{% trans "Survey With User" %}{% endblock %}
+
+{%  block script %}
+    $(function() {
+    $( "#sli_price" ).slider();
+    $( "#sli_price" ).on( "slidechange", function( event, ui ) { $("#id_price").val($( "#sli_price" ).slider( "value" )); } );
+    $( "#sli_price" ).slider( "option", "max", 100 );
+    $( "#sli_price" ).slider( "option", "min", 0 );
+    $( "#sli_price" ).slider( "value", 50 );
+    $("#id_price").hide()
+
+    $( "#sli_taste" ).slider();
+    $( "#sli_taste" ).on( "slidechange", function( event, ui ) { $("#id_taste").val($( "#sli_taste" ).slider( "value" )); } );
+    $( "#sli_taste" ).slider( "option", "max", 100 );
+    $( "#sli_taste" ).slider( "option", "min", 0 );
+    $( "#sli_taste" ).slider( "value", 50 );
+    $("#id_taste").hide()
+    
+    $( "#sli_clumsiness" ).slider();
+    $( "#sli_clumsiness" ).on( "slidechange", function( event, ui ) { $("#id_clumsiness").val($( "#sli_clumsiness" ).slider( "value" )); } );
+    $( "#sli_clumsiness" ).slider( "option", "max", 100 );
+    $( "#sli_clumsiness" ).slider( "option", "min", 0 );
+    $( "#sli_clumsiness" ).slider( "value", 50 );
+    $("#id_clumsiness").hide()
+    
+    $( "#sli_service" ).slider();
+    $( "#sli_service" ).on( "slidechange", function( event, ui ) { $("#id_service").val($( "#sli_service" ).slider( "value" )); } );
+    $( "#sli_service" ).slider( "option", "max", 100 );
+    $( "#sli_service" ).slider( "option", "min", 0 );
+    $( "#sli_service" ).slider( "value", 50 );
+    $("#id_service").hide()
+
+    $( "#sli_hippieness" ).slider();
+    $( "#sli_hippieness" ).on( "slidechange", function( event, ui ) { $("#id_hippieness").val($( "#sli_hippieness" ).slider( "value" )); } );
+    $( "#sli_hippieness" ).slider( "option", "max", 100 );
+    $( "#sli_hippieness" ).slider( "option", "min", 0 );
+    $( "#sli_hippieness" ).slider( "value", 50 );
+    $("#id_hippieness").hide()
+    
+    $( "#sli_location" ).slider();
+    $( "#sli_location" ).on( "slidechange", function( event, ui ) { $("#id_location").val($( "#sli_location" ).slider( "value" )); } );
+    $( "#sli_location" ).slider( "option", "max", 100 );
+    $( "#sli_location" ).slider( "option", "min", 0 );
+    $( "#sli_location" ).slider( "value", 50 );
+    $("#id_location").hide()
+    
+    $( "#sli_social_overlap" ).slider();
+    $( "#sli_social_overlap" ).on( "slidechange", function( event, ui ) { $("#id_social_overlap").val($( "#sli_social_overlap" ).slider( "value" )); } );
+    $( "#sli_social_overlap" ).slider( "option", "max", 100 );
+    $( "#sli_social_overlap" ).slider( "option", "min", 0 );
+    $( "#sli_social_overlap" ).slider( "value", 50 );
+    $("#id_social_overlap").hide()
+
+    $( document ).tooltip();
+  });
+
+
+{%  endblock %}
+{%  block body %}
+    <p>
+        {% blocktrans %}We kindly ask you to do this quick review for the restaurant you chose... <a href="/help/">We</a> (as the organizers) <strong>will never know your real name</strong>. Please be aware that <strong>you can not change/edit your answers after submitting</strong> this form.
+        {%  endblocktrans %}
+    </p>
+
+
+    <form action="/group_restaurant_survey/" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+     <p>
+        <b>You are currently representing your group: <h2>{{group.name}}</h2></b>       
+    </p> 
+    <p>
+        {% blocktrans %} You are reviewing the restaurant:{% endblocktrans %}
+            <table class="real">
+                <tr>
+                   <td colspan="4">
+                        <img width="70" height="70" src={{restaurant.image_url}}>
+                    </td>
+                    <td colspan="4">
+                        <label>{{restaurant.name}}</label>
+                        <input type="hidden" name="restaurant_id" value="{{restaurant.id}}">
+                        <input type="hidden" name="group_id" value="{{group.id}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        Slogan:
+                    </td>
+                    <td colspan="4">
+                        <label>{{restaurant.snippet_text}}</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        Address:
+                    </td>
+                    <td colspan="4">
+                        {% for address_part in restaurant.location.display_address %}
+                            <label>{{address_part}}</label>
+                        {% endfor %}
+                    </td>
+                </tr>
+                 <tr>
+                    <td colspan="4">
+                        Genre:
+                    </td>
+                    <td colspan="4">
+                        {% for categories in restaurant.categories %}
+                            {% for category in categories %}
+                                <label>"{{category}}" </label>
+                            {% endfor %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        Yelp Link:
+                    </td>
+                    <td colspan="4">
+                        <a href="{{restaurant.url}}" target="_blank">{{restaurant.url}}</a>
+                    </td>
+                </tr>
+            </table>
+    </p>
+    
+    <table class="real">
+     <tr class="overline-dotted">
+        <td>{% blocktrans %}How hippie do you find this restaurant?{% endblocktrans %}</td>
+         <td>{% blocktrans %}Not at All{% endblocktrans %}</td>
+         <td><div id="sli_hippieness" style="width:200px;"></div>{{ form.hippieness }}</td>
+         <td>{% blocktrans %}Very Hippy{% endblocktrans %}</td>
+
+        <td class="error">
+            {{ form.hippieness.errors.as_text }}
+        </td>
+    </tr>
+
+    <tr class="overline-dotted">
+        <td>
+            {% blocktrans %}How expensive is this restaurant?{% endblocktrans %}
+        </td>
+        <td>{% blocktrans %}Cheap{% endblocktrans %}</td>
+         <td><div id="sli_price" style="width:200px;"></div>{{ form.price }}</td>
+         <td>{% blocktrans %}Expensive{% endblocktrans %}</td>
+        <td class="error">
+            {{ form.price.errors.as_text }}
+        </td>
+    </tr>
+
+      <tr class="overline-dotted">
+        <td colspan="1">
+            {% blocktrans %}How clumsy is this restaurant?{% endblocktrans %}
+        </td>
+         <td>{% blocktrans %}Orderly{% endblocktrans %}</td>
+         <td><div id="sli_clumsiness" style="width:200px;"></div>{{ form.clumsiness }}</td>
+         <td>{% blocktrans %}Chaotic{% endblocktrans %}</td>
+        <td class="error">
+            {{ form.clumsiness.errors.as_text }}
+        </td>
+    </tr>
+    
+    <tr class="overline-dotted">
+        <td colspan="1">
+            {% blocktrans %}How do you find the service in this restaurant?{% endblocktrans %}
+        </td>
+         <td>{% blocktrans %}Terrible{% endblocktrans %}</td>
+         <td><div id="sli_service" style="width:200px;"></div>{{ form.service }}</td>
+         <td>{% blocktrans %}Great{%  endblocktrans %}</td>
+        <td class="error">
+            {{ form.service.errors.as_text }}
+        </td>
+    </tr>
+
+    <tr class="overline-dotted">
+        <td colspan="1">
+            {% blocktrans %}How does the food taste in this restaurant?{% endblocktrans %}
+        </td>
+         <td>{% blocktrans %}Ugh!{% endblocktrans %}</td>
+         <td><div id="sli_taste" style="width:200px;"></div>{{ form.taste }}</td>
+         <td>{% blocktrans %}Yum!{% endblocktrans %}</td>
+        <td class="error">
+            {{ form.taste.errors.as_text }}
+        </td>
+    </tr>
+    
+    <tr class="overline-dotted">
+        <td>{% blocktrans %}What do you think about the location of this restaurant?{% endblocktrans %}</td>
+         <td>{% blocktrans %}Terrible{% endblocktrans %}</td>
+         <td><div id="sli_location" style="width:200px;"></div>{{ form.location }}</td>
+         <td>{% blocktrans %}Perfect{% endblocktrans %}</td>
+
+        <td class="error">
+            {{ form.location.errors.as_text }}
+        </td>
+    </tr>
+    
+    <tr class="overline-dotted">
+        <td>{% blocktrans %}How much social overlap between you and your friends regarding this restaurant? <span class="tooltip" title="Social overlap means: to which extent you and your friends share the same opinion about this restaurant?">What is Social Overlap?</span>{% endblocktrans %}</td>
+         <td>{% blocktrans %}Weak{% endblocktrans %}</td>
+         <td><div id="sli_social_overlap" style="width:200px;"></div>{{ form.social_overlap }}</td>
+         <td>{% blocktrans %}Strong{% endblocktrans %}</td>
+
+        <td class="error">
+            {{ form.social_overlap.errors.as_text }}
+        </td>
+    </tr>
+    
+    <tr class="overline-dotted">
+        <td>{% blocktrans %}Please write here any additional comments...{% endblocktrans %}</td>
+        <td colspan="6">
+            {{ form.other }}
+        </td>
+        <td class="error">
+            {{ form.other.errors.as_text }}
+        </td>
+    </tr>
+    
+    </table>
+
+    <input type="submit" />
+    </form>
+
+
+
+{%  endblock %}

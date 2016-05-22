@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% extends "guratorapp/base.html" %}
+{% load extras %}
+{% block title %} Select User {% endblock%}
+{%  block body %}
+<h1> Select User for Test</h1>
+<font color="blue">
+Select user for test...
+</font>
+</p>
+<form action="/select_user/" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <p>
+        <b>You still have to survey {{num_remaining}} participants!</b>
+    </p>
+    <table class="real">
+        <tbody>
+        {% for target_participant in target_participants %}
+            <tr>
+                 <td colspan="4">
+                    <img width="70" height="70" src={{target_participant.picture.name|get_image_path}}>
+                </td>
+                <td colspan="4">
+                    <label>{{target_participant.name}}</label>
+                </td>
+                <td colspan="4">
+                    <button type="submit" name="submitBtn" value="{{target_participant.id}}">Select this user</button>
+                </td>
+                <td class="error">{{ target_participant.errors.as_text }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
+{%  endblock %}

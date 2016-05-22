@@ -1,0 +1,5 @@
+.settings
+.pydevproject
+*.sqlite3
+.DS_Store
+.project

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+{%  extends "guratorapp/base.html" %}
+{%  block title %}Subscription{% endblock %}
+{%  block script %}
+    function validate_input(field, value) {
+        if (field == "id_real_name") {
+            if ((value.split(" ").length > 1) && (value.length > 3)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        else if (field == "id_name") {
+            $.post("/check_register_input/", {"elem_id":field, "value":value}, function(data) {
+                if (data.success==true) {
+                    $('#'+field)[0].className = "ok";
+                    return true;
+                }
+                else {
+                    $('#'+field)[0].className = "error";
+                    return false;
+                }
+            });
+        }
+
+        else if (field=="id_email") {
+            var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
+            var valid = emailRegex.test(value);
+            if (!valid) {
+                return false;
+            } else
+                return true;
+        }
+
+        else if (field=="id_email2") {
+            return value == $('#id_email')[0].value;
+        }
+
+        else if (field == "id_password") {
+            return value.length > 3;
+        }
+
+        else if (field == "id_password2") {
+            return value == $('#id_password')[0].value;
+        }
+
+    }
+
+    function check_input(element) {
+        if (element.value == "") {
+            $('#'+element.id)[0].className="";
+        }
+        else {
+            if (validate_input(element.id, element.value)) {
+                // go
+                $('#'+element.id)[0].className = "ok";
+            }
+            else {
+                // error
+                $('#'+element.id)[0].className = "error";
+            }
+        }
+
+    }
+{% endblock %}
+
+{%  block body %}
+
+    <h1>Register as a Participant</h1>
+
+    <p>Please fill out the form below to register for the experiment. For a successful registration you have to accept the terms & conditions.</p>
+
+    <form action="/start/" method="post" enctype="multipart/form-data">
+     {% csrf_token %}
+    {{ form.non_field_errors }}
+    <table class="real">
+       <tr>
+            <td class="right">Real name:</td>
+            <td><input id="id_real_name" maxlength="50" name="real_name" type="text" onblur="check_input(this);" /></td>
+            <td class="error">{{ form.real_name.errors.as_text }}</td>
+        </tr>
+        
+        <tr>
+            <td class="right">Mariculation number:</td>
+            <td><input id="id_matriculation_number" maxlength="10" name="matriculation_number" type="text" /></td>
+            <td class="error">{{ form.matriculation_number.errors.as_text }}</td>
+        </tr>
+        
+        <tr>
+            <td class="right">{{ form.birthdate.label_tag }}</td>
+            <td>{{ form.birthdate }}</td>
+            <td class="error">{{ form.birthdate.errors.as_text }}</td>
+        </tr>
+        
+        <tr>
+            <td class="right">{{ form.name.label_tag }}</td>
+            <td><input id="id_name" maxlength="500" name="name" type="text" onblur="check_input(this);" /></td>
+            <td class="error">{{ form.name.errors.as_text }}</td>
+        </tr>
+        
+        <tr>
+            <td class="right">{{ form.country.label_tag }}</td>
+            <td> {{ form.country }} </td>
+            <td class="error">{{ form.country.errors.as_text }}</td>
+        </tr>
+        
+        <tr>
+            <td class="right"><span title="Please add a profile photo so that it is easier for other students to identify you" class="tooltip">Profile photo (*.jpg only):</span></td>
+            <td>{{ form.picture }} </td>
+            <td class="error">{{ form.picture.errors.as_text }}</td>
+        </tr>
+        <tr>
+            <td class="right">{{ form.email.label_tag }}</td>
+            <td><input id="id_email" maxlength="500" name="email" type="text" onblur="check_input(this);" /></td>
+            <td class="error">{{ form.email.errors.as_text }}</td>
+        </tr>
+        <tr>
+            <td class="right">{{ form.email2.label_tag }}</td>
+            <td><input id="id_email2" maxlength="500" name="email2" type="text" onblur="check_input(this);" /></td>
+            <td class="error">{{ form.email2.errors.as_text }}</td>
+        </tr>
+        <tr>
+            <td class="right">{{ form.password.label_tag }}</td>
+            <td><input id="id_password" name="password" type="password" onblur="check_input(this);" /></td>
+            <td class="error">{{ form.password.errors.as_text }}</td>
+        </tr>
+        <tr>
+            <td class="right">{{ form.password2.label_tag }}</td>
+            <td><input id="id_password2" name="password2" type="password" onblur="check_input(this);" /></td>
+            <td class="error">{{ form.password2.errors.as_text }}</td>
+        </tr>
+        <tr>
+            <td class="right">{{ form.gender.label_tag }}</td>
+            <td>{{ form.gender }}</td>
+            <td class="error">{{ form.gender.errors.as_text }}</td>
+        </tr>
+
+
+        <tr>
+            <td class="right">Please enter the coordinates of your main place of residence <span class="tiny"><a href="/static/doc/gps.html" target="_blank">How do I get this?</a></span></td>
+            <td>Lat: {{ form.gps_lat }} Long: {{ form.gps_long }}</td>
+            <td class="error">{{ form.gps_lat.errors.as_text }} {{ form.gps_long.errors.as_text }}</td>
+        </tr>
+
+        <tr>
+            <td colspan="3">
+                <textarea rows="5" readonly>{%  include "guratorapp/terms_conditions.html" %}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                {{ form.accepted_terms_conditions }} I accept the terms and conditions as stated above
+            </td>
+            <td class="error">{{ form.accepted_terms_conditions.errors.as_text }}</td>
+        </tr>
+    </table>
+
+      <input type="submit" value="Submit" />
+</form>
+{%  endblock %}

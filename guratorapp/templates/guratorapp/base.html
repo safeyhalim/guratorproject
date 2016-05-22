@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        {% load extras %}
+        <title>{% block title %}Title{%  endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="/static/default.css">
+        <link rel="stylesheet" href="/static/jquery.raty.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+        <script src="/static/jquery.databar.js"></script>
+        <script src="/static/jquery.raty.js"></script>
+        <script src="/static/jquery.cookie.js"></script>
+        <script>
+            var timeout    = 500;
+            var closetimer = 0;
+            var ddmenuitem = 0;
+            
+            function jsddm_open()
+            {  jsddm_canceltimer();
+            jsddm_close();
+            ddmenuitem = $(this).find('ul').css('visibility', 'visible');}
+            
+            function jsddm_close()
+            {  if(ddmenuitem) ddmenuitem.css('visibility', 'hidden');}
+            
+            function jsddm_timer()
+            {  closetimer = window.setTimeout(jsddm_close, timeout);}
+            
+            function jsddm_canceltimer()
+            {  if(closetimer)
+            {  window.clearTimeout(closetimer);
+              closetimer = null;}}
+            
+            $(document).ready(function()
+            {  $('#jsddm > li').bind('mouseover', jsddm_open)
+            $('#jsddm > li').bind('mouseout',  jsddm_timer)
+            
+            
+            
+            });
+            
+            
+            document.onclick = jsddm_close;
+            $( document ).tooltip();
+            
+            function csrfSafeMethod(method) {
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+            var csrftoken = $.cookie('csrftoken');
+            $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+            });
+            
+                {%  block script %}
+            
+                {% endblock %}
+        </script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            
+            ga('create', 'UA-63705301-1', 'auto');
+            ga('send', 'pageview');
+            
+        </script>
+        {% if user.is_authenticated %}
+            {%  include "guratorapp/menu.html" %}
+        {% endif %}
+        <div id="frame">
+            <div id="messagearea"></div>
+            <div id="content">
+                {% block body %}
+                {%  endblock %}
+            </div>
+        </div>
+    </body>
+</html>
