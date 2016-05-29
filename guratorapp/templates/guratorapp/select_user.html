@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 {% extends "guratorapp/base.html" %}
 {% load extras %}
-{% block title %} Select User {% endblock%}
+{% block title %} User Survey {% endblock%}
 {%  block body %}
-<h1> Select User for Test</h1>
+<h1> Select User to Survey</h1>
 <font color="blue">
-Select user for test...
+Participants in this experiment are listed below. By choosing one of them, you are going to be redirected to page in which you will go through a survey which aim is to evaluate different aspects of your relationship with this person. E.g. How much do you trust this person - How similar is this person to you, and so on...
+Remember: This survey is <b>totally confidential.</b> 
 </font>
 </p>
 <form action="/select_user/" method="POST">
