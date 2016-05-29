@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+YELP_RESTAURANT_PATH = os.path.join(BASE_DIR, 'yelp.json')
 
 
 # Quick-start development settings - unsuitable for production

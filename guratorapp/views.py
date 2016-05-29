@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.conf import settings as conf_settings
 import json
 
 ############################### Constants #####################################
@@ -67,7 +68,8 @@ def get_current_menu_info(request):
     
 
 def parse_restaurants_json():
-    path = "/Users/shalim/liclipse_workspace/guratorproject/yelp.json"
+    # path = "/Users/shalim/liclipse_workspace/guratorproject/yelp.json"
+    path = conf_settings.YELP_RESTAURANT_PATH
     with open(path) as restaurants_file:  
         restaurants_dict = json.loads(restaurants_file.read())
     return restaurants_dict["restaurants"]  # returns a list of dictionaries, each of which represents a restaurant
