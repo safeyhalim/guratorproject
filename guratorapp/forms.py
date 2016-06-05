@@ -78,11 +78,12 @@ class PreferenceForm(forms.Form):
 class ParticipantEntryForm(ModelForm):
     password = CharField(widget=PasswordInput(), label="Please choose a password")
     password2 = CharField(widget=PasswordInput(), label="Please confirm the password")
+    matriculation_number = CharField(label="Matriculation Number", required=False)
 
     class Meta:
         model = Participant
         # fields = ['name', 'gender','email', 'email2', 'accepted_terms_conditions','picture']
-        fields = ['name', 'country', 'birthdate', 'email', 'email2', 'gender', 'accepted_terms_conditions', 'picture', 'real_name', 'gps_lat', 'gps_long', 'matriculation_number']
+        fields = ['name', 'country', 'birthdate', 'email', 'email2', 'gender', 'accepted_terms_conditions', 'picture', 'real_name', 'gps_lat', 'gps_long']
         widgets = {
             'birthdate': SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"), years=range(1930, 2016)),
         }
@@ -104,13 +105,13 @@ class ParticipantEntryForm(ModelForm):
         country = cleaned_data.get("country")
         birthdate = cleaned_data.get("birthdate")
 
-        matriculation_number = cleaned_data.get("matriculation_number")
-        try:
-            if int(matriculation_number) < 10000:
-                self.add_error("matriculation_number", "Please add your matriculation number")
-        except:
-            self.add_error("matriculation_number", "Please add your matriculation number")
-
+        # Matriculation Number is not mandatory
+        # try:
+            # int(matriculation_number) < 10000:
+            # self.add_error("matriculation_number", "Please add your matriculation number")
+        # except:
+        #   self.add_error("matriculation_number", "Please add your matriculation number")
+         
         if name != None and len(name) > 0:
             name_clean = ''.join(name.split())
 
