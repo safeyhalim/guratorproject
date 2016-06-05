@@ -7,9 +7,9 @@ from django_countries import countries
 
 def content_file_name(instance, filename):
     if filename.find("."):
-        return "guratorproject/guratorapp/static/img/" + instance.user.username + filename[filename.find("."):]
+        return instance.user.username + filename[filename.find("."):]
     else:
-        return "guratorproject/guratorapp/static/img/" + instance.user.username
+        return instance.user.username
 
 class PersonalityQuestion(models.Model):
     optionA = models.CharField(max_length=500, verbose_name="A")

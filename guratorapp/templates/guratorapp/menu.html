@@ -40,8 +40,9 @@
     <li><a href="/help/">Help & Contact</a></li>
      <li>
         {% if menu.personality_test_done == False %}
-            <a href="/personality_test/">Personality Test</a>
+            <a href="/personality_test/">Personality Test</a> 
         {% else %}
+        <!--
             <a><strike>Personality Test</strike></a>
             <li>
                 {% if menu.user_survey_done == False %}
@@ -69,8 +70,9 @@
                             </li>
                         {% endif %}
                     </li>
-                {% endif %}s
+                {% endif %}
             </li>
+            -->
         {% endif %}
     </li>
     <li><a href="/logout/">Logout</a></li>
