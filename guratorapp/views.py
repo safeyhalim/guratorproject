@@ -432,7 +432,8 @@ def start(request):
                 p.real_name = form.cleaned_data["real_name"]
                 p.gps_lat = form.cleaned_data["gps_lat"]
                 p.gps_long = form.cleaned_data["gps_long"]
-                p.matriculation_number = form.cleaned_data["matriculation_number"]
+                if form.cleaned_data["matriculation_number"] != None:
+                    p.matriculation_number = form.cleaned_data["matriculation_number"]
                 p.save()
 
                 u = authenticate(username=user.username, password=form.cleaned_data["password"])
