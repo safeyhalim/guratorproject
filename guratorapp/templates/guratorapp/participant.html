@@ -78,7 +78,7 @@
     <table class="real">
        <tr>
             <td class="right">Real name:</td>
-            <td><input id="id_real_name" maxlength="50" name="real_name" type="text" onblur="check_input(this);" /></td>
+            <td><input id="id_real_name" maxlength="50" name="real_name" type="text" onblur="check_input(this);" /> <span class="tooltip" title="Real name must be in the format: Firstname Lastname">What is the format?</span></td>
             <td class="error">{{ form.real_name.errors.as_text }}</td>
         </tr>
         
