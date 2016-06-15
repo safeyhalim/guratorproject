@@ -245,6 +245,7 @@ def user_survey(request):
             user_survey = UserSurvey()
             user_survey.from_participant = request.user.participant
             user_survey.to_participant = Participant.objects.get(id=target_participant_id)
+            user_survey.relationship = cleaned_data["relationship"]
             user_survey.social_capital = cleaned_data["social_capital"]
             user_survey.tie_strength = cleaned_data["tie_strength"]
             user_survey.social_similarity = cleaned_data["social_similarity"]

@@ -85,6 +85,16 @@
     </p>
     
     <table class="real">
+    <tr class="overline-dotted">
+        <td><b>{% blocktrans %} What is your relationship to the that person?{% endblocktrans %}</b><span class="tooltip" title="Write free-text describing your relationship to that person">What does this mean?</span></td>
+        <td colspan="20">
+            <input type="text" name="relationship" placeholder="E.g. Father, Close Friend, Acquaintance..."/>
+        </td>
+        <td class="error">
+            {{ form.relationship.errors.as_text }}
+        </td>
+    </tr>
+    
      <tr class="overline-dotted">
         <td>{% blocktrans %}Would you <strong>help this person no matter what</strong>, i.e. in <strong>any situation</strong>?{% endblocktrans %}</td>
          <td>{% blocktrans %}No{% endblocktrans %}</td>

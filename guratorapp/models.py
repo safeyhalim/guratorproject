@@ -63,6 +63,7 @@ class ParticipantPersonalityQuestion(models.Model):
 class UserSurvey(models.Model):
     from_participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name="from_participant")
     to_participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name="to_participant")
+    relationship = models.CharField(max_length=50, default="N/A")
     social_capital = models.IntegerField(default=0)
     tie_strength = models.IntegerField(default=0)
     social_similarity = models.IntegerField(default=0)
