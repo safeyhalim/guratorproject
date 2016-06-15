@@ -198,7 +198,7 @@ class PersonalityQuestionForm(forms.Form):
 class UserSurveyForm(ModelForm):
     class Meta:
         model = UserSurvey
-        fields = ['social_capital', 'tie_strength', 'social_similarity', 'social_context_similarity', 'sympathy', 'social_hierarchy', 'domain_expertise']
+        fields = ['relationship', 'social_capital', 'tie_strength', 'social_similarity', 'social_context_similarity', 'sympathy', 'social_hierarchy', 'domain_expertise']
             
 
 class RestaurantSurveyForm(ModelForm):
