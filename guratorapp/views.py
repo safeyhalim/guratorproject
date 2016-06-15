@@ -14,7 +14,7 @@ from django.conf import settings as conf_settings
 import json
 
 ############################### Constants #####################################
-NUM_SURVEY = 4
+NUM_SURVEY = 40
 NUM_RESTAURANT_SURVEY = 3
 MAX_NUM_IN_GROUP = 2
 NUM_GROUPS_FOR_PARTICIPANT = 2
