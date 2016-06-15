@@ -57,8 +57,32 @@
     
     $( document ).tooltip();
   });
-
-
+  
+   function check_input(element) {
+        if (element.value == "") {
+            $('#'+element.id)[0].className="error";
+        } else {
+            $('#'+element.id)[0].className="ok";
+        }
+    }
+    
+    $(function() {
+        $('#form_id').on('submit', function () {
+            if($('#relationship_id').val() == ""){
+                $('#relationship_id')[0].className = "error";
+                return false;
+            } 
+        });
+    });
+    
+    $(function() {
+    $('#form_id').on('submit', function () {
+        if($('#relationship_id').val() == ""){
+            $('#relationship_id')[0].className = "error";
+            return false;
+        }
+    });
+    });
 {%  endblock %}
 {%  block body %}
 
@@ -68,7 +92,7 @@
     </p>
 
 
-    <form action="/user_survey/" method="POST">
+    <form id="form_id" action="/user_survey/" method="POST">
     {% csrf_token %}
     {{ form.non_field_errors }}
     <p>
@@ -88,7 +112,7 @@
     <tr class="overline-dotted">
         <td><b>{% blocktrans %} What is your relationship to the that person?{% endblocktrans %}</b><span class="tooltip" title="Write free-text describing your relationship to that person">What does this mean?</span></td>
         <td colspan="20">
-            <input type="text" name="relationship" placeholder="E.g. Father, Close Friend, Acquaintance..."/>
+            <input type="text" id="relationship_id" name="relationship" placeholder="E.g. Father, Close Friend, Acquaintance..." onblur="check_input(this);"/>
         </td>
         <td class="error">
             {{ form.relationship.errors.as_text }}
