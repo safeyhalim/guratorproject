@@ -14,8 +14,8 @@ from django.conf import settings as conf_settings
 import json
 
 ############################### Constants #####################################
-NUM_SURVEY = 4
-NUM_RESTAURANT_SURVEY = 3
+NUM_SURVEY = 40
+NUM_RESTAURANT_SURVEY = 15
 MAX_NUM_IN_GROUP = 2
 NUM_GROUPS_FOR_PARTICIPANT = 2
 
@@ -40,7 +40,8 @@ def get_participants_in_the_same_groups(participant):
     
 def get_current_menu_info(request):
     personality_test_done = False
-    user_survey_done = False
+    user_survey_almost_done = False  # Relevant to ProductionPhase3
+    user_survey_done = False 
     restaurant_survey_done = False
     group_creation_done = False
     group_restaurant_survey_done = True
@@ -48,8 +49,10 @@ def get_current_menu_info(request):
         if request.user.participant.personality_test_done == True:
             personality_test_done = True
             _, num_remaining = get_surveyed_participants(request.user.participant)
-            if num_remaining == 0:
-                user_survey_done = True
+            if num_remaining <= 16:  # NOTE: this is applicable only for ProductionPhase3, the students can start rating restaurants if they already have surveyed 24 participants (20 externals and 4 internals)
+                user_survey_almost_done = True
+                if num_remaining == 0:
+                    user_survey_done = True
                 restaurants = parse_restaurants_json()
                 _, num_restaurants_remaining = get_restaurants(restaurants, request.user.participant)
                 if num_restaurants_remaining == 0:
@@ -64,7 +67,7 @@ def get_current_menu_info(request):
                                 group_restaurant_survey_done = False
                                 break
                                 
-    return {"personality_test_done": personality_test_done, "user_survey_done": user_survey_done, "restaurant_survey_done": restaurant_survey_done, "group_creation_done": group_creation_done, "group_restaurant_survey_done": group_restaurant_survey_done}
+    return {"personality_test_done": personality_test_done, "user_survey_almost_done": user_survey_almost_done, "user_survey_done": user_survey_done, "restaurant_survey_done": restaurant_survey_done, "group_creation_done": group_creation_done, "group_restaurant_survey_done": group_restaurant_survey_done}
     
 
 def parse_restaurants_json():

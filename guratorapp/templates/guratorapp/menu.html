@@ -44,15 +44,20 @@
         {% else %}
             <a><strike>Personality Test</strike></a>
             <li>
-                {% if menu.user_survey_done == False %}
+                {% if menu.user_survey_almost_done == False %} <!-- This change is relevant to ProductionPhase3 only because we allow participants to do restaurant surveys even they didn't finish surveying people -->
                     <a href="/select_user/">Select User</a>
                 {% else %}
-                    <a><strike>Select User</strike></a>
+                    {% if menu.user_survey_done == True %}
+                        <a><strike>Select User</strike></a>
+                    {% else %}
+                        <a href="/select_user/">Select User</a>
+                    {% endif %}
                      <li>
                         {% if menu.restaurant_survey_done == False %}
                             <a href="/select_restaurant/">Select Restaurant</a>
                         {% else %}
                             <a><strike>Select Restaurant</strike></a>
+                            <!--
                             <li>
                                 {% if menu.group_creation_done == False %}
                                     <a href="/create_group/">Create Group</a>
@@ -67,6 +72,7 @@
                                     </li>
                                 {% endif %}
                             </li>
+                            -->
                         {% endif %}
                     </li>
                 {% endif %}
