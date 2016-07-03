@@ -195,51 +195,51 @@
             }
         },
         {
-            "is_claimed": false, 
-            "rating": 3.5, 
-            "mobile_url": "http://m.yelp.de/biz/burger-house-4-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
-            "rating_img_url": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/5ef3eb3cb162/ico/stars/v1/stars_3_half.png", 
-            "review_count": 19, 
-            "name": "Burger House 4", 
-            "rating_img_url_small": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/2e909d5d3536/ico/stars/v1/stars_small_3_half.png", 
-            "url": "http://www.yelp.de/biz/burger-house-4-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "is_claimed": false,
+            "rating": 3.5,
+            "mobile_url": "http://m.yelp.de/biz/burger-house-4-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
+            "rating_img_url": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/5ef3eb3cb162/ico/stars/v1/stars_3_half.png",
+            "review_count": 19,
+            "name": "Burger House 4",
+            "rating_img_url_small": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/2e909d5d3536/ico/stars/v1/stars_small_3_half.png",
+            "url": "http://www.yelp.de/biz/burger-house-4-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
             "categories": [
                 [
-                    "Burger", 
+                    "Burger",
                     "burgers"
                 ]
-            ], 
-            "phone": "08944384377", 
-            "snippet_text": "Leckere Burger, Pommes waren gut ( ein bischen wärmer könnten sie aber schon sein )\nService freundlich und schnell.\nInsgesamt empfehlenswertes Burgerlokal.", 
-            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/zNgAGZAclxAeTCuGft-4Mg/ms.jpg", 
-            "snippet_image_url": "http://s3-media4.fl.yelpcdn.com/photo/UukVIMHMjD4aMscVAKPTdA/ms.jpg", 
-            "display_phone": "+49 89 44384377", 
-            "rating_img_url_large": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/bd9b7a815d1b/ico/stars/v1/stars_large_3_half.png", 
-            "id": "burger-house-4-münchen-2", 
-            "is_closed": false, 
+            ],
+            "phone": "08944384377",
+            "snippet_text": "Leckere Burger, Pommes waren gut ( ein bischen wärmer könnten sie aber schon sein )\nService freundlich und schnell.\nInsgesamt empfehlenswertes Burgerlokal.",
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/zNgAGZAclxAeTCuGft-4Mg/ms.jpg",
+            "snippet_image_url": "http://s3-media4.fl.yelpcdn.com/photo/UukVIMHMjD4aMscVAKPTdA/ms.jpg",
+            "display_phone": "+49 89 44384377",
+            "rating_img_url_large": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/bd9b7a815d1b/ico/stars/v1/stars_large_3_half.png",
+            "id": "burger-house-4-münchen-2",
+            "is_closed": false,
             "location": {
-                "city": "München", 
+                "city": "München",
                 "display_address": [
-                    "Theresienstr. 60", 
-                    "Maxvorstadt", 
+                    "Theresienstr. 60",
+                    "Maxvorstadt",
                     "80333 München"
-                ], 
-                "geo_accuracy": 9.5, 
+                ],
+                "geo_accuracy": 9.5,
                 "neighborhoods": [
                     "Maxvorstadt"
-                ], 
-                "postal_code": "80333", 
-                "country_code": "DE", 
+                ],
+                "postal_code": "80333",
+                "country_code": "DE",
                 "address": [
                     "Theresienstr. 60"
-                ], 
+                ],
                 "coordinate": {
-                    "latitude": 48.148682951816, 
+                    "latitude": 48.148682951816,
                     "longitude": 11.573222219851
-                }, 
+                },
                 "state_code": "BY"
             }
-        }, 
+        },
         {
             "is_claimed": true,
             "rating": 4.0,
@@ -1561,60 +1561,6 @@
         {
             "is_claimed": false,
             "rating": 4.5,
-            "mobile_url": "http://m.yelp.de/biz/koshari-al-kairo-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
-            "rating_img_url": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/99493c12711e/ico/stars/v1/stars_4_half.png",
-            "review_count": 3,
-            "name": "Koshari Al Kairo",
-            "rating_img_url_small": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/a5221e66bc70/ico/stars/v1/stars_small_4_half.png",
-            "url": "http://www.yelp.de/biz/koshari-al-kairo-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
-            "categories": [
-                [
-                    "Imbiss",
-                    "foodstands"
-                ],
-                [
-                    "Nahöstliches Restaurant",
-                    "mideastern"
-                ],
-                [
-                    "Veganes Restaurant",
-                    "vegan"
-                ]
-            ],
-            "phone": "015162867999",
-            "snippet_text": "WOW. So muss Fast Food schmecken! \n\nKoshari Ahl Kairo ist in München der erste ägyptische Imbiss! Omar, der Besitzer erklärt mir wie das schnelle Essen auf...",
-            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/m3VIS9tuPPxeZPZYYu4CEQ/ms.jpg",
-            "snippet_image_url": "http://s3-media2.fl.yelpcdn.com/photo/m1hzo1PpV9BJ4cJwKeqB0w/ms.jpg",
-            "display_phone": "+49 1516 2867999",
-            "rating_img_url_large": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/9f83790ff7f6/ico/stars/v1/stars_large_4_half.png",
-            "id": "koshari-al-kairo-münchen",
-            "is_closed": false,
-            "location": {
-                "city": "München",
-                "display_address": [
-                    "Kapuzinerstr. 35",
-                    "Isarvorstadt",
-                    "80469 München"
-                ],
-                "geo_accuracy": 8.0,
-                "neighborhoods": [
-                    "Isarvorstadt"
-                ],
-                "postal_code": "80469",
-                "country_code": "DE",
-                "address": [
-                    "Kapuzinerstr. 35"
-                ],
-                "coordinate": {
-                    "latitude": 48.12427,
-                    "longitude": 11.56469
-                },
-                "state_code": "BY"
-            }
-        },
-        {
-            "is_claimed": false,
-            "rating": 4.5,
             "mobile_url": "http://m.yelp.de/biz/götterspeise-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
             "rating_img_url": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/99493c12711e/ico/stars/v1/stars_4_half.png",
             "review_count": 48,
@@ -1862,56 +1808,6 @@
                 "coordinate": {
                     "latitude": 48.130619,
                     "longitude": 11.5704098
-                },
-                "state_code": "BY"
-            }
-        },
-        {
-            "is_claimed": true,
-            "rating": 4.0,
-            "mobile_url": "http://m.yelp.de/biz/aroma-kaffeebar-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
-            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png",
-            "review_count": 122,
-            "name": "Aroma Kaffeebar",
-            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png",
-            "url": "http://www.yelp.de/biz/aroma-kaffeebar-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
-            "categories": [
-                [
-                    "Coffee Shop",
-                    "coffee"
-                ],
-                [
-                    "Café",
-                    "cafes"
-                ]
-            ],
-            "phone": "08926949249",
-            "snippet_text": "Toll hier zu sein, das macht Laune. Und schmecken tut`s auch! Ein schönes Cafè, wo man sich einfach wohlfühlen kann. Es ist eben anders als andere Café`s,...",
-            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/KqLlqv14Ved5s_z2FTOosQ/ms.jpg",
-            "snippet_image_url": "http://s3-media3.fl.yelpcdn.com/photo/yZIsneq9fC7e1-P2_YEV3g/ms.jpg",
-            "display_phone": "+49 89 26949249",
-            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png",
-            "id": "aroma-kaffeebar-münchen",
-            "is_closed": false,
-            "location": {
-                "city": "München",
-                "display_address": [
-                    "Pestalozzistr. 24",
-                    "Isarvorstadt",
-                    "80469 München"
-                ],
-                "geo_accuracy": 8.0,
-                "neighborhoods": [
-                    "Isarvorstadt"
-                ],
-                "postal_code": "80469",
-                "country_code": "DE",
-                "address": [
-                    "Pestalozzistr. 24"
-                ],
-                "coordinate": {
-                    "latitude": 48.13031,
-                    "longitude": 11.56707
                 },
                 "state_code": "BY"
             }
@@ -3058,163 +2954,163 @@
             }
         },
         {
-            "is_claimed": true, 
-            "rating": 3.5, 
-            "mobile_url": "http://m.yelp.de/biz/café-puck-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
-            "rating_img_url": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/5ef3eb3cb162/ico/stars/v1/stars_3_half.png", 
-            "review_count": 100, 
-            "name": "Café Puck", 
-            "rating_img_url_small": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/2e909d5d3536/ico/stars/v1/stars_small_3_half.png", 
-            "url": "http://www.yelp.de/biz/café-puck-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "is_claimed": true,
+            "rating": 3.5,
+            "mobile_url": "http://m.yelp.de/biz/café-puck-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
+            "rating_img_url": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/5ef3eb3cb162/ico/stars/v1/stars_3_half.png",
+            "review_count": 100,
+            "name": "Café Puck",
+            "rating_img_url_small": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/2e909d5d3536/ico/stars/v1/stars_small_3_half.png",
+            "url": "http://www.yelp.de/biz/café-puck-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
             "categories": [
                 [
-                    "Bar", 
+                    "Bar",
                     "bars"
-                ], 
+                ],
                 [
-                    "Café", 
+                    "Café",
                     "cafes"
-                ], 
+                ],
                 [
-                    "Frühstück & Brunch", 
+                    "Frühstück & Brunch",
                     "breakfast_brunch"
                 ]
-            ], 
-            "phone": "0892802280", 
-            "snippet_text": "Ich kann nur die Kuchen beurteilen, da bisher immer nur zu Kaffee uns Kuchen dort. Kuchen sind stets sehr lecker und die Größe der Stücke für den Preis...", 
-            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/keNP0-NTg5BdstrNFGVk9g/ms.jpg", 
-            "snippet_image_url": "https://s3-media4.fl.yelpcdn.com/assets/srv0/yelp_styleguide/cc4afe21892e/assets/img/default_avatars/user_medium_square.png", 
-            "display_phone": "+49 89 2802280", 
-            "rating_img_url_large": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/bd9b7a815d1b/ico/stars/v1/stars_large_3_half.png", 
-            "id": "café-puck-münchen", 
-            "is_closed": false, 
+            ],
+            "phone": "0892802280",
+            "snippet_text": "Ich kann nur die Kuchen beurteilen, da bisher immer nur zu Kaffee uns Kuchen dort. Kuchen sind stets sehr lecker und die Größe der Stücke für den Preis...",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/keNP0-NTg5BdstrNFGVk9g/ms.jpg",
+            "snippet_image_url": "https://s3-media4.fl.yelpcdn.com/assets/srv0/yelp_styleguide/cc4afe21892e/assets/img/default_avatars/user_medium_square.png",
+            "display_phone": "+49 89 2802280",
+            "rating_img_url_large": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/bd9b7a815d1b/ico/stars/v1/stars_large_3_half.png",
+            "id": "café-puck-münchen",
+            "is_closed": false,
             "location": {
-                "city": "München", 
+                "city": "München",
                 "display_address": [
-                    "Türkenstr. 33", 
-                    "Maxvorstadt", 
+                    "Türkenstr. 33",
+                    "Maxvorstadt",
                     "80799 München"
-                ], 
-                "geo_accuracy": 8.0, 
+                ],
+                "geo_accuracy": 8.0,
                 "neighborhoods": [
                     "Maxvorstadt"
-                ], 
-                "postal_code": "80799", 
-                "country_code": "DE", 
+                ],
+                "postal_code": "80799",
+                "country_code": "DE",
                 "address": [
                     "Türkenstr. 33"
-                ], 
+                ],
                 "coordinate": {
-                    "latitude": 48.14941, 
+                    "latitude": 48.14941,
                     "longitude": 11.57518
-                }, 
+                },
                 "state_code": "BY"
             }
         },
         {
-            "is_claimed": false, 
-            "rating": 4.0, 
-            "mobile_url": "http://m.yelp.de/biz/opatija-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
-            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png", 
-            "review_count": 92, 
-            "name": "Opatija", 
-            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png", 
-            "url": "http://www.yelp.de/biz/opatija-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "is_claimed": false,
+            "rating": 4.0,
+            "mobile_url": "http://m.yelp.de/biz/opatija-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
+            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png",
+            "review_count": 92,
+            "name": "Opatija",
+            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png",
+            "url": "http://www.yelp.de/biz/opatija-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
             "categories": [
                 [
-                    "Mediterranes Restaurant", 
+                    "Mediterranes Restaurant",
                     "mediterranean"
-                ], 
+                ],
                 [
-                    "Steakhouse", 
+                    "Steakhouse",
                     "steak"
-                ], 
+                ],
                 [
-                    "Pizza", 
+                    "Pizza",
                     "pizza"
                 ]
-            ], 
-            "phone": "089268353", 
-            "snippet_text": "Jubel, Trubel, Heiterkeit, gutes Essen ist nicht weit.\nWer eine schöne Stunde verschenkt weil er an überteuerte Preise denkt\noder Sorgen von Morgen- der tut...", 
-            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/wO57-ekhfUBLOYiXy0XbSg/ms.jpg", 
-            "snippet_image_url": "http://s3-media2.fl.yelpcdn.com/photo/GU34RTD_CyK3AXenPjuzSw/ms.jpg", 
-            "display_phone": "+49 89 268353", 
-            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png", 
-            "id": "opatija-münchen", 
-            "is_closed": false, 
+            ],
+            "phone": "089268353",
+            "snippet_text": "Jubel, Trubel, Heiterkeit, gutes Essen ist nicht weit.\nWer eine schöne Stunde verschenkt weil er an überteuerte Preise denkt\noder Sorgen von Morgen- der tut...",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/wO57-ekhfUBLOYiXy0XbSg/ms.jpg",
+            "snippet_image_url": "http://s3-media2.fl.yelpcdn.com/photo/GU34RTD_CyK3AXenPjuzSw/ms.jpg",
+            "display_phone": "+49 89 268353",
+            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png",
+            "id": "opatija-münchen",
+            "is_closed": false,
             "location": {
-                "city": "München", 
+                "city": "München",
                 "display_address": [
-                    "Hochbrückenstr. 3", 
-                    "Altstadt", 
+                    "Hochbrückenstr. 3",
+                    "Altstadt",
                     "80331 München"
-                ], 
-                "geo_accuracy": 8.0, 
+                ],
+                "geo_accuracy": 8.0,
                 "neighborhoods": [
                     "Altstadt"
-                ], 
-                "postal_code": "80331", 
-                "country_code": "DE", 
+                ],
+                "postal_code": "80331",
+                "country_code": "DE",
                 "address": [
                     "Hochbrückenstr. 3"
-                ], 
+                ],
                 "coordinate": {
-                    "latitude": 48.13646, 
+                    "latitude": 48.13646,
                     "longitude": 11.57944
-                }, 
+                },
                 "state_code": "BY"
             }
         },
         {
-            "is_claimed": true, 
-            "rating": 4.0, 
-            "mobile_url": "http://m.yelp.de/biz/el-gaucho-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
-            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png", 
-            "review_count": 24, 
-            "name": "El Gaucho", 
-            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png", 
-            "url": "http://www.yelp.de/biz/el-gaucho-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "is_claimed": true,
+            "rating": 4.0,
+            "mobile_url": "http://m.yelp.de/biz/el-gaucho-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
+            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png",
+            "review_count": 24,
+            "name": "El Gaucho",
+            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png",
+            "url": "http://www.yelp.de/biz/el-gaucho-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
             "categories": [
                 [
-                    "Steakhouse", 
+                    "Steakhouse",
                     "steak"
-                ], 
+                ],
                 [
-                    "Argentinisches Restaurant", 
+                    "Argentinisches Restaurant",
                     "argentine"
                 ]
-            ], 
-            "phone": "08924224104", 
-            "snippet_text": "Gleich wenn man das Steakhaus betritt, steht man vor der Bar und rechts davon stehen urige Barhocker. \nDer eigentliche Restaurant-Bereich ist sehr schön,...", 
-            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/KxNYqdrhGzH01NC-HWfQbQ/ms.jpg", 
-            "snippet_image_url": "http://s3-media1.fl.yelpcdn.com/photo/lINtpHy7csxmwheh8Ms-8Q/ms.jpg", 
-            "display_phone": "+49 89 24224104", 
-            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png", 
-            "id": "el-gaucho-münchen", 
-            "is_closed": false, 
+            ],
+            "phone": "08924224104",
+            "snippet_text": "Gleich wenn man das Steakhaus betritt, steht man vor der Bar und rechts davon stehen urige Barhocker. \nDer eigentliche Restaurant-Bereich ist sehr schön,...",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/KxNYqdrhGzH01NC-HWfQbQ/ms.jpg",
+            "snippet_image_url": "http://s3-media1.fl.yelpcdn.com/photo/lINtpHy7csxmwheh8Ms-8Q/ms.jpg",
+            "display_phone": "+49 89 24224104",
+            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png",
+            "id": "el-gaucho-münchen",
+            "is_closed": false,
             "location": {
-                "city": "München", 
+                "city": "München",
                 "display_address": [
-                    "Frauenstr. 7-9", 
-                    "Altstadt", 
+                    "Frauenstr. 7-9",
+                    "Altstadt",
                     "80469 München"
-                ], 
-                "geo_accuracy": 8.0, 
+                ],
+                "geo_accuracy": 8.0,
                 "neighborhoods": [
                     "Altstadt"
-                ], 
-                "postal_code": "80469", 
-                "country_code": "DE", 
+                ],
+                "postal_code": "80469",
+                "country_code": "DE",
                 "address": [
                     "Frauenstr. 7-9"
-                ], 
+                ],
                 "coordinate": {
-                    "latitude": 48.1347, 
+                    "latitude": 48.1347,
                     "longitude": 11.5777699
-                }, 
+                },
                 "state_code": "BY"
             }
-        }, 
+        },
         {
             "is_claimed": false,
             "rating": 3.0,
@@ -5092,56 +4988,6 @@
             }
         },
         {
-            "is_claimed": true,
-            "rating": 4.0,
-            "mobile_url": "http://m.yelp.de/biz/l-amar-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
-            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png",
-            "review_count": 32,
-            "name": "L'Amar",
-            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png",
-            "url": "http://www.yelp.de/biz/l-amar-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
-            "categories": [
-                [
-                    "Mediterranes Restaurant",
-                    "mediterranean"
-                ],
-                [
-                    "Café",
-                    "cafes"
-                ]
-            ],
-            "phone": "08954892327",
-            "snippet_text": "Super Lokal zum Frühstücken! Bin hier regelmäßig und kann das Lokal nur weiterempfehlen. Essen ist sehr liebevoll angerichtet, Brot ist super lecker, nettes...",
-            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/9XOAnHtxlgvx3oBPMJK4dA/ms.jpg",
-            "snippet_image_url": "http://s3-media3.fl.yelpcdn.com/photo/AGcIK28tnd6Ih41XQCexYA/ms.jpg",
-            "display_phone": "+49 89 54892327",
-            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png",
-            "id": "l-amar-münchen",
-            "is_closed": false,
-            "location": {
-                "city": "München",
-                "display_address": [
-                    "Pestalozzistr. 28",
-                    "Isarvorstadt",
-                    "80469 München"
-                ],
-                "geo_accuracy": 8.0,
-                "neighborhoods": [
-                    "Isarvorstadt"
-                ],
-                "postal_code": "80469",
-                "country_code": "DE",
-                "address": [
-                    "Pestalozzistr. 28"
-                ],
-                "coordinate": {
-                    "latitude": 48.13008,
-                    "longitude": 11.56706
-                },
-                "state_code": "BY"
-            }
-        },
-        {
             "is_claimed": false,
             "rating": 0.0,
             "mobile_url": "http://m.yelp.de/biz/cafe-bistro-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ",
@@ -5605,6 +5451,584 @@
             "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/1d04a136ee3e/ico/stars/v1/stars_large_0.png",
             "id": "tele-global-münchen",
             "is_closed": false
+        },
+        {
+            "is_claimed": true, 
+            "rating": 3.5, 
+            "mobile_url": "http://m.yelp.de/biz/taste-my-burger-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/5ef3eb3cb162/ico/stars/v1/stars_3_half.png", 
+            "review_count": 50, 
+            "name": "Taste my Burger", 
+            "rating_img_url_small": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/2e909d5d3536/ico/stars/v1/stars_small_3_half.png", 
+            "url": "http://www.yelp.de/biz/taste-my-burger-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "categories": [
+                [
+                    "Burger", 
+                    "burgers"
+                ]
+            ], 
+            "phone": "08954328827", 
+            "snippet_text": "Es gibt in München ja in der Zwischenzeit Burgerläden an fast jeder Ecke, neben kleineren und größeren Ketten gibt es auch noch den einen oder anderen...", 
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/piXYEobbIgKjdAuBI-5UxQ/ms.jpg", 
+            "snippet_image_url": "http://s3-media3.fl.yelpcdn.com/photo/24LXQE8oH5hBkgKrkgRO3w/ms.jpg", 
+            "display_phone": "+49 89 54328827", 
+            "rating_img_url_large": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/bd9b7a815d1b/ico/stars/v1/stars_large_3_half.png", 
+            "id": "taste-my-burger-münchen", 
+            "is_closed": false, 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Augustenstr. 16", 
+                    "Maxvorstadt", 
+                    "80333 München"
+                ], 
+                "geo_accuracy": 9.5, 
+                "neighborhoods": [
+                    "Maxvorstadt"
+                ], 
+                "postal_code": "80333", 
+                "country_code": "DE", 
+                "address": [
+                    "Augustenstr. 16"
+                ], 
+                "coordinate": {
+                    "latitude": 48.1455448352023, 
+                    "longitude": 11.5607188659285
+                }, 
+                "state_code": "BY"
+            }
+        },
+         {
+            "is_claimed": true, 
+            "rating": 4.0, 
+            "mobile_url": "http://m.yelp.de/biz/khorassan-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png", 
+            "review_count": 12, 
+            "name": "Khorassan", 
+            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png", 
+            "url": "http://www.yelp.de/biz/khorassan-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "categories": [
+                [
+                    "Afghanisches Restaurant", 
+                    "afghani"
+                ]
+            ], 
+            "phone": "08930668937", 
+            "snippet_text": "Wir waren mittags da und haben das Hühnchen mit Safranreis, Bitterorangenschalen, Pistazien und Spinat, die gedämpfte Lammkeule mit braunem Basmati,...", 
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/Y8jAcs78P39qek6ROIZJBQ/ms.jpg", 
+            "snippet_image_url": "https://s3-media4.fl.yelpcdn.com/assets/srv0/yelp_styleguide/cc4afe21892e/assets/img/default_avatars/user_medium_square.png", 
+            "display_phone": "+49 89 30668937", 
+            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png", 
+            "id": "khorassan-münchen-2", 
+            "is_closed": false, 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Ungererstr. 56", 
+                    "Münchner Freiheit", 
+                    "80805 München"
+                ], 
+                "geo_accuracy": 9.5, 
+                "neighborhoods": [
+                    "Münchner Freiheit"
+                ], 
+                "postal_code": "80805", 
+                "country_code": "DE", 
+                "address": [
+                    "Ungererstr. 56"
+                ], 
+                "coordinate": {
+                    "latitude": 48.166649, 
+                    "longitude": 11.5907
+                }, 
+                "state_code": "BY"
+            }
+        },
+        {
+            "is_claimed": false, 
+            "rating": 4.0, 
+            "mobile_url": "http://m.yelp.de/biz/sara-restaurant-grill-house-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png", 
+            "review_count": 12, 
+            "name": "Sara Restaurant Grill House", 
+            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png", 
+            "url": "http://www.yelp.de/biz/sara-restaurant-grill-house-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "categories": [
+                [
+                    "Libanesisches Restaurant", 
+                    "lebanese"
+                ]
+            ], 
+            "snippet_text": "Empfehlenswert! Nettes Personal, Leckeres Essen, Take-Away auch möglich. Hab sogar ein Tee noch bekommen:)", 
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/qgnBDxPZ1XhDj1V76Z2gKg/ms.jpg", 
+            "snippet_image_url": "https://s3-media4.fl.yelpcdn.com/assets/srv0/yelp_styleguide/cc4afe21892e/assets/img/default_avatars/user_medium_square.png", 
+            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png", 
+            "id": "sara-restaurant-grill-house-münchen", 
+            "is_closed": false, 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Landwehrstr. 41-42", 
+                    "Ludwigsvorstadt-Isarvorstadt", 
+                    "80336 München"
+                ], 
+                "geo_accuracy": 9.5, 
+                "neighborhoods": [
+                    "Ludwigsvorstadt-Isarvorstadt"
+                ], 
+                "postal_code": "80336", 
+                "country_code": "DE", 
+                "address": [
+                    "Landwehrstr. 41-42"
+                ], 
+                "coordinate": {
+                    "latitude": 48.1364252942045, 
+                    "longitude": 11.559058409346
+                }, 
+                "state_code": "BY"
+            }
+        },
+        {
+            "is_claimed": false, 
+            "rating": 4.0, 
+            "mobile_url": "http://m.yelp.de/biz/istanbul-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png", 
+            "review_count": 12, 
+            "name": "Istanbul", 
+            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png", 
+            "url": "http://www.yelp.de/biz/istanbul-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "categories": [
+                [
+                    "Türkisches Restaurant", 
+                    "turkish"
+                ]
+            ], 
+            "phone": "08954828252", 
+            "snippet_text": "Kann mit gutem Gewissen sagen das Essen schmeckt gut. Das Fleisch ist aus helal schlacht. Die Preise etwas hoch aber qualität hat seinen Preis. Am Hbf/dort...", 
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/FCYCvBCk2L4kvkQ7RLlOlg/ms.jpg", 
+            "snippet_image_url": "https://s3-media4.fl.yelpcdn.com/assets/srv0/yelp_styleguide/cc4afe21892e/assets/img/default_avatars/user_medium_square.png", 
+            "display_phone": "+49 89 54828252", 
+            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png", 
+            "id": "istanbul-münchen-2", 
+            "is_closed": false, 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Landwehrstr. 8", 
+                    "Ludwigsvorstadt-Isarvorstadt", 
+                    "80336 München"
+                ], 
+                "geo_accuracy": 9.5, 
+                "neighborhoods": [
+                    "Ludwigsvorstadt-Isarvorstadt"
+                ], 
+                "postal_code": "80336", 
+                "country_code": "DE", 
+                "address": [
+                    "Landwehrstr. 8"
+                ], 
+                "coordinate": {
+                    "latitude": 48.1364413160461, 
+                    "longitude": 11.5636402911961
+                }, 
+                "state_code": "BY"
+            }
+        },
+        {
+            "is_claimed": false, 
+            "rating": 2.0, 
+            "mobile_url": "http://m.yelp.de/biz/sindbad-kebab-und-grillhaus-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/b561c24f8341/ico/stars/v1/stars_2.png", 
+            "review_count": 7, 
+            "name": "Sindbad Kebab & Grillhaus", 
+            "rating_img_url_small": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/a6210baec261/ico/stars/v1/stars_small_2.png", 
+            "url": "http://www.yelp.de/biz/sindbad-kebab-und-grillhaus-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "categories": [
+                [
+                    "Fast Food", 
+                    "hotdogs"
+                ], 
+                [
+                    "Döner", 
+                    "kebab"
+                ]
+            ], 
+            "snippet_text": "Der Kellner hat uns generell ignoriert (wir sehen nicht arabisch aus). Das Brot mussten wir uns daher selbst holen. Das Döner war ungewürzt (beides: Huhn...", 
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/FhZF20FNTmP-FnO6d8CuJg/ms.jpg", 
+            "snippet_image_url": "https://s3-media4.fl.yelpcdn.com/assets/srv0/yelp_styleguide/cc4afe21892e/assets/img/default_avatars/user_medium_square.png", 
+            "rating_img_url_large": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c00926ee5dcb/ico/stars/v1/stars_large_2.png", 
+            "id": "sindbad-kebab-und-grillhaus-münchen-2", 
+            "is_closed": false, 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Schwanthalerstraße 3-11", 
+                    "Ludwigsvorstadt-Isarvorstadt", 
+                    "80336 München"
+                ], 
+                "geo_accuracy": 9.5, 
+                "neighborhoods": [
+                    "Ludwigsvorstadt-Isarvorstadt"
+                ], 
+                "postal_code": "80336", 
+                "country_code": "DE", 
+                "address": [
+                    "Schwanthalerstraße 3-11"
+                ], 
+                "coordinate": {
+                    "latitude": 48.1374, 
+                    "longitude": 11.5644
+                }, 
+                "state_code": "BY"
+            }
+        },
+        {
+            "is_claimed": false, 
+            "rating": 3.5, 
+            "mobile_url": "http://m.yelp.de/biz/hans-im-glück-münchen-13?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/5ef3eb3cb162/ico/stars/v1/stars_3_half.png", 
+            "review_count": 16, 
+            "name": "Hans Im Glück", 
+            "snippet_image_url": "http://s3-media4.fl.yelpcdn.com/photo/n1pq6-fK3UYP-fbc2TwbNQ/ms.jpg", 
+            "rating_img_url_small": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/2e909d5d3536/ico/stars/v1/stars_small_3_half.png", 
+            "url": "http://www.yelp.de/biz/hans-im-glück-münchen-13?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Sonnenstr. 24 - 26", 
+                    "Ludwigsvorstadt-Isarvorstadt", 
+                    "80331 München"
+                ], 
+                "geo_accuracy": 8.0, 
+                "neighborhoods": [
+                    "Ludwigsvorstadt-Isarvorstadt"
+                ], 
+                "postal_code": "80331", 
+                "country_code": "DE", 
+                "address": [
+                    "Sonnenstr. 24 - 26"
+                ], 
+                "coordinate": {
+                    "latitude": 48.1355, 
+                    "longitude": 11.5648199
+                }, 
+                "state_code": "BY"
+            }, 
+            "phone": "08955999966", 
+            "snippet_text": "Ich war hier nun schön öfters zum Abendessen. Leckeres Essen, tolle Location, nette Bedienung! Einziges Manko: sehr laute Musik", 
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/IdGKW8D5IrvxFrn6PbIcoA/ms.jpg", 
+            "categories": [
+                [
+                    "Burger", 
+                    "burgers"
+                ], 
+                [
+                    "Cocktailbar", 
+                    "cocktailbars"
+                ]
+            ], 
+            "display_phone": "+49 89 55999966", 
+            "rating_img_url_large": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/bd9b7a815d1b/ico/stars/v1/stars_large_3_half.png", 
+            "id": "hans-im-glück-münchen-13", 
+            "is_closed": false, 
+            "distance": 1.5510289541251607
+        },
+        {
+            "is_claimed": false, 
+            "rating": 3.0, 
+            "mobile_url": "http://m.yelp.de/biz/bento-box-münchen-3?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/34bc8086841c/ico/stars/v1/stars_3.png", 
+            "review_count": 80, 
+            "name": "bento box", 
+            "rating_img_url_small": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/902abeed0983/ico/stars/v1/stars_small_3.png", 
+            "url": "http://www.yelp.de/biz/bento-box-münchen-3?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "categories": [
+                [
+                    "Japanisches Restaurant", 
+                    "japanese"
+                ]
+            ], 
+            "phone": "08933036812", 
+            "snippet_text": "Unglaublich leckeres Sushi! Wobei man sagen muss, dass die seperat verstellbaren Sushi Rollen besser schmecken, als die in Menüs beinhalteten. \nMeiner...", 
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/YeqvL44_IYft_9LBb0KvoQ/ms.jpg", 
+            "snippet_image_url": "http://s3-media2.fl.yelpcdn.com/photo/H_0qMN4FX5r2loTNheqryA/ms.jpg", 
+            "display_phone": "+49 89 33036812", 
+            "rating_img_url_large": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/e8b5b79d37ed/ico/stars/v1/stars_large_3.png", 
+            "id": "bento-box-münchen-3", 
+            "is_closed": false, 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Leopoldstr. 42", 
+                    "Schwabing", 
+                    "80802 München"
+                ], 
+                "geo_accuracy": 8.0, 
+                "neighborhoods": [
+                    "Schwabing"
+                ], 
+                "postal_code": "80802", 
+                "country_code": "DE", 
+                "address": [
+                    "Leopoldstr. 42"
+                ], 
+                "coordinate": {
+                    "latitude": 48.1568184, 
+                    "longitude": 11.5848799
+                }, 
+                "state_code": "BY"
+            }
+        },
+        {
+            "is_claimed": false, 
+            "rating": 4.0, 
+            "mobile_url": "http://m.yelp.de/biz/klenze-17-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png", 
+            "review_count": 38, 
+            "name": "Klenze 17", 
+            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png", 
+            "url": "http://www.yelp.de/biz/klenze-17-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "categories": [
+                [
+                    "Kneipe", 
+                    "divebars"
+                ], 
+                [
+                    "Burger", 
+                    "burgers"
+                ], 
+                [
+                    "Deutsches Restaurant", 
+                    "german"
+                ]
+            ], 
+            "phone": "08925544277", 
+            "snippet_text": "Die Klenzestraße ohne das Klenze ist unvorstellbar. \n\nEine tolle Münchner Boazn mit gutem Bier und deftiger Küche. War in der Vergangenheit auch gerne...", 
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/ypfgXxtnDckcUXg_TeHmZQ/ms.jpg", 
+            "snippet_image_url": "http://s3-media1.fl.yelpcdn.com/photo/shiz-r_lsBuPe_TZSfJJTg/ms.jpg", 
+            "display_phone": "+49 89 25544277", 
+            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png", 
+            "id": "klenze-17-münchen", 
+            "is_closed": false, 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Klenzestr. 17", 
+                    "Ludwigsvorstadt-Isarvorstadt", 
+                    "80469 München"
+                ], 
+                "geo_accuracy": 8.0, 
+                "neighborhoods": [
+                    "Ludwigsvorstadt-Isarvorstadt"
+                ], 
+                "postal_code": "80469", 
+                "country_code": "DE", 
+                "address": [
+                    "Klenzestr. 17"
+                ], 
+                "coordinate": {
+                    "latitude": 48.132898, 
+                    "longitude": 11.578312
+                }, 
+                "state_code": "BY"
+            }
+        },
+        {
+            "is_claimed": false, 
+            "rating": 3.0, 
+            "mobile_url": "http://m.yelp.de/biz/sausalitos-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/34bc8086841c/ico/stars/v1/stars_3.png", 
+            "review_count": 97, 
+            "name": "Sausalitos", 
+            "snippet_image_url": "http://s3-media1.fl.yelpcdn.com/photo/ook6F5eL7Gpmw5Wj4Oe_qA/ms.jpg", 
+            "rating_img_url_small": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/902abeed0983/ico/stars/v1/stars_small_3.png", 
+            "url": "http://www.yelp.de/biz/sausalitos-münchen-2?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Tal 16", 
+                    "Altstadt-Lehel", 
+                    "80331 München"
+                ], 
+                "geo_accuracy": 8.0, 
+                "neighborhoods": [
+                    "Altstadt-Lehel"
+                ], 
+                "postal_code": "80331", 
+                "country_code": "DE", 
+                "address": [
+                    "Tal 16"
+                ], 
+                "coordinate": {
+                    "latitude": 48.135871, 
+                    "longitude": 11.578854
+                }, 
+                "state_code": "BY"
+            }, 
+            "phone": "08924295494", 
+            "snippet_text": "Ich war letzte Woche am Samstag mit einer größeren Gruppe dort.\n\nDie Bedienungen waren alle nett und auch sehr schön anzuschauen :-)\nGetränke, Cocktails...", 
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/vvhN2y6ZNmnBpoDAZ3vwzw/ms.jpg", 
+            "categories": [
+                [
+                    "Tex Mex Restaurant", 
+                    "tex-mex"
+                ], 
+                [
+                    "Cocktailbar", 
+                    "cocktailbars"
+                ]
+            ], 
+            "display_phone": "+49 89 24295494", 
+            "rating_img_url_large": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/e8b5b79d37ed/ico/stars/v1/stars_large_3.png", 
+            "id": "sausalitos-münchen-2", 
+            "is_closed": false, 
+            "distance": 1.351801882716994
+        },
+        {
+            "is_claimed": true, 
+            "rating": 4.0, 
+            "mobile_url": "http://m.yelp.de/biz/cafe-fräulein-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png", 
+            "review_count": 63, 
+            "name": "Cafe Fräulein", 
+            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png", 
+            "url": "http://www.yelp.de/biz/cafe-fräulein-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "categories": [
+                [
+                    "Café", 
+                    "cafes"
+                ], 
+                [
+                    "Fondue Restaurant", 
+                    "fondue"
+                ], 
+                [
+                    "Deutsches Restaurant", 
+                    "german"
+                ]
+            ], 
+            "phone": "01776721090", 
+            "snippet_text": "Wir waren heute im Café Fräulein zum Frühstück und es war ganz zauberhaft. Mir als Vintage Fan haben die Retro-Einrichtung und Musik sehr gefallen, auch die...", 
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/IaadBa6Sl9GYHY7TAggWjQ/ms.jpg", 
+            "snippet_image_url": "http://s3-media4.fl.yelpcdn.com/photo/pZLR-8nLs08BJceNLslIDw/ms.jpg", 
+            "display_phone": "+49 177 6721090", 
+            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png", 
+            "id": "cafe-fräulein-münchen", 
+            "is_closed": false, 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Frauenstr. 11", 
+                    "Altstadt-Lehel", 
+                    "80469 München"
+                ], 
+                "geo_accuracy": 8.0, 
+                "neighborhoods": [
+                    "Altstadt-Lehel"
+                ], 
+                "postal_code": "80469", 
+                "country_code": "DE", 
+                "address": [
+                    "Frauenstr. 11"
+                ], 
+                "coordinate": {
+                    "latitude": 48.13461, 
+                    "longitude": 11.57812
+                }, 
+                "state_code": "BY"
+            }
+        },
+        {
+            "is_claimed": false, 
+            "rating": 3.0, 
+            "mobile_url": "http://m.yelp.de/biz/asado-steak-münchen-3?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/34bc8086841c/ico/stars/v1/stars_3.png", 
+            "review_count": 28, 
+            "name": "Asado Steak", 
+            "rating_img_url_small": "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/902abeed0983/ico/stars/v1/stars_small_3.png", 
+            "url": "http://www.yelp.de/biz/asado-steak-münchen-3?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "categories": [
+                [
+                    "Steakhouse", 
+                    "steak"
+                ]
+            ], 
+            "phone": "08931204427", 
+            "snippet_text": "Mein Vater und ich haben diesen Asado Steak ausprobiert, weil er in der Nähe von uns ist, aber Vorallem weil ich ja noch den Gutschein hatte.\nDer Gutschein...", 
+            "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/hDSp8DaKgaHBoLLEiLxtbQ/ms.jpg", 
+            "snippet_image_url": "http://s3-media4.fl.yelpcdn.com/photo/t3VcfjB9bWScGxL5ji8mnw/ms.jpg", 
+            "display_phone": "+49 89 31204427", 
+            "rating_img_url_large": "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/e8b5b79d37ed/ico/stars/v1/stars_large_3.png", 
+            "id": "asado-steak-münchen-3", 
+            "is_closed": false, 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Schleißheimer Str. 415", 
+                    "Hasenbergl-Lerchenau Ost", 
+                    "80935 München"
+                ], 
+                "geo_accuracy": 8.0, 
+                "neighborhoods": [
+                    "Hasenbergl-Lerchenau Ost"
+                ], 
+                "postal_code": "80935", 
+                "country_code": "DE", 
+                "address": [
+                    "Schleißheimer Str. 415"
+                ], 
+                "coordinate": {
+                    "latitude": 48.2043686, 
+                    "longitude": 11.5633602
+                }, 
+                "state_code": "BY"
+            }
+        },
+        {
+            "is_claimed": true, 
+            "rating": 4.0, 
+            "mobile_url": "http://m.yelp.de/biz/pizzesco-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "rating_img_url": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png", 
+            "review_count": 51, 
+            "name": "Pizzesco", 
+            "rating_img_url_small": "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/f62a5be2f902/ico/stars/v1/stars_small_4.png", 
+            "url": "http://www.yelp.de/biz/pizzesco-münchen?utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=TEa3vHyycsk072Q_DSj0IQ", 
+            "categories": [
+                [
+                    "Pizza", 
+                    "pizza"
+                ]
+            ], 
+            "phone": "08967972812", 
+            "snippet_text": "Ciaooooooooooooooo Bella. \n\nSo viel Schönheit kennt einfach keine Grenzen. Ich kann es ja kaum in Worte fassen, weil der Anblick der hübschen Teilchen mir...", 
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/v1VRWUo_HhQ2my5WJhkosA/ms.jpg", 
+            "snippet_image_url": "http://s3-media2.fl.yelpcdn.com/photo/m1hzo1PpV9BJ4cJwKeqB0w/ms.jpg", 
+            "display_phone": "+49 89 67972812", 
+            "rating_img_url_large": "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png", 
+            "id": "pizzesco-münchen", 
+            "is_closed": false, 
+            "location": {
+                "city": "München", 
+                "display_address": [
+                    "Rosenheimer Str. 12", 
+                    "Au-Haidhausen", 
+                    "81669 München"
+                ], 
+                "geo_accuracy": 9.5, 
+                "neighborhoods": [
+                    "Au-Haidhausen"
+                ], 
+                "postal_code": "81669", 
+                "country_code": "DE", 
+                "address": [
+                    "Rosenheimer Str. 12"
+                ], 
+                "coordinate": {
+                    "latitude": 48.1314339, 
+                    "longitude": 11.5894507
+                }, 
+                "state_code": "BY"
+            }
         },
         {
             "is_claimed": true,
