@@ -57,22 +57,8 @@
                             <a href="/select_restaurant/">Select Restaurant</a>
                         {% else %}
                             <a><strike>Select Restaurant</strike></a>
-                            <!--
-                            <li>
-                                {% if menu.group_creation_done == False %}
-                                    <a href="/create_group/">Create Group</a>
-                                {% else %}
-                                    <a><strike>Create Group</strike></a>
-                                    <li>
-                                        {% if menu.group_restaurant_survey_done == False %}
-                                            <a href="/select_group/">Select Group</a>
-                                        {% else %}
-                                            <a><strike>Select Group</strike></a>
-                                        {% endif %}
-                                    </li>
-                                {% endif %}
-                            </li>
-                            -->
+                            <li><a href="/create_group/">Create Group</a></li>
+                            <li><a href="/select_group/">Select Group</a></li>
                         {% endif %}
                     </li>
                 {% endif %}
