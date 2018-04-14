@@ -1,18 +1,29 @@
+# coding=utf-8
+# implements a file-like class, that reads and writes a string buffer (memory files)
 import StringIO
+# provides image class for PIL images and functions like loading and creating pictures
 from PIL import Image
+# imports html forms
 from django import forms
+# single parts of the html forms
 from django.forms import ModelForm, PasswordInput, CharField, ImageField, BooleanField, ChoiceField
 from django.forms.widgets import SelectDateWidget
+# A validator is a callable that takes a value and raises a ValidationError if it doesnt meet some criteria
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from guratorapp.models import Participant, UserSurvey, RestaurantSurvey, GroupRestaurantSurvey
 from django_countries import countries
 
 
+# how the a user is authenticated
 class AuthForm(forms.Form):
     username = CharField(label="Username")
     password = CharField(widget=PasswordInput(), label="Password")
-    
+
+# The clean() method on a Field subclass is responsible for running to_python(), validate(), and run_validators() in the correct order and propagating their errors
+
+
+# users settings
 class PreferenceForm(forms.Form):
     password_new1 = CharField(widget=PasswordInput(), label="New password", required=False)
     password_new2 = CharField(widget=PasswordInput(), label="New password (confirmation)", required=False)
@@ -21,13 +32,11 @@ class PreferenceForm(forms.Form):
     country = ChoiceField(list(countries), label="Country", required=False)
     picture = ImageField(required=False)
     delete_picture = BooleanField(label="Delete profile photo", required=False)
-
     gps_long = CharField(required=False)
     gps_lat = CharField(required=False)
 
     def clean(self):
         cleaned_data = super(PreferenceForm, self).clean()
-
         password_new1 = cleaned_data.get("password_new1")
         password_new2 = cleaned_data.get("password_new2")
         password_old = cleaned_data.get("password_old")
@@ -37,17 +46,16 @@ class PreferenceForm(forms.Form):
         lat = cleaned_data.get("gps_lat")
 
         if password_new1 != password_new2:
-            self.add_error("password_new1", "New passwords do not match!")
+            self.add_error("password_new1", "New passwords need to match!")
 
-        if password_new1 != None and password_old != None and len(password_new1) > 0 and len(password_old) == 0:
+        if password_new1 is not None and password_old is not None and len(password_new1) > 0 and len(password_old) == 0:
             self.add_error("password_old", "Please enter the current password to change it!")
 
-        if email != None:
+        if email is not None:
             try:
                 validate_email(email)
             except ValidationError as e:
                 self.add_error('email', "Please enter a valid e-mail address")
-
 
         try:
             z = float(long)
@@ -59,7 +67,7 @@ class PreferenceForm(forms.Form):
         except ValueError:
             self.add_error("gps_lat", "Wrong format (lat)")
 
-        if self.cleaned_data.get('picture') != None:
+        if self.cleaned_data.get('picture') is not None:
             image_field = self.cleaned_data.get('picture')
             image_file = StringIO.StringIO(image_field.read())
             image = Image.open(image_file)
@@ -72,9 +80,10 @@ class PreferenceForm(forms.Form):
                 image = image.resize((int(w * ratio), int(h * ratio)), Image.ANTIALIAS)
                 image_file = StringIO.StringIO()
                 image.save(image_file, 'JPEG', quality=90)
-
                 image_field.file = image_file
-                
+
+
+# user creation form
 class ParticipantEntryForm(ModelForm):
     password = CharField(widget=PasswordInput(), label="Please choose a password")
     password2 = CharField(widget=PasswordInput(), label="Please confirm the password")
@@ -85,7 +94,7 @@ class ParticipantEntryForm(ModelForm):
         # fields = ['name', 'gender','email', 'email2', 'accepted_terms_conditions','picture']
         fields = ['name', 'country', 'birthdate', 'email', 'email2', 'gender', 'accepted_terms_conditions', 'picture', 'real_name', 'gps_lat', 'gps_long']
         widgets = {
-            'birthdate': SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"), years=range(1930, 2016)),
+            'birthdate': SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"), years=range(1930, 2018)),
         }
 
     def clean(self):
@@ -93,18 +102,14 @@ class ParticipantEntryForm(ModelForm):
         email = cleaned_data.get("email")
         email2 = cleaned_data.get("email2")
         accepted_terms_conditions = cleaned_data.get("accepted_terms_conditions")
-
         password = cleaned_data.get("password")
         password2 = cleaned_data.get("password2")
-
         real_name = cleaned_data.get("real_name")
         gps_lat = cleaned_data.get("gps_lat")
         gps_long = cleaned_data.get("gps_long")
-
         name = cleaned_data.get("name")
         country = cleaned_data.get("country")
         birthdate = cleaned_data.get("birthdate")
-
         # Matriculation Number is not mandatory
         # try:
             # int(matriculation_number) < 10000:
@@ -112,7 +117,7 @@ class ParticipantEntryForm(ModelForm):
         # except:
         #   self.add_error("matriculation_number", "Please add your matriculation number")
          
-        if name != None and len(name) > 0:
+        if name is not None and len(name) > 0:
             name_clean = ''.join(name.split())
 
             if name_clean != name:
@@ -122,52 +127,54 @@ class ParticipantEntryForm(ModelForm):
             except:
                 self.add_error("name", "Please only use ASCII in your username (i.e. no umlauts or other non-standard letters)")
                 
-        if country == None:
+        if country is None:
             self.add_error("country", "Please enter your country")
             
-        if birthdate == None:
+        if birthdate is None:
             self.add_error("birthdate", "Please enter your birthdate")
 
-        if email != None:
+        if email is not None:
             try:
                 validate_email(email)
             except ValidationError as e:
                 self.add_error('email', "Please enter a valid e-mail address")
 
-        if email2 != None:
+        if email2 is not None:
             if email != email2:
                 self.add_error('email', "The email addresses do not match")
 
         if not accepted_terms_conditions:
             self.add_error('accepted_terms_conditions', "Please accept the terms and conditions to proceed")
 
-        if gps_lat != None:
+        if gps_lat is not None:
             try:
                 i = gps_lat.index(".")
             except:
                 success = False
                 self.add_error('gps_lat', "Please provide correct value for latitude in decimal format, e.g. 48.9174128")
-        if gps_long != None:
+
+        if gps_long is not None:
             try:
                 i = gps_long.index(".")
             except:
                 success = False
                 self.add_error('gps_long', "Please provide correct value for longitude in decimal format, e.g. 11.4079934")
 
-        if real_name == None:
+        if real_name is None:
             self.add_error("real_name", "Please provide your real name")
         else:
             if len(real_name) < 3 or real_name.find(" ") == -1:
                 self.add_error("real_name", "Please provide your real name")
 
-        if password != None:
+        if password is not None:
             if len(password) < 4:
                 self.add_error('password', "Please choose a longer password")
-        if password2 != None:
+
+        if password2 is not None:
             if password != password2:
                 self.add_error('password2', "Passwords do not match")
 
-        if self.cleaned_data.get('picture') != None:
+        if self.cleaned_data.get('picture') is not None:
             image_field = self.cleaned_data.get('picture')
             image_file = StringIO.StringIO(image_field.read())
             image = Image.open(image_file)
@@ -185,6 +192,7 @@ class ParticipantEntryForm(ModelForm):
                 
 
 class PersonalityQuestionForm(forms.Form):
+# you can use **kwargs to let your functions take an arbitrary number of keyword arguments ("kwargs" means "keyword arguments")
     def __init__(self, *args, **kwargs):
         try: 
             personality_questions = kwargs.pop('personality_questions')
@@ -199,20 +207,15 @@ class UserSurveyForm(ModelForm):
     class Meta:
         model = UserSurvey
         fields = ['relationship', 'social_capital', 'tie_strength', 'social_similarity', 'social_context_similarity', 'sympathy', 'social_hierarchy', 'domain_expertise']
-            
+
 
 class RestaurantSurveyForm(ModelForm):
     class Meta:
         model = RestaurantSurvey
         fields = ['price', 'taste', 'clumsiness', 'service', 'hippieness', 'location', 'social_overlap', 'other']
-        
+
+
 class GroupRestaurantSurveyForm(ModelForm):
     class Meta:
         model = GroupRestaurantSurvey
         fields = ['price', 'taste', 'clumsiness', 'service', 'hippieness', 'location', 'social_overlap', 'other']
-            
-            
-            
-            
-            
-            

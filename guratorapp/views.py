@@ -1,9 +1,13 @@
+# coding=utf-8
+# Combines a given template with a given context dictionary and returns an HttpResponse object with that rendered text.
 from django.shortcuts import render
 from guratorapp.forms import ParticipantEntryForm, PreferenceForm, AuthForm, \
     PersonalityQuestionForm, UserSurveyForm, RestaurantSurveyForm, GroupRestaurantSurveyForm
 from guratorapp.models import Participant, PersonalityQuestion, \
     ParticipantPersonalityQuestion, UserSurvey, RestaurantSurvey, Group, GroupParticipant, GroupRestaurantSurvey
+# enables the creation of users
 from django.contrib.auth.models import User
+# Keyword argument queries are "and"ed together. If you need to execute more complex queries like "or" you can use Q objects.
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.http import HttpResponseRedirect
@@ -14,13 +18,14 @@ from django.conf import settings as conf_settings
 import json
 
 ############################### Constants #####################################
-NUM_SURVEY = 40
-NUM_RESTAURANT_SURVEY = 15
+NUM_SURVEY = 10
+NUM_RESTAURANT_SURVEY = 1
 MAX_NUM_IN_GROUP = 10000  # Setting a very large number: effectively: a participant can add any number of participants in his group
-MIN_NUM_IN_GROUP = 3
+MIN_NUM_IN_GROUP = 1
 NUM_GROUPS_FOR_PARTICIPANT = 10000  # Setting a very large number: effectively: a participant can be in any number of groups
 
-############################### Utility functions #############################
+
+#   --------------------------- Utility functions ------------------------------ #
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -29,15 +34,18 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
+
 def get_surveyed_participants(participant):
     already_surveyed_participant_ids = UserSurvey.objects.filter(from_participant=participant).values_list('to_participant', flat=True)
     num_remaining = NUM_SURVEY - already_surveyed_participant_ids.count()  # Number of participants that the current participant still needs to do survey for
     return already_surveyed_participant_ids, num_remaining
 
+
 def get_participants_in_the_same_groups(participant):
     group_ids = GroupParticipant.objects.filter(participant=participant).values_list('group', flat=True)
     participant_ids = GroupParticipant.objects.filter(group__in=group_ids).values_list('participant', flat=True).distinct()
     return participant_ids
+
 
 def get_participant_ids_assigned_to_max_num_groups():
     participant_ids = Participant.objects.all().values_list('id', flat=True)
@@ -48,7 +56,8 @@ def get_participant_ids_assigned_to_max_num_groups():
             excluded_ids.append(participant_id)
     pids = participant_ids.exclude(Q(id__in=excluded_ids))
     return pids
-    
+
+
 def get_current_menu_info(request):
     personality_test_done = False
     user_survey_almost_done = False  # Relevant to ProductionPhase3
@@ -89,46 +98,56 @@ def parse_restaurants_json():
         restaurants_dict = json.loads(restaurants_file.read())
     return restaurants_dict["restaurants"]  # returns a list of dictionaries, each of which represents a restaurant
 
+
 def get_restaurant_by_id(restaurants, target_restaurant_id):
     for restaurant in restaurants:
         if restaurant["id"] == target_restaurant_id:
             return restaurant
     return None
 
+
+# all restaurants without the already surveyed
 def get_restaurants(all_restaurants, current_participant):
-    surveyed_restaurant_ids = RestaurantSurvey.objects.filter(participant=current_participant).values_list('restaurant_yelp_id', flat=True)
+    surveyed_restaurant_ids = RestaurantSurvey.objects.filter(participant=current_participant).values_list('restaurant_id', flat=True)
     for restaurant in all_restaurants:
         if restaurant["id"] in surveyed_restaurant_ids:
             all_restaurants.remove(restaurant)
     return all_restaurants, NUM_RESTAURANT_SURVEY - surveyed_restaurant_ids.count()
 
+
+# all restaurants without the already surveyed
 def get_group_restaurants(all_restaurants, current_group):
-    surveyed_restaurant_ids = GroupRestaurantSurvey.objects.filter(group=current_group).values_list('restaurant_yelp_id', flat=True)
+    surveyed_restaurant_ids = GroupRestaurantSurvey.objects.filter(group=current_group).values_list('restaurant_id', flat=True)
     for restaurant in all_restaurants:
         if restaurant["id"] in surveyed_restaurant_ids:
             all_restaurants.remove(restaurant)
     return all_restaurants, NUM_RESTAURANT_SURVEY - surveyed_restaurant_ids.count()    
         
 
-########################## End of Utility functions #############################################################################
-    
+# --------------------------- End of Utility functions --------------------------------------- #
+
 def index(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/home/')
     return render(request, 'guratorapp/index.html')
 
+
 def help_view(request):
-    return render(request, 'guratorapp/help.html', {"menu":get_current_menu_info(request)})
+    return render(request, 'guratorapp/help.html', {"menu": get_current_menu_info(request)})
+
 
 @login_required
 def home(request):
     p = Participant.objects.get(user=request.user)
-    return render(request, 'guratorapp/home.html', {"user":request.user, "participant":p
-                                                     , "menu":get_current_menu_info(request)
+    return render(request, 'guratorapp/home.html', {"user": request.user, "participant": p,
+                                                    "menu": get_current_menu_info(request),
                                                     })
+
+
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/login/')
+
 
 def login_user(request):
     if request.method == "POST":
@@ -149,43 +168,15 @@ def login_user(request):
                 form.add_error("username", "Username and password do not match.")
     else:
         form = AuthForm()
-    return render(request, 'guratorapp/login.html', {"form":form})
+    return render(request, 'guratorapp/login.html', {"form": form})
 
 
 @login_required
 def restaurant_survey(request):
-    restaurants = parse_restaurants_json()
-    if request.method == "POST":
-        form = RestaurantSurveyForm(request.POST)
-        target_restaurant_id = request.POST.get("restaurant_id",)
-        if form.is_valid():
-            cleaned_data = form.cleaned_data
-            restaurant_survey = RestaurantSurvey()
-            restaurant_survey.participant = request.user.participant
-            restaurant_survey.restaurant_yelp_id = target_restaurant_id
-            restaurant_survey.price = cleaned_data["price"]
-            restaurant_survey.taste = cleaned_data["taste"]
-            restaurant_survey.clumsiness = cleaned_data["clumsiness"]
-            restaurant_survey.service = cleaned_data["service"]
-            restaurant_survey.hippieness = cleaned_data["hippieness"]
-            restaurant_survey.location = cleaned_data["location"]
-            restaurant_survey.social_overlap = cleaned_data["social_overlap"]
-            restaurant_survey.other = cleaned_data["other"]
-            restaurant_survey.save()
-            
-            restaurant_survey_count = RestaurantSurvey.objects.filter(participant=request.user.participant).count()
-            if restaurant_survey_count == NUM_RESTAURANT_SURVEY:
-                return HttpResponseRedirect('/home/')
-            else:
-                return HttpResponseRedirect('/select_restaurant/')
-    else:  # GET request        
-        target_restaurant_id = request.GET.get("t", "")
-        
-    target_restaurant = get_restaurant_by_id(restaurants, target_restaurant_id)
-    if target_restaurant == None:
-        return render(request, 'guratorapp/basic_message.html', {"title":"Does not exist", "message":"Couldn't find this restaurant..."})
+    target_restaurant_id = request.GET.get("t", "")
     form = RestaurantSurveyForm()
-    return render(request, 'guratorapp/restaurant_survey.html', {"user": request.user, "form": form, "restaurant": target_restaurant, "menu":get_current_menu_info(request)})
+    return render(request, 'guratorapp/restaurant_survey.html', {"user": request.user, "form": form, "restaurant_id": target_restaurant_id, "menu": get_current_menu_info(request)})
+
 
 @login_required
 def group_restaurant_survey(request):
@@ -221,10 +212,10 @@ def group_restaurant_survey(request):
         
     target_restaurant = get_restaurant_by_id(restaurants, target_restaurant_id)
     group = Group.objects.get(id=group_id)
-    if target_restaurant == None:
-        return render(request, 'guratorapp/basic_message.html', {"title":"Does not exist", "message":"Couldn't find this restaurant..."})
+    if target_restaurant is None:
+        return render(request, 'guratorapp/basic_message.html', {"title": "Does not exist", "message": "Couldn't find this restaurant..."})
     form = GroupRestaurantSurveyForm()
-    return render(request, 'guratorapp/group_restaurant_survey.html', {"user": request.user, "form": form, "restaurant": target_restaurant, "group": group, "menu":get_current_menu_info(request)})
+    return render(request, 'guratorapp/group_restaurant_survey.html', {"user": request.user, "form": form, "restaurant": target_restaurant, "group": group, "menu": get_current_menu_info(request)})
     
 
 @login_required
@@ -241,14 +232,18 @@ def select_group_restaurant(request):
     restaurants, num_remaining_restaurants = get_group_restaurants(all_restaurants, group)
     return render(request, 'guratorapp/select_group_restaurant.html', {"user": request.user, "restaurants": restaurants, "group":group, "num_remaining_restaurants": num_remaining_restaurants, "menu":get_current_menu_info(request)})
 
+
 @login_required
 def select_restaurant(request):
-    all_restaurants = parse_restaurants_json()
-    restaurants, num_remaining_restaurants = get_restaurants(all_restaurants, request.user.participant)
+    # all_restaurants = parse_restaurants_json()
+    # restaurants, num_remaining_restaurants = get_restaurants(all_restaurants, request.user.participant)
+    survey_count = RestaurantSurvey.objects.filter(participant=request.user.participant).count()
+    num_remaining_restaurants = NUM_RESTAURANT_SURVEY - survey_count
     if request.method == "POST":
-        target_restaurant_id = request.POST.get("submitBtn", "")
+        target_restaurant_id = request.POST.get("submitBtn")
         return HttpResponseRedirect('/restaurant_survey/?t=' + target_restaurant_id)
-    return render(request, 'guratorapp/select_restaurant.html', {"user": request.user, "restaurants": restaurants, "num_remaining_restaurants": num_remaining_restaurants, "menu":get_current_menu_info(request)})
+    return render(request, 'guratorapp/select_restaurant.html', {"user": request.user, "num_remaining_restaurants": num_remaining_restaurants, "menu": get_current_menu_info(request)})
+
 
 @login_required
 def user_survey(request):
@@ -281,7 +276,8 @@ def user_survey(request):
         
     target_participant = Participant.objects.get(id=target_participant_id)
     form = UserSurveyForm()
-    return render(request, 'guratorapp/user_survey.html', {"user": request.user, "form": form, "target_participant": target_participant, "menu":get_current_menu_info(request)})
+    return render(request, 'guratorapp/user_survey.html', {"user": request.user, "form": form, "target_participant": target_participant, "menu": get_current_menu_info(request)})
+
 
 @login_required
 def select_group(request):
@@ -298,7 +294,8 @@ def select_group(request):
     if request.method == "POST":
         group_id = request.POST.get("submitBtn", "")
         return HttpResponseRedirect('/select_group_restaurant/?g=' + group_id)
-    return render(request, 'guratorapp/select_group.html', {"user": request.user, "groups": remaining_groups, "menu":get_current_menu_info(request)})
+    return render(request, 'guratorapp/select_group.html', {"user": request.user, "groups": remaining_groups, "menu": get_current_menu_info(request)})
+
 
 @login_required
 def select_user(request):
@@ -308,7 +305,8 @@ def select_user(request):
     if request.method == "POST":
         target_participant_id = request.POST.get("submitBtn", "")
         return HttpResponseRedirect('/user_survey/?t=' + target_participant_id)
-    return render(request, 'guratorapp/select_user.html', {"user": request.user, "target_participants": target_participants, "num_remaining": num_remaining, "menu":get_current_menu_info(request)})
+    return render(request, 'guratorapp/select_user.html', {"user": request.user, "target_participants": target_participants, "num_remaining": num_remaining, "menu": get_current_menu_info(request)})
+
 
 @login_required
 def create_group(request):
@@ -343,8 +341,9 @@ def create_group(request):
     participants_in_max_num_groups = get_participant_ids_assigned_to_max_num_groups() 
     target_participants = Participant.objects.exclude(Q(id=participant.id) | Q(id__in=participant_ids_in_same_groups) | Q(id__in=participants_in_max_num_groups))  # Relaxing the conditions: making it possible to add participants to the group even if you didn't survey them
     # target_participants = surveyed_participants.exclude(Q(id__in=participant_ids_in_same_groups) | Q(id__id=participants_in_max_num_groups))
-    return render(request, 'guratorapp/create_group.html', {"user": request.user, "target_participants": target_participants, "min_participants_in_group": MIN_NUM_IN_GROUP, "max_participants_in_group": MAX_NUM_IN_GROUP, "num_remaining": num_remaining, "menu":get_current_menu_info(request)})
-        
+    return render(request, 'guratorapp/create_group.html', {"user": request.user, "target_participants": target_participants, "min_participants_in_group": MIN_NUM_IN_GROUP, "max_participants_in_group": MAX_NUM_IN_GROUP, "num_remaining": num_remaining, "menu": get_current_menu_info(request)})
+
+
 @login_required
 def personality_test(request):
     if request.method == "POST":
@@ -353,9 +352,43 @@ def personality_test(request):
         if form.is_valid():
             cleaned_data = form.cleaned_data
             participant = request.user.participant
+            # personality variables
+            competing = 0
+            cooperating = 0
+            compromising = 0
+            avoiding = 0
+            accommodating = 0
             for _id, answer in cleaned_data.items():
                 ppq = ParticipantPersonalityQuestion(participant=participant, personality_question=personality_questions.get(id=int(_id)), answer=answer)
                 ppq.save()
+                # my code
+                if int(_id) == 3 and answer == 'A' or int(_id) == 8 and answer == 'A'or int(_id) == 10 and answer == 'A' or int(_id) == 17 and answer == 'A' or int(_id) == 25 and answer == 'A' or int(_id) == 28 and answer == 'A':
+                    competing += 1
+                if int(_id) == 6 and answer == 'B' or int(_id) == 9 and answer == 'B' or int(_id) == 13 and answer == 'B' or int(_id) == 14 and answer == 'B' or int(_id) == 16 and answer == 'B' or int(_id) == 22 and answer == 'B':
+                    competing += 1
+                if int(_id) == 5 and answer == 'A' or int(_id) == 11 and answer == 'A' or int(_id) == 14 and answer == 'A' or int(_id) == 19 and answer == 'A' or int(_id) == 20 and answer == 'A' or int(_id) == 23 and answer == 'A':
+                    cooperating += 1
+                if int(_id) == 2 and answer == 'B' or int(_id) == 8 and answer == 'B' or int(_id) == 21 and answer == 'B' or int(_id) == 26 and answer == 'B' or int(_id) == 28 and answer == 'B' or int(_id) == 30 and answer == 'B':
+                    cooperating += 1
+                if int(_id) == 2 and answer == 'A' or int(_id) == 4 and answer == 'A' or int(_id) == 13 and answer == 'A' or int(_id) == 22 and answer == 'A' or int(_id) == 26 and answer == 'A' or int(_id) == 29 and answer == 'A':
+                    compromising += 1
+                if int(_id) == 7 and answer == 'B' or int(_id) == 10 and answer == 'B' or int(_id) == 12 and answer == 'B' or int(_id) == 18 and answer == 'B' or int(_id) == 20 and answer == 'B' or int(_id) == 24 and answer == 'B':
+                    compromising += 1
+                if int(_id) == 1 and answer == 'A' or int(_id) == 6 and answer == 'A' or int(_id) == 7 and answer == 'A' or int(_id) == 9 and answer == 'A' or int(_id) == 12 and answer == 'A' or int(_id) == 27 and answer == 'A':
+                    avoiding += 1
+                if int(_id) == 5 and answer == 'B' or int(_id) == 15 and answer == 'B' or int(_id) == 17 and answer == 'B' or int(_id) == 19 and answer == 'B' or int(_id) == 23 and answer == 'B' or int(_id) == 29 and answer == 'B':
+                    avoiding += 1
+                if int(_id) == 15 and answer == 'A' or int(_id) == 16 and answer == 'A' or int(_id) == 18 and answer == 'A' or int(_id) == 21 and answer == 'A' or int(_id) == 24 and answer == 'A' or int(_id) == 30 and answer == 'A':
+                    accommodating += 1
+                if int(_id) == 1 and answer == 'B' or int(_id) == 3 and answer == 'B' or int(_id) == 4 and answer == 'B' or int(_id) == 11 and answer == 'B' or int(_id) == 25 and answer == 'B' or int(_id) == 27 and answer == 'B':
+                    accommodating += 1
+
+            participant.personality_competing = competing
+            participant.personality_cooperating = cooperating
+            participant.personality_compromising = compromising
+            participant.personality_avoiding = avoiding
+            participant.personality_accommodating = accommodating
+            # end of my code
             participant.personality_test_done = True
             participant.save()
             return HttpResponseRedirect('/home/')
@@ -363,8 +396,9 @@ def personality_test(request):
     else:  # GET
         questions = PersonalityQuestion.objects.all()
         form = PersonalityQuestionForm(personality_questions=questions)
-    return render(request, 'guratorapp/personality_test.html', {"user": request.user, "form": form, "menu":get_current_menu_info(request)})
-    
+    return render(request, 'guratorapp/personality_test.html', {"user": request.user, "form": form, "menu": get_current_menu_info(request)})
+
+
 @login_required
 def settings(request):
     if request.method == "POST":
@@ -397,7 +431,7 @@ def settings(request):
                         request.user.participant.picture = ""
                         request.user.participant.save()
                     # save the great pic
-                    if form.cleaned_data['picture'] != None:
+                    if form.cleaned_data['picture'] is not None:
                         request.user.participant.picture = form.cleaned_data['picture']
                         request.user.participant.save()
 
@@ -449,7 +483,7 @@ def start(request):
                 p.real_name = form.cleaned_data["real_name"]
                 p.gps_lat = form.cleaned_data["gps_lat"]
                 p.gps_long = form.cleaned_data["gps_long"]
-                if form.cleaned_data["matriculation_number"] != None:
+                if form.cleaned_data["matriculation_number"] is not None:
                     p.matriculation_number = form.cleaned_data["matriculation_number"]
                 p.save()
 
@@ -464,6 +498,7 @@ def start(request):
 
     return render(request, 'guratorapp/participant.html', {"user":request.user, "form":form})
 
+
 # Handles Ajax call
 def check_register_input(request):
     if request.method == "POST":
@@ -477,10 +512,11 @@ def check_register_input(request):
         return JsonResponse(resp)
     else:
         return render(request, 'guratorapp/basic_message.html',
-                      {"title":"Forbidden", "message":"You are not allowed to access this content."
-                        , "menu":get_current_menu_info(request)
+                      {"title": "Forbidden", "message": "You are not allowed to access this content."
+                        , "menu": get_current_menu_info(request),
                         })
-        
+
+
 def image_connector(request):
     from guratorapp.templatetags import extras
 
@@ -494,7 +530,6 @@ def image_connector(request):
     if len(u) > 0:
         x = u[0]
         # print u[0].picture.name
-
         return HttpResponse(extras.get_image_path(x.picture.name))
     else:
         return HttpResponse(HttpResponse(extras.get_image_path("")))
