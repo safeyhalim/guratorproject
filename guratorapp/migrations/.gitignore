@@ -12,3 +12,4 @@
 /0012_participant_groups.pyc
 /0013_grouprestaurantsurvey.pyc
 /__init__.pyc
+*.pyc

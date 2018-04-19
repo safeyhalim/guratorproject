@@ -5,4 +5,5 @@
 /models.pyc
 /views.pyc
 /uploads/img/*
+*.pyc
 
