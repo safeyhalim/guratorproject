@@ -19,9 +19,9 @@ import json
 
 ############################### Constants #####################################
 NUM_SURVEY = 10
-NUM_RESTAURANT_SURVEY = 1
+NUM_RESTAURANT_SURVEY = 10
 MAX_NUM_IN_GROUP = 10000  # Setting a very large number: effectively: a participant can add any number of participants in his group
-MIN_NUM_IN_GROUP = 1
+MIN_NUM_IN_GROUP = 0
 NUM_GROUPS_FOR_PARTICIPANT = 10000  # Setting a very large number: effectively: a participant can be in any number of groups
 
 
@@ -173,18 +173,41 @@ def login_user(request):
 
 @login_required
 def restaurant_survey(request):
-    target_restaurant_id = request.GET.get("t", "")
+    if request.method == "POST":
+        form = RestaurantSurveyForm(request.POST)
+        target_restaurant_id = request.POST.get("restaurant_id",)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            restaurant_survey = RestaurantSurvey()
+            restaurant_survey.participant = request.user.participant
+            restaurant_survey.restaurant_yelp_id = target_restaurant_id
+            restaurant_survey.price = cleaned_data["price"]
+            restaurant_survey.taste = cleaned_data["taste"]
+            restaurant_survey.clumsiness = cleaned_data["clumsiness"]
+            restaurant_survey.service = cleaned_data["service"]
+            restaurant_survey.hippieness = cleaned_data["hippieness"]
+            restaurant_survey.location = cleaned_data["location"]
+            restaurant_survey.social_overlap = cleaned_data["social_overlap"]
+            restaurant_survey.other = cleaned_data["other"]
+            restaurant_survey.save()
+
+            restaurant_survey_count = RestaurantSurvey.objects.filter(participant=request.user.participant).count()
+            if restaurant_survey_count == NUM_RESTAURANT_SURVEY:
+                return HttpResponseRedirect('/home/')
+            else:
+                return HttpResponseRedirect('/select_restaurant/')
+    else:  # GET request
+        target_restaurant_id = request.GET.get("t", "")
     form = RestaurantSurveyForm()
     return render(request, 'guratorapp/restaurant_survey.html', {"user": request.user, "form": form, "restaurant_id": target_restaurant_id, "menu": get_current_menu_info(request)})
 
 
 @login_required
 def group_restaurant_survey(request):
-    restaurants = parse_restaurants_json()
     if request.method == "POST":
         form = GroupRestaurantSurveyForm(request.POST)
-        target_restaurant_id = request.POST.get("restaurant_id", "")
         group_id = request.POST.get("group_id", "")
+        target_restaurant_id = request.POST.get("restaurant_id", "")
         group = Group.objects.get(id=group_id)
         if form.is_valid():
             cleaned_data = form.cleaned_data
@@ -200,37 +223,35 @@ def group_restaurant_survey(request):
             group_restaurant_survey.social_overlap = cleaned_data["social_overlap"]
             group_restaurant_survey.other = cleaned_data["other"]
             group_restaurant_survey.save()
-            
+
             group_restaurant_survey_count = GroupRestaurantSurvey.objects.filter(group=group).count()
             if group_restaurant_survey_count == NUM_RESTAURANT_SURVEY:
                 return HttpResponseRedirect('/home/')
             else:
                 return HttpResponseRedirect('/select_group_restaurant/?g=' + str(group.id))
-    else:  # GET request        
-        target_restaurant_id = request.GET.get("t", "")
+    else:
         group_id = request.GET.get("g", "")
-        
-    target_restaurant = get_restaurant_by_id(restaurants, target_restaurant_id)
+        target_restaurant_id = request.GET.get("t", "")
     group = Group.objects.get(id=group_id)
-    if target_restaurant is None:
-        return render(request, 'guratorapp/basic_message.html', {"title": "Does not exist", "message": "Couldn't find this restaurant..."})
     form = GroupRestaurantSurveyForm()
-    return render(request, 'guratorapp/group_restaurant_survey.html', {"user": request.user, "form": form, "restaurant": target_restaurant, "group": group, "menu": get_current_menu_info(request)})
+    return render(request, 'guratorapp/group_restaurant_survey.html', {"user": request.user, "form": form, "restaurant_id": target_restaurant_id, "group": group, "menu": get_current_menu_info(request)})
     
 
 @login_required
 def select_group_restaurant(request):
     if request.method == "POST":
-        group_id = request.POST.get("group_id", "")
-        target_restaurant_id = request.POST.get("submitBtn", "")
+        group_id = request.POST.get("group_id")
+        target_restaurant_id = request.POST.get("submitBtn")
         return HttpResponseRedirect('/group_restaurant_survey/?t=' + target_restaurant_id + '&g=' + group_id)
     else:  # GET request
         group_id = request.GET.get("g", "")
     
     group = Group.objects.get(id=group_id)
-    all_restaurants = parse_restaurants_json()
-    restaurants, num_remaining_restaurants = get_group_restaurants(all_restaurants, group)
-    return render(request, 'guratorapp/select_group_restaurant.html', {"user": request.user, "restaurants": restaurants, "group":group, "num_remaining_restaurants": num_remaining_restaurants, "menu":get_current_menu_info(request)})
+    # all_restaurants = parse_restaurants_json()
+    # restaurants, num_remaining_restaurants = get_group_restaurants(all_restaurants, group)
+    surveyed_count = GroupRestaurantSurvey.objects.filter(group=group).count()
+    num_remaining_restaurants = NUM_RESTAURANT_SURVEY - surveyed_count
+    return render(request, 'guratorapp/select_group_restaurant.html', {"user": request.user, "group": group, "num_remaining_restaurants": num_remaining_restaurants, "menu": get_current_menu_info(request)})
 
 
 @login_required
@@ -241,6 +262,8 @@ def select_restaurant(request):
     num_remaining_restaurants = NUM_RESTAURANT_SURVEY - survey_count
     if request.method == "POST":
         target_restaurant_id = request.POST.get("submitBtn")
+        if target_restaurant_id is None:
+            return HttpResponseRedirect('/home/')
         return HttpResponseRedirect('/restaurant_survey/?t=' + target_restaurant_id)
     return render(request, 'guratorapp/select_restaurant.html', {"user": request.user, "num_remaining_restaurants": num_remaining_restaurants, "menu": get_current_menu_info(request)})
 

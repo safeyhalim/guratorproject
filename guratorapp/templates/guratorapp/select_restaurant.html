@@ -6,238 +6,202 @@
 {% block body %}
 
 <html>
-<head>
-
-<h1>Review restaurant</h1>
-
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjsPHPtpe4BK-XRsbnguTa2W3XTWhTOdc&libraries=places"></script>
-
-<form action="/select_restaurant/" method="POST">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
-    <p>
-        <b>You still have to review {{num_remaining_restaurants}} restaurants!</b>
-    </p>
-
-    <style>
-        .controls {
-            margin-top: 10px;
-            border: 1px solid transparent;
-            border-radius: 2px 0 0 2px;
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            height: 32px;
-            outline: none;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      }
-
-
-        #pac-input {
-            background-color: #fff;
-            font-family: Roboto;
-            font-size: 15px;
-            font-weight: 300;
-            margin-left: 12px;
-            padding: 0 11px 0 13px;
-            text-overflow: ellipsis;
-            width: 300px;
-        }
-
-        #pac-input:focus {
-            border-color: #4d90fe;
-        }
-
-    </style>
-
-</p>
-
-<div id="googleMap" style="width:100%;height:600px;"></div>
-
-    <script>
-        var infowindow;
-        var map;
-        var markers = [];
-        function initMap() {
-            var munich = new google.maps.LatLng(48.137154, 11.576124);
-            var mapProp= {
-                center:munich,
-                zoom:15};
-            map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-
-            var input = document.getElementById('pac-input');
-            var searchBox = new google.maps.places.SearchBox(input);
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-            infowindow = new google.maps.InfoWindow();
-            var restaurant = new google.maps.places.PlacesService(map);
-            restaurant.nearbySearch({
-                location: munich,
-                radius: 1000,
-                type: ['restaurant']
-                }, callback);
-
-            var bar = new google.maps.places.PlacesService(map);
-            bar.nearbySearch({
-                location: munich,
-                radius: 1000,
-                type: ['bar']
-                }, callback);
-
-            var delivery = new google.maps.places.PlacesService(map);
-            delivery.nearbySearch({
-                location: munich,
-                radius: 1000,
-                type: ['meal_delivery']
-                }, callback);
-
-            var takeaway = new google.maps.places.PlacesService(map);
-            takeaway.nearbySearch({
-                location: munich,
-                radius: 1000,
-                type: ['meal_takeaway']
-                }, callback);
-
-            var cafe = new google.maps.places.PlacesService(map);
-            delivery.nearbySearch({
-                location: place.geometry.location,
-                radius: 1000,
-                type: ['cafe']
-                }, callback);
-
-            map.addListener('bounds_changed', function() {
-                searchBox.setBounds(map.getBounds());
-            });
-
-            searchBox.addListener('places_changed', function() {
-                var places = searchBox.getPlaces();
-                if (places.length == 0) {
-                    return;
+    <head>
+        <form action="/select_restaurant/" method="POST">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+        <h1> Restaurant Review </h1>
+        <font color="blue">
+            Select restaurant to review...
+        </font>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjsPHPtpe4BK-XRsbnguTa2W3XTWhTOdc&libraries=places"></script>
+            <p>
+                <b> You still have to review {{ num_remaining_restaurants }} restaurants! </b>
+            </p>
+            <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+            <meta charset="utf-8">
+            <style>
+                .controls {
+                    margin-top: 10px;
+                    border: 1px solid transparent;
+                    border-radius: 2px 0 0 2px;
+                    box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    height: 32px;
+                    outline: none;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
                 }
+                #pac-input {
+                    background-color: #fff;
+                    font-family: Roboto;
+                    font-size: 15px;
+                    font-weight: 300;
+                    margin-left: 12px;
+                    padding: 0 11px 0 13px;
+                    text-overflow: ellipsis;
+                    width: 300px;
+                }
+                #pac-input:focus {
+                    border-color: #4d90fe;
+                }
+            </style>
+            <div id="googlemap" style="width:100%;height:600px;"></div>
+            <script>
+            var map;
+            var infowindow;
+            var markers = [];
+            function initMap() {
+                var munich = {lat: 48.137154, lng: 11.576124};
 
-                removeMarkers();
-
-                var bounds = new google.maps.LatLngBounds();
-                places.forEach(function(place) {
-                    if (!place.geometry) {
-                      console.log("Returned place contains no geometry");
-                      return;
-                    }
-                    infowindow = new google.maps.InfoWindow();
-                    var restaurant = new google.maps.places.PlacesService(map);
-                    restaurant.nearbySearch({
-                        location: place.geometry.location,
-                        radius: 1000,
-                        type: ['restaurant']
-                    }, callback);
-
-                    var bar = new google.maps.places.PlacesService(map);
-                    bar.nearbySearch({
-                        location: place.geometry.location,
-                        radius: 1000,
-                        type: ['bar']
-                    }, callback);
-
-                    var delivery = new google.maps.places.PlacesService(map);
-                    delivery.nearbySearch({
-                        location: place.geometry.location,
-                        radius: 1000,
-                        type: ['meal_delivery']
-                    }, callback);
-
-                    var takeaway = new google.maps.places.PlacesService(map);
-                    takeaway.nearbySearch({
-                        location: place.geometry.location,
-                        radius: 1000,
-                        type: ['meal_takeaway']
-                    }, callback);
-
-                    var cafe = new google.maps.places.PlacesService(map);
-                    delivery.nearbySearch({
-                        location: place.geometry.location,
-                        radius: 1000,
-                        type: ['cafe']
-                    }, callback);
-
-                    if (place.geometry.viewport) {
-                        bounds.union(place.geometry.viewport);
-                    } else {
-                        bounds.extend(place.geometry.location);
-                    }
+                map = new google.maps.Map(document.getElementById('googlemap'), {
+                    center: munich,
+                    zoom: 15
                 });
-                map.fitBounds(bounds)
-            });
-        }
 
-        function createMarker(place){
-            var placeLoc = place.geometry.location;
-            var marker = new google.maps.Marker({
-                position: place.geometry.location,
-                map: map,
-                title: place.name
-            });
-            markers.push(marker);
-            google.maps.event.addListener(marker, 'click', function() {
-                infowindow.setContent(
-                    '<h2>' + place.name + '</h2><br>' +
-                    '<button type="submit" name="submitBtn" value="' + place.place_id + '">' + ' Review ' + '</button>'
-                    );
-                infowindow.open(map, this);
-            });
-        }
+                infowindow = new google.maps.InfoWindow();
+                var restaurants = new google.maps.places.PlacesService(map);
+                restaurants.nearbySearch({
+                    location: munich,
+                    radius: 1000,
+                    type: ['restaurant']
+                }, callback);
 
-        function removeMarkers(){
-            for(i=0; i<markers.length; i++){
-                markers[i].setMap(null);
+                var bars = new google.maps.places.PlacesService(map);
+                bars.nearbySearch({
+                    location: munich,
+                    radius: 1000,
+                    type: ['bar']
+                }, callback);
+
+                var cafes = new google.maps.places.PlacesService(map);
+                restaurants.nearbySearch({
+                    location: munich,
+                    radius: 1000,
+                    type: ['cafe']
+                }, callback);
+
+                var deliveries = new google.maps.places.PlacesService(map);
+                deliveries.nearbySearch({
+                    location: munich,
+                    radius: 1000,
+                    type: ['meal_delivery']
+                }, callback);
+
+                var takeaways = new google.maps.places.PlacesService(map);
+                takeaways.nearbySearch({
+                    location: munich,
+                    radius: 1000,
+                    type: ['meal_takeaway']
+                }, callback);
+
+                var input = document.getElementById('pac-input');
+                var searchBox = new google.maps.places.SearchBox(input);
+                map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+                map.addListener('bounds_changed', function() {
+                    searchBox.setBounds(map.getBounds());
+                });
+
+                searchBox.addListener('places_changed', function() {
+                    var places = searchBox.getPlaces();
+                    if (places.length == 0) {
+                        return;
+                    }
+
+                    removeMarkers();
+                    clearMarkers();
+                    markers = [];
+
+                    var bounds = new google.maps.LatLngBounds();
+                    places.forEach(function(place) {
+                        if (!place.geometry) {
+                            console.log("Returned place contains no geometry");
+                            return;
+                        }
+                        if (place.geometry.viewport) {
+                            bounds.union(place.geometry.viewport);
+                        } else {
+                            bounds.extend(place.geometry.location);
+                        }
+                        infowindow = new google.maps.InfoWindow();
+                        var restaurantsnew = new google.maps.places.PlacesService(map);
+                        restaurantsnew.nearbySearch({
+                            location: place.geometry.location,
+                            radius: 1000,
+                            type: ['restaurant']
+                        }, callback);
+
+                        var barsnew = new google.maps.places.PlacesService(map);
+                        barsnew.nearbySearch({
+                            location: place.geometry.location,
+                            radius: 1000,
+                            type: ['bar']
+                        }, callback);
+
+                        var cafesnew = new google.maps.places.PlacesService(map);
+                        cafesnew.nearbySearch({
+                            location: place.geometry.location,
+                            radius: 1000,
+                            type: ['cafe']
+                        }, callback);
+
+                        var deliveriesnew = new google.maps.places.PlacesService(map);
+                        deliveriesnew.nearbySearch({
+                            location: place.geometry.location,
+                            radius: 1000,
+                            type: ['meal_delivery']
+                        }, callback);
+
+                        var takeawaysnew = new google.maps.places.PlacesService(map);
+                        takeawaysnew.nearbySearch({
+                            location: place.geometry.location,
+                            radius: 1000,
+                            type: ['meal_takeaway']
+                        }, callback);
+
+                    });
+                    map.fitBounds(bounds);
+
+                });
             }
-        }
 
-        function callback(results, status) {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
-          }
-        }
-      }
-    </script>
-</head>
-<body>
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <div id="map"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjsPHPtpe4BK-XRsbnguTa2W3XTWhTOdc&libraries=places&callback=initMap" async defer></script>
-</p>
-</body>
-</form>
+            function callback(results, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    for (var i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
+                    }
+                }
+            }
+            function createMarker(place) {
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                });
+                markers.push(marker);
+
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.setContent(
+                        '<h2>' + place.name + '</h2>' +
+                        '<button type="submit" name="submitBtn" value="' + place.id + '"> Review </button>'
+                    );
+                    infowindow.open(map, this);
+                });
+            }
+
+            function removeMarkers(){
+                for(i=0; i<markers.length; i++){
+                    markers[i].setMap(null);
+                }
+            }
+
+            </script>
+    </form>
+    </head>
+    <body>
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+        <div id="map"></div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjsPHPtpe4BK-XRsbnguTa2W3XTWhTOdc&libraries=places&callback=initMap" async defer></script>
+    </body>
 </html>
 
-<!--
-</p>
-<form action="/select_restaurant/" method="POST">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
-    <p>
-        <b>You still have to review {{num_remaining_restaurants}} restaurants!</b>
-    </p>
-    <table class="real">
-        <tbody>
-        {% for restaurant in restaurants %}
-            <tr>
-                <td colspan="2">
-                    <label>{{forloop.counter}}</label>
-                </td>
-                 <td colspan="4">
-                    <img width="70" height="70" src={{restaurant.image_url}}>
-                </td>
-                <td colspan="4">
-                    <label>{{restaurant.name}}</label>
-                </td>
-                <td colspan="4">
-                    <button type="submit" name="submitBtn" value="{{restaurant.id}}"> Review restaurant</button>
-                </td>
-                <td class="error">{{ restaurant.errors.as_text }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</form>
-{%  endblock %}
--->
+{% endblock %}

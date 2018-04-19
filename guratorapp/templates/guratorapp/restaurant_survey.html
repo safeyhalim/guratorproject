@@ -61,10 +61,7 @@
 
 {%  endblock %}
 
-<script>
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjsPHPtpe4BK-XRsbnguTa2W3XTWhTOdc&libraries=place async defer>
-    var details = new google.maps.place.PlaceDetailsRequest({{restaurant_id}})
-</script>
+
 
 {%  block body %}
 
@@ -83,7 +80,7 @@
                 <tr>
                     <td colspan="4">
                         <label> {{restaurant_id}} </label>
-                        <input type="hidden" name="restaurant_id" value="{{restaurant.id}}">
+                        <input type="hidden" name="restaurant_id" value="{{restaurant_id}}">
                     </td>
                 </tr>
                 <tr>
