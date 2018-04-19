@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% extends "guratorapp/base.html" %}
 {% load extras %}
-{% block title %} Select User {% endblock%}
+{% block title %} Create a Group of Participants {% endblock%}
 {% block script%}
 $(function() {
     $('input[type=checkbox]').change(function(e){
@@ -25,8 +25,8 @@ $(function() {
         if($('#group_name_id').val() == ""){
             $('#group_name_id')[0].className = "error";
             return false;
-        } else if ($('input[type=checkbox]:checked').length < {{max_participants_in_group}}){
-            $('#error_message_id').html("Error: Please select " + {{max_participants_in_group}} + " participants!");
+        } else if ($('input[type=checkbox]:checked').length < {{min_participants_in_group}}){
+            $('#error_message_id').html("Error: Please select at least" + {{min_participants_in_group}} + " participants!");
             return false;
         } else {
             return true;
@@ -36,18 +36,18 @@ $(function() {
 
 {% endblock %}
 {%  block body %}
-<h1> Select User for Test</h1>
+<h1> Create a Group</h1>
 <font color="blue">
-Create a group. WARNING:
+Create a group of participants by entering a group name, and select some participants to be members in this group. You are a member in this group by default.
 </font>
 </p>
 <div style="color:red;" id="error_message_id"></div>
 <form id="form_id" action="/create_group/" method="POST">
     {% csrf_token %}
     {{ form.non_field_errors }}
-    <p>
+    <!--<p>
         <b>You still can create {{num_remaining}} groups!</b>
-    </p>
+    </p>-->
     <table class="real">
         <tbody>
         <tr>
@@ -64,7 +64,7 @@ Create a group. WARNING:
                     <img width="70" height="70" src={{target_participant.picture.name|get_image_path}}>
                 </td>
                 <td colspan="4">
-                    <label>{{target_participant.name}}</label>
+                    <label>{{target_participant.real_name}}</label>
                 </td>
                 <td colspan="4">
                     <input class="single-checkbox" type="checkbox" name="participant_{{target_participant.id}}" />

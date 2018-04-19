@@ -14,10 +14,11 @@ from django.conf import settings as conf_settings
 import json
 
 ############################### Constants #####################################
-NUM_SURVEY = 4
-NUM_RESTAURANT_SURVEY = 3
-MAX_NUM_IN_GROUP = 2
-NUM_GROUPS_FOR_PARTICIPANT = 2
+NUM_SURVEY = 40
+NUM_RESTAURANT_SURVEY = 15
+MAX_NUM_IN_GROUP = 10000  # Setting a very large number: effectively: a participant can add any number of participants in his group
+MIN_NUM_IN_GROUP = 3
+NUM_GROUPS_FOR_PARTICIPANT = 10000  # Setting a very large number: effectively: a participant can be in any number of groups
 
 ############################### Utility functions #############################
 def get_client_ip(request):
@@ -35,36 +36,50 @@ def get_surveyed_participants(participant):
 
 def get_participants_in_the_same_groups(participant):
     group_ids = GroupParticipant.objects.filter(participant=participant).values_list('group', flat=True)
-    participant_ids = GroupParticipant.objects.filter(group__in=group_ids).values_list('participant', flat=True)
+    participant_ids = GroupParticipant.objects.filter(group__in=group_ids).values_list('participant', flat=True).distinct()
     return participant_ids
+
+def get_participant_ids_assigned_to_max_num_groups():
+    participant_ids = Participant.objects.all().values_list('id', flat=True)
+    excluded_ids = []
+    for participant_id in participant_ids:
+        num_groups = GroupParticipant.objects.filter(participant=participant_id).count()
+        if num_groups < NUM_GROUPS_FOR_PARTICIPANT:
+            excluded_ids.append(participant_id)
+    pids = participant_ids.exclude(Q(id__in=excluded_ids))
+    return pids
     
 def get_current_menu_info(request):
     personality_test_done = False
-    user_survey_done = False
+    user_survey_almost_done = False  # Relevant to ProductionPhase3
+    user_survey_done = False 
     restaurant_survey_done = False
-    group_creation_done = False
+    # group_creation_done = False
     group_restaurant_survey_done = True
     if request.user.is_authenticated():
         if request.user.participant.personality_test_done == True:
             personality_test_done = True
             _, num_remaining = get_surveyed_participants(request.user.participant)
-            if num_remaining == 0:
-                user_survey_done = True
+            if num_remaining <= 16:  # NOTE: this is applicable only for ProductionPhase3, the students can start rating restaurants if they already have surveyed 24 participants (20 externals and 4 internals)
+                user_survey_almost_done = True
+                if num_remaining == 0:
+                    user_survey_done = True
                 restaurants = parse_restaurants_json()
                 _, num_restaurants_remaining = get_restaurants(restaurants, request.user.participant)
                 if num_restaurants_remaining == 0:
                     restaurant_survey_done = True
-                    groups = GroupParticipant.objects.filter(participant=request.user.participant).values_list('group', flat=True)
-                    num_groups = groups.count()
-                    if num_groups == NUM_GROUPS_FOR_PARTICIPANT:
-                        group_creation_done = True
-                        for group in groups:
-                            _, num_remaining_group_restaurants = get_group_restaurants(restaurants, group)
-                            if num_remaining_group_restaurants > 0:
-                                group_restaurant_survey_done = False
-                                break
+                    # groups = GroupParticipant.objects.filter(participant=request.user.participant).values_list('group', flat=True)
+                    # num_groups = groups.count()
+                    # if num_groups == NUM_GROUPS_FOR_PARTICIPANT:
+                        # group_creation_done = True
+                        # for group in groups:
+                            # _, num_remaining_group_restaurants = get_group_restaurants(restaurants, group)
+                            # if num_remaining_group_restaurants > 0:
+                                # group_restaurant_survey_done = False
+                                # break
                                 
-    return {"personality_test_done": personality_test_done, "user_survey_done": user_survey_done, "restaurant_survey_done": restaurant_survey_done, "group_creation_done": group_creation_done, "group_restaurant_survey_done": group_restaurant_survey_done}
+    # return {"personality_test_done": personality_test_done, "user_survey_almost_done": user_survey_almost_done, "user_survey_done": user_survey_done, "restaurant_survey_done": restaurant_survey_done, "group_creation_done": group_creation_done, "group_restaurant_survey_done": group_restaurant_survey_done}
+    return {"personality_test_done": personality_test_done, "user_survey_almost_done": user_survey_almost_done, "user_survey_done": user_survey_done, "restaurant_survey_done": restaurant_survey_done, "group_restaurant_survey_done": group_restaurant_survey_done}
     
 
 def parse_restaurants_json():
@@ -323,11 +338,12 @@ def create_group(request):
         num_groups = GroupParticipant.objects.filter(participant=participant).count()
     num_remaining = NUM_GROUPS_FOR_PARTICIPANT - num_groups
     participant_ids_in_same_groups = get_participants_in_the_same_groups(participant)  # Show participants and exclude the current participant and those already members in the same groups as the current participant
-    surveyed_participant_ids = UserSurvey.objects.filter(from_participant=participant).values_list('to_participant')
-    surveyed_participants = Participant.objects.filter(Q(id__in=surveyed_participant_ids)) 
-    # target_participants = Participant.objects.exclude(Q(id=participant.id) | Q(id__in=participant_ids_in_same_groups))
-    target_participants = surveyed_participants.exclude(Q(id__in=participant_ids_in_same_groups))
-    return render(request, 'guratorapp/create_group.html', {"user": request.user, "target_participants": target_participants, "max_participants_in_group": MAX_NUM_IN_GROUP, "num_remaining": num_remaining, "menu":get_current_menu_info(request)})
+    # surveyed_participant_ids = UserSurvey.objects.filter(from_participant=participant).values_list('to_participant')
+    # surveyed_participants = Participant.objects.filter(Q(id__in=surveyed_participant_ids))
+    participants_in_max_num_groups = get_participant_ids_assigned_to_max_num_groups() 
+    target_participants = Participant.objects.exclude(Q(id=participant.id) | Q(id__in=participant_ids_in_same_groups) | Q(id__in=participants_in_max_num_groups))  # Relaxing the conditions: making it possible to add participants to the group even if you didn't survey them
+    # target_participants = surveyed_participants.exclude(Q(id__in=participant_ids_in_same_groups) | Q(id__id=participants_in_max_num_groups))
+    return render(request, 'guratorapp/create_group.html', {"user": request.user, "target_participants": target_participants, "min_participants_in_group": MIN_NUM_IN_GROUP, "max_participants_in_group": MAX_NUM_IN_GROUP, "num_remaining": num_remaining, "menu":get_current_menu_info(request)})
         
 @login_required
 def personality_test(request):
