@@ -5,18 +5,23 @@ from django.conf import settings
 from django_countries.fields import CountryField
 from django_countries import countries
 
+
 def content_file_name(instance, filename):
     if filename.find("."):
         return instance.user.username + filename[filename.find("."):]
     else:
         return instance.user.username
 
+
 class PersonalityQuestion(models.Model):
-    optionA = models.CharField(max_length=500, verbose_name="A")
-    optionB = models.CharField(max_length=500, verbose_name="B")
+    name = models.CharField(max_length=10, default='no name')
+    optionA = models.CharField(max_length=1000, verbose_name="A")
+    optionB = models.CharField(max_length=1000, verbose_name="B")
+
     def __unicode__(self):
-        return self.optionA + "/ " + self.optionB
-        
+        return self.name
+
+
 class Participant(models.Model):
     GENDER_CHOICES = (
         ('f', 'female'),
@@ -34,22 +39,27 @@ class Participant(models.Model):
     picture = models.ImageField(upload_to=content_file_name, blank=True, verbose_name="Profile picture")
     birthdate = models.DateField(verbose_name="Date of Birth", default="")
     country = CountryField(choices=list(countries), verbose_name="Country", default=countries.name('DE'))
-
     matriculation_number = models.CharField(max_length=10, default="0")
-
     gps_long = models.CharField(max_length=15)
     gps_lat = models.CharField(max_length=15)
-
     grade = models.CharField(max_length=5)
     personality_answers = models.ManyToManyField(PersonalityQuestion,
                                                  through="ParticipantPersonalityQuestion",
-                                                  through_fields=("participant", "personality_question"))
+                                                 through_fields=("participant", "personality_question"))
     groups = models.ManyToManyField("Group", through="GroupParticipant", through_fields=("participant", "group"))
     personality_test_done = models.BooleanField(default=False, verbose_name="Personality test done")
+    # my code
+    personality_competing = models.IntegerField(default=0)
+    personality_cooperating = models.IntegerField(default=0)
+    personality_compromising = models.IntegerField(default=0)
+    personality_avoiding = models.IntegerField(default=0)
+    personality_accommodating = models.IntegerField(default=0)
+    # end of my code
 
     def __unicode__(self):
         return self.name
-    
+
+
 class ParticipantPersonalityQuestion(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     personality_question = models.ForeignKey(PersonalityQuestion, on_delete=models.CASCADE)
@@ -59,7 +69,8 @@ class ParticipantPersonalityQuestion(models.Model):
     
     def __unicode__(self):
         return self.participant.name + ":" + self.personality_question.optionA + "/" + self.personality_question.optionB + ":" + self.answer
-    
+
+
 class UserSurvey(models.Model):
     from_participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name="from_participant")
     to_participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name="to_participant")
@@ -80,22 +91,24 @@ class UserSurvey(models.Model):
 
 class RestaurantSurvey(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name="participant_rating_the_restaurant")
-    restaurant_yelp_id = models.CharField(max_length=100, blank=False)
+    restaurant_id = models.CharField(max_length=100, blank=False)
     price = models.IntegerField(default=0)
     taste = models.IntegerField(default=0)
     clumsiness = models.IntegerField(default=0)
     service = models.IntegerField(default=0)
+    #hippieness = the state or quality of being a hippy or hippies
     hippieness = models.IntegerField(default=0)
     location = models.IntegerField(default=0)
     social_overlap = models.IntegerField(default=0)
     other = models.CharField(max_length=1000, blank=True)
     
     def __unicode__(self):
-        return "Rating of participant" + self.participant + " to restaurant:" + self.resturant_yelp_id + ": price = " + self.price + " taste = " + self.taste + " clumsiness = " + self.clumsiness + " service = " + self.service + " hippieness = " + self.hippieness + " location = " + self.location + " social overlap = " + self.social_overlap + " other = " + self.other
+        return "Rating of participant" + self.participant + " to restaurant:" + self.resturant_id + ": price = " + self.price + " taste = " + self.taste + " clumsiness = " + self.clumsiness + " service = " + self.service + " hippieness = " + self.hippieness + " location = " + self.location + " social overlap = " + self.social_overlap + " other = " + self.other
+
 
 class GroupRestaurantSurvey(models.Model):
     group = models.ForeignKey("Group", on_delete=models.CASCADE, related_name="group_rating_the_restaurant")
-    restaurant_yelp_id = models.CharField(max_length=100, blank=False)
+    restaurant_id = models.CharField(max_length=100, blank=False)
     price = models.IntegerField(default=0)
     taste = models.IntegerField(default=0)
     clumsiness = models.IntegerField(default=0)
@@ -106,7 +119,7 @@ class GroupRestaurantSurvey(models.Model):
     other = models.CharField(max_length=1000, blank=True)
     
     def __unicode__(self):
-        return "Rating of group" + self.group + " to restaurant:" + self.resturant_yelp_id + ": price = " + self.price + " taste = " + self.taste + " clumsiness = " + self.clumsiness + " service = " + self.service + " hippieness = " + self.hippieness + " location = " + self.location + " social overlap = " + self.social_overlap + " other = " + self.other
+        return "Rating of group" + self.group + " to restaurant:" + self.resturant_id + ": price = " + self.price + " taste = " + self.taste + " clumsiness = " + self.clumsiness + " service = " + self.service + " hippieness = " + self.hippieness + " location = " + self.location + " social overlap = " + self.social_overlap + " other = " + self.other
     
 
 class Group(models.Model):
@@ -126,5 +139,4 @@ class GroupParticipant(models.Model):
     modified = models.DateTimeField(auto_now_add=True)
     
     def __unicode__(self):
-        return "Participant " + self.participant.name + " member of group " + self.group.name + " since " + self.created      
-    
+        return "Participant " + self.participant.name + " member of group " + self.group.name + " since " + self.created
