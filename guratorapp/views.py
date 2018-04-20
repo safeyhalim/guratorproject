@@ -375,43 +375,9 @@ def personality_test(request):
         if form.is_valid():
             cleaned_data = form.cleaned_data
             participant = request.user.participant
-            # personality variables
-            competing = 0
-            cooperating = 0
-            compromising = 0
-            avoiding = 0
-            accommodating = 0
             for _id, answer in cleaned_data.items():
                 ppq = ParticipantPersonalityQuestion(participant=participant, personality_question=personality_questions.get(id=int(_id)), answer=answer)
                 ppq.save()
-                # my code
-                if int(_id) == 3 and answer == 'A' or int(_id) == 8 and answer == 'A'or int(_id) == 10 and answer == 'A' or int(_id) == 17 and answer == 'A' or int(_id) == 25 and answer == 'A' or int(_id) == 28 and answer == 'A':
-                    competing += 1
-                if int(_id) == 6 and answer == 'B' or int(_id) == 9 and answer == 'B' or int(_id) == 13 and answer == 'B' or int(_id) == 14 and answer == 'B' or int(_id) == 16 and answer == 'B' or int(_id) == 22 and answer == 'B':
-                    competing += 1
-                if int(_id) == 5 and answer == 'A' or int(_id) == 11 and answer == 'A' or int(_id) == 14 and answer == 'A' or int(_id) == 19 and answer == 'A' or int(_id) == 20 and answer == 'A' or int(_id) == 23 and answer == 'A':
-                    cooperating += 1
-                if int(_id) == 2 and answer == 'B' or int(_id) == 8 and answer == 'B' or int(_id) == 21 and answer == 'B' or int(_id) == 26 and answer == 'B' or int(_id) == 28 and answer == 'B' or int(_id) == 30 and answer == 'B':
-                    cooperating += 1
-                if int(_id) == 2 and answer == 'A' or int(_id) == 4 and answer == 'A' or int(_id) == 13 and answer == 'A' or int(_id) == 22 and answer == 'A' or int(_id) == 26 and answer == 'A' or int(_id) == 29 and answer == 'A':
-                    compromising += 1
-                if int(_id) == 7 and answer == 'B' or int(_id) == 10 and answer == 'B' or int(_id) == 12 and answer == 'B' or int(_id) == 18 and answer == 'B' or int(_id) == 20 and answer == 'B' or int(_id) == 24 and answer == 'B':
-                    compromising += 1
-                if int(_id) == 1 and answer == 'A' or int(_id) == 6 and answer == 'A' or int(_id) == 7 and answer == 'A' or int(_id) == 9 and answer == 'A' or int(_id) == 12 and answer == 'A' or int(_id) == 27 and answer == 'A':
-                    avoiding += 1
-                if int(_id) == 5 and answer == 'B' or int(_id) == 15 and answer == 'B' or int(_id) == 17 and answer == 'B' or int(_id) == 19 and answer == 'B' or int(_id) == 23 and answer == 'B' or int(_id) == 29 and answer == 'B':
-                    avoiding += 1
-                if int(_id) == 15 and answer == 'A' or int(_id) == 16 and answer == 'A' or int(_id) == 18 and answer == 'A' or int(_id) == 21 and answer == 'A' or int(_id) == 24 and answer == 'A' or int(_id) == 30 and answer == 'A':
-                    accommodating += 1
-                if int(_id) == 1 and answer == 'B' or int(_id) == 3 and answer == 'B' or int(_id) == 4 and answer == 'B' or int(_id) == 11 and answer == 'B' or int(_id) == 25 and answer == 'B' or int(_id) == 27 and answer == 'B':
-                    accommodating += 1
-
-            participant.personality_competing = competing
-            participant.personality_cooperating = cooperating
-            participant.personality_compromising = compromising
-            participant.personality_avoiding = avoiding
-            participant.personality_accommodating = accommodating
-            # end of my code
             participant.personality_test_done = True
             participant.save()
             return HttpResponseRedirect('/home/')

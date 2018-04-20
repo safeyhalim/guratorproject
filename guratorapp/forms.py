@@ -92,10 +92,13 @@ class ParticipantEntryForm(ModelForm):
     class Meta:
         model = Participant
         # fields = ['name', 'gender','email', 'email2', 'accepted_terms_conditions','picture']
-        fields = ['name', 'country', 'birthdate', 'email', 'email2', 'gender', 'accepted_terms_conditions', 'picture', 'real_name', 'gps_lat', 'gps_long']
+        fields = ['name', 'country', 'birthdate', 'email', 'email2', 'gender', 'accepted_terms_conditions', 'picture', 'real_name']
         widgets = {
             'birthdate': SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"), years=range(1930, 2018)),
         }
+
+    gps_lat = CharField(label="gps_lat", required=False)
+    gps_long = CharField(label="gps_long", required=False)
 
     def clean(self):
         cleaned_data = super(ParticipantEntryForm, self).clean()
@@ -146,14 +149,14 @@ class ParticipantEntryForm(ModelForm):
         if not accepted_terms_conditions:
             self.add_error('accepted_terms_conditions', "Please accept the terms and conditions to proceed")
 
-        if gps_lat is not None:
+        if gps_lat != '':
             try:
                 i = gps_lat.index(".")
             except:
                 success = False
                 self.add_error('gps_lat', "Please provide correct value for latitude in decimal format, e.g. 48.9174128")
 
-        if gps_long is not None:
+        if gps_long != '':
             try:
                 i = gps_long.index(".")
             except:

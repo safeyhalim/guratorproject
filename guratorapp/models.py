@@ -14,7 +14,6 @@ def content_file_name(instance, filename):
 
 
 class PersonalityQuestion(models.Model):
-    name = models.CharField(max_length=10, default='no name')
     optionA = models.CharField(max_length=1000, verbose_name="A")
     optionB = models.CharField(max_length=1000, verbose_name="B")
 
@@ -48,13 +47,6 @@ class Participant(models.Model):
                                                  through_fields=("participant", "personality_question"))
     groups = models.ManyToManyField("Group", through="GroupParticipant", through_fields=("participant", "group"))
     personality_test_done = models.BooleanField(default=False, verbose_name="Personality test done")
-    # my code
-    personality_competing = models.IntegerField(default=0)
-    personality_cooperating = models.IntegerField(default=0)
-    personality_compromising = models.IntegerField(default=0)
-    personality_avoiding = models.IntegerField(default=0)
-    personality_accommodating = models.IntegerField(default=0)
-    # end of my code
 
     def __unicode__(self):
         return self.name
