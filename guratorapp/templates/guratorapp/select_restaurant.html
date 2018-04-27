@@ -59,7 +59,7 @@
     font-family: Roboto;
     font-size: 15px;
     font-weight: 300;
-    margin-left: 12px;
+    margin-left: 20px;
     padding: 0 11px 0 13px;
     text-overflow: ellipsis;
     width: 400px;
@@ -126,7 +126,7 @@
       </div>
     </div>
 <script>
-     var map, places, infoWindow;
+      var map, places, infoWindow;
 
       function initAutocomplete() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -205,7 +205,15 @@
                 }
 
                 count++;
-           }
+            }
+            else{
+                if (place.geometry.viewport) {
+                  // Only geocodes have viewport.
+                  bounds.union(place.geometry.viewport);
+                } else {
+                  bounds.extend(place.geometry.location);
+                }
+            }
           });
           map.fitBounds(bounds);
         });
@@ -238,6 +246,9 @@
         document.getElementById('iw-url').innerHTML = '<b><a href="' + place.url +
             '">' + place.name + '</a></b>';
         document.getElementById('iw-address').textContent = place.vicinity;
+        document.getElementById('iw-phone').textContent = place.international_phone_number;
+        document.getElementById('iw-rating').textContent = place.rating;
+        document.getElementById('iw-website').textContent = place.website;
         document.getElementById('submit-btn-id').value = place.id;
       }
 
