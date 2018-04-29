@@ -88,6 +88,7 @@ class ParticipantEntryForm(ModelForm):
     password = CharField(widget=PasswordInput(), label="Please choose a password")
     password2 = CharField(widget=PasswordInput(), label="Please confirm the password")
     matriculation_number = CharField(label="Matriculation Number", required=False)
+    device_id = CharField(label="Device ID", required=False)
 
     class Meta:
         model = Participant
@@ -110,6 +111,7 @@ class ParticipantEntryForm(ModelForm):
         real_name = cleaned_data.get("real_name")
         gps_lat = cleaned_data.get("gps_lat")
         gps_long = cleaned_data.get("gps_long")
+        device_id = cleaned_data.get("device_id")
         name = cleaned_data.get("name")
         country = cleaned_data.get("country")
         birthdate = cleaned_data.get("birthdate")

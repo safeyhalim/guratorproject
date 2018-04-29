@@ -136,6 +136,10 @@
             <td class="error">{{ form.gender.errors.as_text }}</td>
         </tr>
 
+        <tr>
+            <td class="right">{{ form.device_id.label_tag }}</td>
+            <td><input id="id_device_id" maxlength="200" name="device_id" type="text" /><span class="tooltip" title="bla">What does this mean?</span></td>
+        </tr>
 
         <tr>
             <td class="right">Please enter the coordinates of your main place of residence <span class="tiny"><a href="/static/doc/gps.html" target="_blank">How do I get this?</a></span></td>

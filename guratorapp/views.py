@@ -470,8 +470,12 @@ def start(request):
                 p.accepted_terms_conditions = form.cleaned_data['accepted_terms_conditions']
                 p.picture = form.cleaned_data['picture']
                 p.real_name = form.cleaned_data["real_name"]
-                p.gps_lat = form.cleaned_data["gps_lat"]
-                p.gps_long = form.cleaned_data["gps_long"]
+                if form.cleaned_data["gps_lat"] is not None:
+                    p.gps_lat = form.cleaned_data["gps_lat"]
+                if form.cleaned_data["gps_long"] is not None:
+                    p.gps_long = form.cleaned_data["gps_long"]
+                if form.cleaned_data["device_id"] is not None:
+                    p.device_id = form.cleaned_data["device_id"]
                 if form.cleaned_data["matriculation_number"] is not None:
                     p.matriculation_number = form.cleaned_data["matriculation_number"]
                 p.save()
@@ -485,7 +489,7 @@ def start(request):
     else:
         form = ParticipantEntryForm()
 
-    return render(request, 'guratorapp/participant.html', {"user":request.user, "form":form})
+    return render(request, 'guratorapp/participant.html', {"user": request.user, "form": form})
 
 
 # Handles Ajax call

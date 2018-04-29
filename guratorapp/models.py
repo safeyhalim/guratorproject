@@ -39,6 +39,7 @@ class Participant(models.Model):
     birthdate = models.DateField(verbose_name="Date of Birth", default="")
     country = CountryField(choices=list(countries), verbose_name="Country", default=countries.name('DE'))
     matriculation_number = models.CharField(max_length=10, default="0")
+    device_id = models.CharField(max_length=200, verbose_name="Device ID", null=True)
     gps_long = models.CharField(max_length=15)
     gps_lat = models.CharField(max_length=15)
     grade = models.CharField(max_length=5)
