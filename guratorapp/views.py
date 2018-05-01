@@ -19,7 +19,7 @@ import json
 
 ############################### Constants #####################################
 NUM_SURVEY = 10
-NUM_RESTAURANT_SURVEY = 1
+NUM_RESTAURANT_SURVEY = 5
 MAX_NUM_IN_GROUP = 10000  # Setting a very large number: effectively: a participant can add any number of participants in his group
 MIN_NUM_IN_GROUP = 0
 NUM_GROUPS_FOR_PARTICIPANT = 10000  # Setting a very large number: effectively: a participant can be in any number of groups
@@ -192,10 +192,7 @@ def restaurant_survey(request):
             restaurant_survey.save()
 
             restaurant_survey_count = RestaurantSurvey.objects.filter(participant=request.user.participant).count()
-            if restaurant_survey_count == NUM_RESTAURANT_SURVEY:
-                return HttpResponseRedirect('/home/')
-            else:
-                return HttpResponseRedirect('/select_restaurant/')
+            return HttpResponseRedirect('/select_restaurant/')
     else:  # GET request
         target_restaurant_id = request.GET.get("t", "")
     form = RestaurantSurveyForm()

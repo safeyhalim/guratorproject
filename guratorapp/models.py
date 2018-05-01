@@ -125,6 +125,7 @@ class Group(models.Model):
     def __unicode__(self):
         return "Group " + self.group_name + " created by: " + self.creator + "on " + self.created
 
+
 class GroupParticipant(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
