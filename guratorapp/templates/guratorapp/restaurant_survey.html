@@ -80,7 +80,7 @@
                 <tr>
                     <td colspan="4">
                         <label> {{restaurant_id}} </label>
-                        <input type="hidden" name="restaurant_id" value="{{restaurant_id}}">
+                        <input type="hidden" id="restaurant_id" name="restaurant_id" value="{{restaurant_id}}">
                     </td>
                 </tr>
                 <tr>
@@ -92,13 +92,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4">
-                        Address:
+                    <td colspan="2">
+                       Location:
                     </td>
-                    <td colspan="4">
-                        {% for address_part in restaurant.location.display_address %}
-                            <label>{{address_part}}</label>
-                        {% endfor %}
+                    <td colspan="1">
+                         <div id="map" style="width:500px;height:150px;"></div>
                     </td>
                 </tr>
                  <tr>
@@ -220,7 +218,46 @@
 
     <input type="submit" />
     </form>
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 8,
+            center: {lat: 40.72, lng: -73.96}
+        });
+        var geocoder = new google.maps.Geocoder;
+        var infowindow = new google.maps.InfoWindow;
 
+        geocodePlaceId(geocoder, map, infowindow);
+    }
+
+    function geocodePlaceId(geocoder, map, infowindow) {
+        var placeId = document.getElementById('restaurant_id').value;
+        var placeId = {{restaurant.id}};
+        geocoder.geocode({'placeId': placeId}, function(results, status) {
+            if (status === 'OK') {
+                if (results[0]) {
+                    map.setZoom(11);
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                    infowindow.setContent(results[0].formatted_address);
+                    infowindow.open(map, marker);
+                } else {
+                    window.alert('No results found');
+                }
+            } else {
+                window.alert('Geocoder failed due to: ' + status);
+            }
+        });
+    }
+
+
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjsPHPtpe4BK-XRsbnguTa2W3XTWhTOdc&callback=initMap">
+</script>
 
 
 {%  endblock %}
