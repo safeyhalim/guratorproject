@@ -76,50 +76,21 @@
     {{ form.non_field_errors }}
     <p>
         {% blocktrans %} You are reviewing the restaurant:{% endblocktrans %}
+        <div id="info-content">
             <table class="real">
-                <tr>
-                    <td colspan="4">
-                        <label> {{restaurant_id}} </label>
-                        <input type="hidden" id="restaurant_id" name="restaurant_id" value="{{restaurant_id}}">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        Slogan:
-                    </td>
-                    <td colspan="4">
-                        <label>{{restaurant.snippet_text}}</label>
-                    </td>
-                </tr>
                 <tr>
                     <td colspan="2">
                        Location:
                     </td>
+                    <td colspan="4">
+                        <input id="restaurant_id" type="hidden" name="restaurant_id" value="{{restaurant_id}}">
+                    </td>
                     <td colspan="1">
-                         <div id="map" style="width:500px;height:150px;"></div>
-                    </td>
-                </tr>
-                 <tr>
-                    <td colspan="4">
-                        Genre:
-                    </td>
-                    <td colspan="4">
-                        {% for categories in restaurant.categories %}
-                            {% for category in categories %}
-                                <label>"{{category}}" </label>
-                            {% endfor %}
-                        {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        Yelp Link:
-                    </td>
-                    <td colspan="4">
-                        <a href="{{restaurant.url}}" target="_blank">{{restaurant.url}}</a>
+                         <div id="map" style="width:500px;height:300px;"></div>
                     </td>
                 </tr>
             </table>
+        </div>
     </p>
     
     <table class="real">
@@ -232,17 +203,17 @@
 
     function geocodePlaceId(geocoder, map, infowindow) {
         var placeId = document.getElementById('restaurant_id').value;
-        var placeId = {{restaurant.id}};
         geocoder.geocode({'placeId': placeId}, function(results, status) {
             if (status === 'OK') {
                 if (results[0]) {
-                    map.setZoom(11);
+                    map.setZoom(19);
                     map.setCenter(results[0].geometry.location);
                     var marker = new google.maps.Marker({
                         map: map,
                         position: results[0].geometry.location
                     });
-                    infowindow.setContent(results[0].formatted_address);
+                    var content = '<p>' + results[0].formatted_address + '</p>'
+                    infowindow.setContent(content);
                     infowindow.open(map, marker);
                 } else {
                     window.alert('No results found');
@@ -255,9 +226,7 @@
 
 
 </script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjsPHPtpe4BK-XRsbnguTa2W3XTWhTOdc&callback=initMap">
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjsPHPtpe4BK-XRsbnguTa2W3XTWhTOdc&amp;libraries=places&amp;callback=initMap" async="" defer=""></script>
 
 
 {%  endblock %}

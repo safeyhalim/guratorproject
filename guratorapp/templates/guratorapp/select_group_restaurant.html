@@ -249,8 +249,8 @@
         document.getElementById('iw-address').textContent = place.vicinity;
         document.getElementById('iw-phone').textContent = place.international_phone_number;
         document.getElementById('iw-rating').textContent = place.rating;
-        document.getElementById('iw-website').textContent = place.website;
-        document.getElementById('submit-btn-id').value = place.id;
+        document.getElementById('iw-website').innerHTML = '<b><a href="' + place.website + '">' + place.website + '</a><b>';
+        document.getElementById('submit-btn-id').value = place.place_id;
       }
 
 </script>

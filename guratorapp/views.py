@@ -19,7 +19,7 @@ import json
 
 ############################### Constants #####################################
 NUM_SURVEY = 10
-NUM_RESTAURANT_SURVEY = 5
+NUM_RESTAURANT_SURVEY = 1
 MAX_NUM_IN_GROUP = 10000  # Setting a very large number: effectively: a participant can add any number of participants in his group
 MIN_NUM_IN_GROUP = 0
 NUM_GROUPS_FOR_PARTICIPANT = 10000  # Setting a very large number: effectively: a participant can be in any number of groups
@@ -75,7 +75,7 @@ def get_current_menu_info(request):
                     user_survey_done = True
                 restaurants = parse_restaurants_json()
                 _, num_restaurants_remaining = get_restaurants(restaurants, request.user.participant)
-                if num_restaurants_remaining == 0:
+                if num_restaurants_remaining < 1:
                     restaurant_survey_done = True
                     # groups = GroupParticipant.objects.filter(participant=request.user.participant).values_list('group', flat=True)
                     # num_groups = groups.count()
@@ -222,10 +222,7 @@ def group_restaurant_survey(request):
             group_restaurant_survey.save()
 
             group_restaurant_survey_count = GroupRestaurantSurvey.objects.filter(group=group).count()
-            if group_restaurant_survey_count == NUM_RESTAURANT_SURVEY:
-                return HttpResponseRedirect('/home/')
-            else:
-                return HttpResponseRedirect('/select_group_restaurant/?g=' + str(group.id))
+            return HttpResponseRedirect('/select_group_restaurant/?g=' + str(group.id))
     else:
         group_id = request.GET.get("g", "")
         target_restaurant_id = request.GET.get("t", "")
@@ -257,6 +254,8 @@ def select_restaurant(request):
     # restaurants, num_remaining_restaurants = get_restaurants(all_restaurants, request.user.participant)
     survey_count = RestaurantSurvey.objects.filter(participant=request.user.participant).count()
     num_remaining_restaurants = NUM_RESTAURANT_SURVEY - survey_count
+    if num_remaining_restaurants < 0:
+        num_remaining_restaurants = 0
     if request.method == "POST":
         target_restaurant_id = request.POST.get("submitBtn")
         if target_restaurant_id is None:
@@ -307,9 +306,7 @@ def select_group(request):
     all_restaurants = parse_restaurants_json()
     remaining_groups = []
     for group in participant_groups:
-        _, num_remaining_group_restaurants = get_group_restaurants(all_restaurants, group)
-        if num_remaining_group_restaurants > 0:
-            remaining_groups.append(group)
+        remaining_groups.append(group)
             
     if request.method == "POST":
         group_id = request.POST.get("submitBtn", "")
