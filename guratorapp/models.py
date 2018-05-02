@@ -120,8 +120,13 @@ class Group(models.Model):
     creator = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name="group_creator")
     participants = models.ManyToManyField(Participant, through="GroupParticipant", through_fields=("group", "participant"))
     created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now_add=True) 
-    
+    modified = models.DateTimeField(auto_now_add=True)
+    INTERNAL_CHOICES = (
+        ('in', 'internal'),
+        ('ex', 'external'),
+    )
+    internal = models.CharField(max_length=10, default='in', verbose_name="Internal group")
+
     def __unicode__(self):
         return "Group " + self.group_name + " created by: " + self.creator + "on " + self.created
 

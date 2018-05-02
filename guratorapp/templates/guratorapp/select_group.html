@@ -16,7 +16,8 @@
         {% for group in groups %}
             <tr>
                 <td colspan="4">
-                    <label>{{group.name}}</label>
+                    <label>{{group.name}} ({{group.internal}})
+                    </label>
                 </td>
                 <td colspan="4">
                     <button type="submit" name="submitBtn" value="{{group.id}}">Select this group</button>
@@ -27,4 +28,5 @@
         </tbody>
     </table>
 </form>
+
 {%  endblock %}

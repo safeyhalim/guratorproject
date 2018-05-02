@@ -333,6 +333,8 @@ def create_group(request):
         group = Group()
         group.name = group_name
         group.creator = participant
+        if request.user.participant.matriculation_number == "":
+            group.internal = 'ex'
         group.save()
         group_participant = GroupParticipant()  # Group creator is also a group participant
         group_participant.participant = participant
@@ -345,6 +347,8 @@ def create_group(request):
                 group_participant = GroupParticipant()
                 group_participant.group = group
                 group_participant.participant = member_participant
+                if member_participant.matriculation_number == "":
+                    group.internal = 'ex'
                 group_participant.save()
         num_groups = GroupParticipant.objects.filter(participant=participant).count()
         if num_groups == NUM_GROUPS_FOR_PARTICIPANT:
