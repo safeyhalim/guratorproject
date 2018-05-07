@@ -7,6 +7,9 @@
 <font color="blue">
 <b>Do the restaurant survey with one of your groups</b>
 </font>
+<p>
+    If you are a student (entered a matriculation number), you should be a member of at least one internal and one external group.
+</p>
 </p>
 <form action="/select_group/" method="POST">
     {% csrf_token %}
@@ -16,7 +19,7 @@
         {% for group in groups %}
             <tr>
                 <td colspan="4">
-                    <label>{{group.name}} ({{group.internal}})
+                    <label>{{group.name}} ({{group.internal}}ternal)
                     </label>
                 </td>
                 <td colspan="4">
