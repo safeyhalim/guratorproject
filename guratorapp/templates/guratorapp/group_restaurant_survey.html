@@ -77,15 +77,12 @@
         {% blocktrans %} You are reviewing the restaurant:{% endblocktrans %}
             <table class="real">
                 <tr>
-                    <td colspan="2">
-                       Location:
-                    </td>
                     <td colspan="4">
                         <input id="restaurant_id" type="hidden" name="restaurant_id" value="{{restaurant_id}}">
                         <input type="hidden" name="group_id" value="{{group.id}}">
                     </td>
                     <td colspan="1">
-                         <div id="map" style="width:500px;height:300px;"></div>
+                         <div id="map" style="width:665px;height:300px;"></div>
                     </td>
                 </tr>
             </table>
@@ -188,43 +185,33 @@
     <input type="submit" />
     </form>
 <script>
-    function initMap() {
+   function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 8,
-            center: {lat: 40.72, lng: -73.96}
+          center: {lat: -33.866, lng: 151.196},
+          zoom: 15
         });
-        var geocoder = new google.maps.Geocoder;
-        var infowindow = new google.maps.InfoWindow;
 
-        geocodePlaceId(geocoder, map, infowindow);
-    }
-
-    function geocodePlaceId(geocoder, map, infowindow) {
+        var infowindow = new google.maps.InfoWindow();
+        var service = new google.maps.places.PlacesService(map);
         var placeId = document.getElementById('restaurant_id').value;
-        geocoder.geocode({'placeId': placeId}, function(results, status) {
-            if (status === 'OK') {
-                if (results[0]) {
-                    map.setZoom(19);
-                    map.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        position: results[0].geometry.location
-                    });
-                    var content = '<p>' + results[0].formatted_address + '</p>'
-                    infowindow.setContent(content);
-                    infowindow.open(map, marker);
-                } else {
-                    window.alert('No results found');
-                }
-            } else {
-                window.alert('Geocoder failed due to: ' + status);
-            }
+        service.getDetails({placeId: placeId}, function(place, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            var marker = new google.maps.Marker({
+              map: map,
+              position: place.geometry.location
+            });
+            map.setCenter(place.geometry.location);
+            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+                place.formatted_address + '</div>');
+            infowindow.open(map, marker);
+          }
         });
-    }
+      }
 
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjsPHPtpe4BK-XRsbnguTa2W3XTWhTOdc&amp;libraries=places&amp;callback=initMap" async="" defer=""></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjsPHPtpe4BK-XRsbnguTa2W3XTWhTOdc&libraries=places&callback=initMap"></script>
 
 
 
