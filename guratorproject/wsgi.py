@@ -9,10 +9,9 @@ https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/
 
 #functions to interface with the operating system(Win, OS, Linux)
 import os
-#imorting the get functions
 from django.core.wsgi import get_wsgi_application
 
-#mapping object representing the string environment
+# mapping object, representing the string environment
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "guratorproject.settings")
 
 application = get_wsgi_application()

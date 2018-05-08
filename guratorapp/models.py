@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-
 from django.db import models
 from django.conf import settings
 from django_countries.fields import CountryField
@@ -18,7 +17,7 @@ class PersonalityQuestion(models.Model):
     optionB = models.CharField(max_length=1000, verbose_name="B")
 
     def __unicode__(self):
-        return self.name
+        return "A: " + self.optionA + "B: " + self.optionB
 
 
 class Participant(models.Model):
@@ -26,7 +25,6 @@ class Participant(models.Model):
         ('f', 'female'),
         ('m', 'male'),
     )
-    
     name = models.CharField(max_length=500, verbose_name="Username")
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     real_name = models.CharField(max_length=50, verbose_name="Real name")
@@ -89,7 +87,6 @@ class RestaurantSurvey(models.Model):
     taste = models.IntegerField(default=0)
     clumsiness = models.IntegerField(default=0)
     service = models.IntegerField(default=0)
-    #hippieness = the state or quality of being a hippy or hippies
     hippieness = models.IntegerField(default=0)
     location = models.IntegerField(default=0)
     social_overlap = models.IntegerField(default=0)

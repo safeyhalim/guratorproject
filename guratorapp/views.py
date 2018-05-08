@@ -5,7 +5,6 @@ from guratorapp.forms import ParticipantEntryForm, PreferenceForm, AuthForm, \
     PersonalityQuestionForm, UserSurveyForm, RestaurantSurveyForm, GroupRestaurantSurveyForm
 from guratorapp.models import Participant, PersonalityQuestion, \
     ParticipantPersonalityQuestion, UserSurvey, RestaurantSurvey, Group, GroupParticipant, GroupRestaurantSurvey
-# enables the creation of users
 from django.contrib.auth.models import User
 # Keyword argument queries are "and"ed together. If you need to execute more complex queries like "or" you can use Q objects.
 from django.db.models import Q
@@ -17,15 +16,14 @@ from django.http import HttpResponse
 from django.conf import settings as conf_settings
 import json
 
-############################### Constants #####################################
-NUM_SURVEY = 1
-NUM_RESTAURANT_SURVEY = 1
+# ------------------------------ Constants ------------------------------ #
+NUM_SURVEY = 10 # shouldnt be needed anymore
+NUM_RESTAURANT_SURVEY = 5 # minimum number of restaurants a user has to review
 MAX_NUM_IN_GROUP = 10000  # Setting a very large number: effectively: a participant can add any number of participants in his group
-MIN_NUM_IN_GROUP = 2
+MIN_NUM_IN_GROUP = 2 # at least 3 members in one group (creator of the group included)
 NUM_GROUPS_FOR_PARTICIPANT = 10000  # Setting a very large number: effectively: a participant can be in any number of groups
 
-
-#   --------------------------- Utility functions ------------------------------ #
+# --------------------------- Utility Functions --------------------------- #
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -34,13 +32,13 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
-
+# returns IDs of already surveyed participants and their count
 def get_surveyed_participants(participant):
     already_surveyed_participant_ids = UserSurvey.objects.filter(from_participant=participant).values_list('to_participant', flat=True)
     num_surveyed = already_surveyed_participant_ids.count()  # Number of participants that the current participant still needs to do survey for
     return already_surveyed_participant_ids, num_surveyed
 
-
+# returns IDs of participants, that are in on of the given user's group
 def get_participants_in_the_same_groups(participant):
     group_ids = GroupParticipant.objects.filter(participant=participant).values_list('group', flat=True)
     participant_ids = GroupParticipant.objects.filter(group__in=group_ids).values_list('participant', flat=True).distinct()
@@ -175,7 +173,7 @@ def login_user(request):
 def restaurant_survey(request):
     if request.method == "POST":
         form = RestaurantSurveyForm(request.POST)
-        target_restaurant_id = request.POST.get("restaurant_id",)
+        target_restaurant_id = request.POST.get("restaurant_id", "")
         if form.is_valid():
             cleaned_data = form.cleaned_data
             restaurant_survey = RestaurantSurvey()
@@ -251,6 +249,7 @@ def select_group_restaurant(request):
 
 @login_required
 def select_restaurant(request):
+    participant = request.user.participant
     # all_restaurants = parse_restaurants_json()
     # restaurants, num_remaining_restaurants = get_restaurants(all_restaurants, request.user.participant)
     survey_count = RestaurantSurvey.objects.filter(participant=request.user.participant).count()
@@ -261,13 +260,12 @@ def select_restaurant(request):
         target_restaurant_id = request.POST.get("submitBtn")
         if target_restaurant_id is None:
             return HttpResponseRedirect('/home/')
-        surveyed_restaurant_ids = RestaurantSurvey.objects.filter(participant=request.user.participant).values_list("restaurant_id", flat=True)
+        surveyed_restaurant_ids = RestaurantSurvey.objects.filter(participant=request.user.participant).values("restaurant_id")
         for restaurant_id in surveyed_restaurant_ids:
             if restaurant_id == target_restaurant_id:
                 return HttpResponseRedirect('/home/')
             return HttpResponseRedirect('/restaurant_survey/?t=' + target_restaurant_id)
     return render(request, 'guratorapp/select_restaurant.html', {"user": request.user, "num_remaining_restaurants": num_remaining_restaurants, "menu": get_current_menu_info(request)})
-
 
 @login_required
 def user_survey(request):

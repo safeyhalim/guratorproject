@@ -14,9 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 
-#includes the used url pattern
-from django.conf.urls import include, url
-#automatic Django administrative interface
+# includes the used url pattern
+from django.conf.urls import url
+# automatic Django administrative interface
 from django.contrib import admin
 from guratorapp import views
 

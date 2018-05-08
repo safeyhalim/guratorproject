@@ -10,7 +10,7 @@
     {%  include "guratorapp/menu.html" %}
 <h1>Settings</h1>
 
-<p>For security reasons your current password is required before any changes get applied. In case of additional changes, please <a href="/help/">contact us</a>.</p>
+<p>For security reasons your current password is required, before any changes can be applied. In case of additional changes, please <a href="/help/">contact us</a>.</p>
 <form action="/settings/" method="post" enctype="multipart/form-data">
   {% csrf_token %}
     {{ form.non_field_errors }}

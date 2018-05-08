@@ -1,7 +1,6 @@
 # coding=utf-8
-# implements a file-like class, that reads and writes a string buffer (memory files)
+
 import StringIO
-# provides image class for PIL images and functions like loading and creating pictures
 from PIL import Image
 # imports html forms
 from django import forms
@@ -14,16 +13,14 @@ from django.core.exceptions import ValidationError
 from guratorapp.models import Participant, UserSurvey, RestaurantSurvey, GroupRestaurantSurvey
 from django_countries import countries
 
+# The clean() method on a Field subclass is responsible for running to_python(), validate(), and run_validators() in the correct order and propagating their errors
 
 # how the a user is authenticated
 class AuthForm(forms.Form):
     username = CharField(label="Username")
     password = CharField(widget=PasswordInput(), label="Password")
 
-# The clean() method on a Field subclass is responsible for running to_python(), validate(), and run_validators() in the correct order and propagating their errors
-
-
-# users settings
+# settings page form
 class PreferenceForm(forms.Form):
     password_new1 = CharField(widget=PasswordInput(), label="New password", required=False)
     password_new2 = CharField(widget=PasswordInput(), label="New password (confirmation)", required=False)
@@ -61,7 +58,6 @@ class PreferenceForm(forms.Form):
             z = float(long)
         except ValueError:
             self.add_error("gps_long", "Wrong format (long)")
-
         try:
             z = float(lat)
         except ValueError:
@@ -72,16 +68,13 @@ class PreferenceForm(forms.Form):
             image_file = StringIO.StringIO(image_field.read())
             image = Image.open(image_file)
             w, h = image.size
-            # max size 500px
             max_size = 200
             ratio = min(max_size / float(w), max_size / float(h))
-
             if ratio < 1:
                 image = image.resize((int(w * ratio), int(h * ratio)), Image.ANTIALIAS)
                 image_file = StringIO.StringIO()
                 image.save(image_file, 'JPEG', quality=90)
                 image_field.file = image_file
-
 
 # user creation form
 class ParticipantEntryForm(ModelForm):
@@ -89,17 +82,13 @@ class ParticipantEntryForm(ModelForm):
     password2 = CharField(widget=PasswordInput(), label="Please confirm the password")
     matriculation_number = CharField(label="Matriculation Number", required=False)
     device_id = CharField(label="Device ID", required=False)
+    gps_lat = CharField(label="gps_lat", required=False)
+    gps_long = CharField(label="gps_long", required=False)
 
     class Meta:
         model = Participant
-        # fields = ['name', 'gender','email', 'email2', 'accepted_terms_conditions','picture']
         fields = ['name', 'country', 'birthdate', 'email', 'email2', 'gender', 'accepted_terms_conditions', 'picture', 'real_name']
-        widgets = {
-            'birthdate': SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"), years=range(1930, 2018)),
-        }
-
-    gps_lat = CharField(label="gps_lat", required=False)
-    gps_long = CharField(label="gps_long", required=False)
+        widgets = {'birthdate': SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"), years=range(1930, 2018))}
 
     def clean(self):
         cleaned_data = super(ParticipantEntryForm, self).clean()
@@ -115,18 +104,11 @@ class ParticipantEntryForm(ModelForm):
         name = cleaned_data.get("name")
         country = cleaned_data.get("country")
         birthdate = cleaned_data.get("birthdate")
-        # Matriculation Number is not mandatory
-        # try:
-            # int(matriculation_number) < 10000:
-            # self.add_error("matriculation_number", "Please add your matriculation number")
-        # except:
-        #   self.add_error("matriculation_number", "Please add your matriculation number")
-         
+        
         if name is not None and len(name) > 0:
             name_clean = ''.join(name.split())
-
             if name_clean != name:
-                self.add_error("name", "Please do not use whitespace (space, tab, etc.) in your username")
+                self.add_error("name", "Please do not use whitespaces (space, tab, etc.) in your username")
             try:
                 name.decode("ascii")
             except:
@@ -184,7 +166,6 @@ class ParticipantEntryForm(ModelForm):
             image_file = StringIO.StringIO(image_field.read())
             image = Image.open(image_file)
             w, h = image.size
-            # max size 500px
             max_size = 200
             ratio = min(max_size / float(w), max_size / float(h))
 
@@ -192,7 +173,6 @@ class ParticipantEntryForm(ModelForm):
                 image = image.resize((int(w * ratio), int(h * ratio)), Image.ANTIALIAS)
                 image_file = StringIO.StringIO()
                 image.save(image_file, 'JPEG', quality=90)
-
                 image_field.file = image_file
                 
 

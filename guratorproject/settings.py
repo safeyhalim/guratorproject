@@ -10,15 +10,13 @@ https://docs.djangoproject.com/en/1.9/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
-
 # functions to interface with the operating system(Win, OS, Linux)
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-#base_dir is root of the folder that manage.py contains
+# base_dir is the root of the folder, in which manage.py is contained
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 YELP_RESTAURANT_PATH = os.path.join(BASE_DIR, 'yelp.json')
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -27,9 +25,9 @@ YELP_RESTAURANT_PATH = os.path.join(BASE_DIR, 'yelp.json')
 SECRET_KEY = '!qm1v8r)8jelx(!^+@3*zbi+mx_m%cd5z9p4=pr(1!by&1j=+z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#should enable debug mode for the app
+# should enable debug mode for the app
 DEBUG = True
-# list of strings representing the host/domain names that this Django site can serve
+# list of strings representing the host/domain names, that this Django site can serve
 ALLOWED_HOSTS = []
 
 
@@ -44,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-# list of activated middlewares (each component is represented by a string; the full Python path to the middleware factorys class or function name)
+# list of activated middlewares (each component is represented by a string; the full Python path to the middleware factories class or function name)
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -55,16 +53,18 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 # where to find the URLs
 ROOT_URLCONF = 'guratorproject.urls'
+
 # templates that are used (written in html usually)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # templates directories
         'DIRS': [],
-        # makes sure templates found in installed apps are used
-        # if template have the same name the one belonging to the first installed app will be used and the other gets ignored
+        # makes sure templates, found in installed apps, are used
+        # if template have the same name, the one belonging to the first installed app will be used and the other one gets ignored
         'APP_DIRS': True,
         'OPTIONS': {
             # custom loader for templates
@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'guratorproject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-# defining used database with ist directory (here sqlite3)
+# defining used database with its directory (here sqlite3)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -112,31 +112,29 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Europe/Berlin'
+
 # specifies whether Django’s translation system should be enabled
 USE_I18N = True
+
 # specifies if localized formatting of data will be enabled by default or not
-# means displaying numbers and dates using the format of the current locale
 USE_L10N = True
+
 # specifies if datetimes will be timezone-aware by default or no
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
-# URL to use when referring to static files located in STATIC_ROOT.
 STATIC_URL = '/static/'
 
 # the absolute path to the directory where collectstatic will collect static files for deployment
 STATIC_ROOT = os.path.join(BASE_DIR, 'guratorapp/static')
+
 # Absolute filesystem path to the directory that will hold user-uploaded files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'guratorapp/static/img')
+
 # URL that handles the media served from MEDIA_ROOT, used for managing stored files
 MEDIA_URL = '/static/img/'
