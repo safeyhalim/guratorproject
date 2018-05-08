@@ -26,7 +26,7 @@ $(function() {
             $('#group_name_id')[0].className = "error";
             return false;
         } else if ($('input[type=checkbox]:checked').length < {{min_participants_in_group}}){
-            $('#error_message_id').html("Error: Please select at least" + {{min_participants_in_group}} + " participants!");
+            $('#error_message_id').html("Error: Please select at least " + {{min_participants_in_group}} + " participants!");
             return false;
         } else {
             return true;
@@ -40,6 +40,10 @@ $(function() {
 <font color="blue">
 Create a group of participants by entering a group name, and select some participants to be members in this group. You are a member in this group by default.
 </font>
+</p>
+<p>
+    <b>In order to include someone into a group, you need to survey him or her first!</b></br>
+    <b>A group consist at least of 3 members(you included)!</b>
 </p>
 <div style="color:red;" id="error_message_id"></div>
 <form id="form_id" action="/create_group/" method="POST">

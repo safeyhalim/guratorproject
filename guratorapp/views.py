@@ -21,7 +21,7 @@ import json
 NUM_SURVEY = 1
 NUM_RESTAURANT_SURVEY = 1
 MAX_NUM_IN_GROUP = 10000  # Setting a very large number: effectively: a participant can add any number of participants in his group
-MIN_NUM_IN_GROUP = 0
+MIN_NUM_IN_GROUP = 2
 NUM_GROUPS_FOR_PARTICIPANT = 10000  # Setting a very large number: effectively: a participant can be in any number of groups
 
 
