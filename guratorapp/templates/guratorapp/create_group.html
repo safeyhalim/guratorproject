@@ -69,7 +69,7 @@ Create a group of participants by entering a group name, and select some partici
                 <td colspan="4">
                     <input class="single-checkbox" type="checkbox" name="participant_{{target_participant.id}}" />
                 </td>
-                <td class="error">{{ target_participant.errors.as_text }}</td>
+                <td class="error">{{target_participant.errors.as_text}}</td>
             </tr>
         {% endfor %}
         </tbody>

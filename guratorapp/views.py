@@ -179,6 +179,7 @@ def restaurant_survey(request):
         if form.is_valid():
             cleaned_data = form.cleaned_data
             restaurant_survey = RestaurantSurvey()
+            restaurant_survey.restaurant_id = target_restaurant_id
             restaurant_survey.participant = request.user.participant
             restaurant_survey.restaurant_yelp_id = target_restaurant_id
             restaurant_survey.price = cleaned_data["price"]
@@ -260,7 +261,11 @@ def select_restaurant(request):
         target_restaurant_id = request.POST.get("submitBtn")
         if target_restaurant_id is None:
             return HttpResponseRedirect('/home/')
-        return HttpResponseRedirect('/restaurant_survey/?t=' + target_restaurant_id)
+        surveyed_restaurant_ids = RestaurantSurvey.objects.filter(participant=request.user.participant).values_list("restaurant_id", flat=True)
+        for restaurant_id in surveyed_restaurant_ids:
+            if restaurant_id == target_restaurant_id:
+                return HttpResponseRedirect('/home/')
+            return HttpResponseRedirect('/restaurant_survey/?t=' + target_restaurant_id)
     return render(request, 'guratorapp/select_restaurant.html', {"user": request.user, "num_remaining_restaurants": num_remaining_restaurants, "menu": get_current_menu_info(request)})
 
 
@@ -333,7 +338,7 @@ def create_group(request):
         group = Group()
         group.name = group_name
         group.creator = participant
-        if request.user.participant.matriculation_number == "":
+        if participant.matriculation_number == "":
             group.internal = 'ex'
         group.save()
         group_participant = GroupParticipant()  # Group creator is also a group participant
