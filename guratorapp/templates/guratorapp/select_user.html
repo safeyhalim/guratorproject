@@ -13,7 +13,8 @@ Remember: This survey is <b>totally confidential.</b>
     {% csrf_token %}
     {{ form.non_field_errors }}
     <p>
-        <b>You still have to survey {{num_remaining}} participants!</b>
+        <b>You have to survey all participants, you want to build a group with later on! (At least 2)</b></br>
+        <b>You have already surveyed {{num_surveyed}} participants.</b>
     </p>
     <table class="real">
         <tbody>

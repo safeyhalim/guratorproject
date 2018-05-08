@@ -47,16 +47,12 @@
                 {% if menu.user_survey_almost_done == False %} <!-- This change is relevant to ProductionPhase3 only because we allow participants to do restaurant surveys even they didn't finish surveying people -->
                     <a href="/select_user/">Select User</a>
                 {% else %}
-                    {% if menu.user_survey_done == True %}
-                        <a><strike>Select User</strike></a>
-                    {% else %}
-                        <a href="/select_user/">Select User</a>
-                    {% endif %}
-                     <li>
+                    <a href="/select_user/">Select User</a>
+                    <li>
                         {% if menu.restaurant_survey_done == False %}
                             <a href="/select_restaurant/">Select Restaurant</a>
                         {% else %}
-    <a href="/select_restaurant/">Select Restaurant</a>
+                            <a href="/select_restaurant/">Select Restaurant</a>
                             <li><a href="/create_group/">Create Group</a></li>
                             <li><a href="/select_group/">Select Group</a></li>
                         {% endif %}

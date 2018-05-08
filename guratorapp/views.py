@@ -18,7 +18,7 @@ from django.conf import settings as conf_settings
 import json
 
 ############################### Constants #####################################
-NUM_SURVEY = 10
+NUM_SURVEY = 1
 NUM_RESTAURANT_SURVEY = 1
 MAX_NUM_IN_GROUP = 10000  # Setting a very large number: effectively: a participant can add any number of participants in his group
 MIN_NUM_IN_GROUP = 0
@@ -37,8 +37,8 @@ def get_client_ip(request):
 
 def get_surveyed_participants(participant):
     already_surveyed_participant_ids = UserSurvey.objects.filter(from_participant=participant).values_list('to_participant', flat=True)
-    num_remaining = NUM_SURVEY - already_surveyed_participant_ids.count()  # Number of participants that the current participant still needs to do survey for
-    return already_surveyed_participant_ids, num_remaining
+    num_surveyed = already_surveyed_participant_ids.count()  # Number of participants that the current participant still needs to do survey for
+    return already_surveyed_participant_ids, num_surveyed
 
 
 def get_participants_in_the_same_groups(participant):
@@ -288,16 +288,9 @@ def user_survey(request):
             user_survey.social_hierarchy = cleaned_data["social_hierarchy"]
             user_survey.domain_expertise = cleaned_data["domain_expertise"]
             user_survey.save()
-            
-            survey_count = UserSurvey.objects.filter(from_participant=request.user.participant).count()
-            if survey_count == NUM_SURVEY:
-                return HttpResponseRedirect('/home/')
-            else:
-                return HttpResponseRedirect('/select_user/')
-                                     
+            return HttpResponseRedirect('/select_user/')
     else:  # GET request
-        target_participant_id = request.GET.get("t", "") 
-        
+        target_participant_id = request.GET.get("t", "")
     target_participant = Participant.objects.get(id=target_participant_id)
     form = UserSurveyForm()
     return render(request, 'guratorapp/user_survey.html', {"user": request.user, "form": form, "target_participant": target_participant, "menu": get_current_menu_info(request)})
@@ -322,12 +315,12 @@ def select_group(request):
 @login_required
 def select_user(request):
     participant = request.user.participant
-    already_surveyed_participant_ids, num_remaining = get_surveyed_participants(participant)
+    already_surveyed_participant_ids, num_surveyed = get_surveyed_participants(participant)
     target_participants = Participant.objects.exclude(Q(id__in=already_surveyed_participant_ids) | Q(id=participant.id))  # select all participants except the current user and all the participants already surveyed
     if request.method == "POST":
         target_participant_id = request.POST.get("submitBtn", "")
         return HttpResponseRedirect('/user_survey/?t=' + target_participant_id)
-    return render(request, 'guratorapp/select_user.html', {"user": request.user, "target_participants": target_participants, "num_remaining": num_remaining, "menu": get_current_menu_info(request)})
+    return render(request, 'guratorapp/select_user.html', {"user": request.user, "target_participants": target_participants, "num_surveyed": num_surveyed, "menu": get_current_menu_info(request)})
 
 
 @login_required
