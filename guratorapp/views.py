@@ -355,10 +355,10 @@ def create_group(request):
         num_groups = GroupParticipant.objects.filter(participant=participant).count()
     num_remaining = NUM_GROUPS_FOR_PARTICIPANT - num_groups
     participant_ids_in_same_groups = get_participants_in_the_same_groups(participant)  # Show participants and exclude the current participant and those already members in the same groups as the current participant
-    # surveyed_participant_ids = UserSurvey.objects.filter(from_participant=participant).values_list('to_participant')
+    surveyed_participant_ids = UserSurvey.objects.filter(from_participant=participant).values_list('to_participant')
     # surveyed_participants = Participant.objects.filter(Q(id__in=surveyed_participant_ids))
     participants_in_max_num_groups = get_participant_ids_assigned_to_max_num_groups() 
-    target_participants = Participant.objects.exclude(Q(id=participant.id) | Q(id__in=participant_ids_in_same_groups) | Q(id__in=participants_in_max_num_groups))  # Relaxing the conditions: making it possible to add participants to the group even if you didn't survey them
+    target_participants = Participant.objects.filter(Q(id__in=surveyed_participant_ids)).exclude(Q(id=participant.id) | Q(id__in=participant_ids_in_same_groups) | Q(id__in=participants_in_max_num_groups))  # Relaxing the conditions: making it possible to add participants to the group even if you didn't survey them
     # target_participants = surveyed_participants.exclude(Q(id__in=participant_ids_in_same_groups) | Q(id__id=participants_in_max_num_groups))
     return render(request, 'guratorapp/create_group.html', {"user": request.user, "target_participants": target_participants, "min_participants_in_group": MIN_NUM_IN_GROUP, "max_participants_in_group": MAX_NUM_IN_GROUP, "num_remaining": num_remaining, "menu": get_current_menu_info(request)})
 
