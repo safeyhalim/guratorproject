@@ -18,9 +18,9 @@ import json
 
 # ------------------------------ Constants ------------------------------ #
 NUM_SURVEY = 10 # shouldnt be needed anymore
-NUM_RESTAURANT_SURVEY = 5 # minimum number of restaurants a user has to review
+NUM_RESTAURANT_SURVEY = 0 # (set to 5) minimum number of restaurants a user has to review
 MAX_NUM_IN_GROUP = 10000  # Setting a very large number: effectively: a participant can add any number of participants in his group
-MIN_NUM_IN_GROUP = 2 # at least 3 members in one group (creator of the group included)
+MIN_NUM_IN_GROUP = 0 # (set to 2) at least 3 members in one group (creator of the group included)
 NUM_GROUPS_FOR_PARTICIPANT = 10000  # Setting a very large number: effectively: a participant can be in any number of groups
 
 # --------------------------- Utility Functions --------------------------- #
@@ -70,7 +70,7 @@ def get_current_menu_info(request):
             if num_remaining <= 16:  # NOTE: this is applicable only for ProductionPhase3, the students can start rating restaurants if they already have surveyed 24 participants (20 externals and 4 internals)
                 user_survey_almost_done = True
                 num_restaurants_remaining = get_restaurants(request.user.participant)
-                if num_restaurants_remaining > 5:
+                if num_restaurants_remaining > NUM_RESTAURANT_SURVEY:
                     restaurant_survey_done = True
                     # groups = GroupParticipant.objects.filter(participant=request.user.participant).values_list('group', flat=True)
                     # num_groups = groups.count()
@@ -81,7 +81,6 @@ def get_current_menu_info(request):
                             # if num_remaining_group_restaurants > 0:
                                 # group_restaurant_survey_done = False
                                 # break
-                                
     return {"personality_test_done": personality_test_done, "user_survey_almost_done": user_survey_almost_done, "user_survey_done": user_survey_done, "restaurant_survey_done": restaurant_survey_done, "group_restaurant_survey_done": group_restaurant_survey_done}
 
 # ?? dont needed anymore ??
@@ -333,6 +332,7 @@ def create_group(request):
                 group_participant.participant = member_participant
                 if member_participant.matriculation_number == "":
                     group.internal = 'ex'
+                    group.save()
                 group_participant.save()
         num_groups = GroupParticipant.objects.filter(participant=participant).count()
         if num_groups == NUM_GROUPS_FOR_PARTICIPANT:
