@@ -18,9 +18,9 @@ import json
 
 # ------------------------------ Constants ------------------------------ #
 NUM_SURVEY = 10 # shouldnt be needed anymore
-NUM_RESTAURANT_SURVEY = 0 # (set to 5) minimum number of restaurants a user has to review
+NUM_RESTAURANT_SURVEY = 5 # (set to 5) minimum number of restaurants a user has to review
 MAX_NUM_IN_GROUP = 10000  # Setting a very large number: effectively: a participant can add any number of participants in his group
-MIN_NUM_IN_GROUP = 0 # (set to 2) at least 3 members in one group (creator of the group included)
+MIN_NUM_IN_GROUP = 02# (set to 2) at least 3 members in one group (creator of the group included)
 NUM_GROUPS_FOR_PARTICIPANT = 10000  # Setting a very large number: effectively: a participant can be in any number of groups
 
 # --------------------------- Utility Functions --------------------------- #
@@ -59,7 +59,7 @@ def get_participant_ids_assigned_to_max_num_groups():
 def get_current_menu_info(request):
     personality_test_done = False
     user_survey_almost_done = False  # Relevant to ProductionPhase3
-    user_survey_done = True
+    user_survey_done = False
     restaurant_survey_done = False
     group_restaurant_survey_done = True
     if request.user.is_authenticated():
@@ -69,8 +69,9 @@ def get_current_menu_info(request):
             num_remaining = NUM_SURVEY - num_surveyed
             if num_remaining <= 16:  # NOTE: this is applicable only for ProductionPhase3, the students can start rating restaurants if they already have surveyed 24 participants (20 externals and 4 internals)
                 user_survey_almost_done = True
-                num_restaurants_remaining = get_restaurants(request.user.participant)
-                if num_restaurants_remaining > NUM_RESTAURANT_SURVEY:
+                user_survey_done = True
+                num_restaurants_surveyed = get_restaurants(request.user.participant)
+                if num_restaurants_surveyed >= NUM_RESTAURANT_SURVEY:
                     restaurant_survey_done = True
                     # groups = GroupParticipant.objects.filter(participant=request.user.participant).values_list('group', flat=True)
                     # num_groups = groups.count()
@@ -270,14 +271,14 @@ def select_restaurant(request):
     if num_remaining_restaurants < 0:
         num_remaining_restaurants = 0
     if request.method == "POST":
-        target_restaurant_id = request.POST.get("submitBtn")
+        target_restaurant_id = request.POST.get("submitBtn", "")
         if target_restaurant_id is None:
             return HttpResponseRedirect('/home/')
-        surveyed_restaurant_ids = RestaurantSurvey.objects.filter(participant=request.user.participant).values("restaurant_id")
-        for restaurant_id in surveyed_restaurant_ids:
-            if restaurant_id == target_restaurant_id:
+        surveyed_restaurants = RestaurantSurvey.objects.filter(participant=request.user.participant)
+        for restaurant in surveyed_restaurants:
+            if restaurant.restaurant_id == target_restaurant_id:
                 return HttpResponseRedirect('/home/')
-            return HttpResponseRedirect('/restaurant_survey/?t=' + target_restaurant_id)
+        return HttpResponseRedirect('/restaurant_survey/?t=' + target_restaurant_id)
     return render(request, 'guratorapp/select_restaurant.html', {"user": request.user, "num_remaining_restaurants": num_remaining_restaurants, "menu": get_current_menu_info(request)})
 
 
@@ -365,7 +366,12 @@ def select_group(request):
 def select_group_restaurant(request):
     if request.method == "POST":
         group_id = request.POST.get("group_id", "")
+        group = Group.objects.get(id=group_id)
         target_restaurant_id = request.POST.get("submitBtn", "")
+        surveyed_restaurants = GroupRestaurantSurvey.objects.filter(group=group)
+        for restaurant in surveyed_restaurants:
+            if restaurant.restaurant_id == target_restaurant_id:
+                return HttpResponseRedirect('/home/')
         return HttpResponseRedirect('/group_restaurant_survey/?t=' + target_restaurant_id + '&g=' + group_id)
     else:  # GET request
         group_id = request.GET.get("g", "")
