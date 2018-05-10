@@ -88,7 +88,8 @@
     Select restaurant to review...
     </font>
     <p>
-        <b> Your group still has to review {{ num_remaining_restaurants }} restaurants! </b>
+        <b>"You should rate at least 5 restaurants. You can rate more if you want"</b></br>
+        <b>Number of rated restaurants so far: {{ num_surveyed_restaurants }}</b>
     </p>
     <input type='hidden' name='restaurant-id' value='val' />
     <input type="hidden" name="group_id" value="{{group.id}}">

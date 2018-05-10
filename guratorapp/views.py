@@ -266,10 +266,7 @@ def user_survey(request):
 @login_required
 def select_restaurant(request):
     participant = request.user.participant
-    surveyed_count = get_restaurants(participant)
-    num_remaining_restaurants = NUM_RESTAURANT_SURVEY - surveyed_count
-    if num_remaining_restaurants < 0:
-        num_remaining_restaurants = 0
+    num_surveyed_restaurants = get_restaurants(participant)
     if request.method == "POST":
         target_restaurant_id = request.POST.get("submitBtn", "")
         if target_restaurant_id is None:
@@ -279,7 +276,7 @@ def select_restaurant(request):
             if restaurant.restaurant_id == target_restaurant_id:
                 return HttpResponseRedirect('/home/')
         return HttpResponseRedirect('/restaurant_survey/?t=' + target_restaurant_id)
-    return render(request, 'guratorapp/select_restaurant.html', {"user": request.user, "num_remaining_restaurants": num_remaining_restaurants, "menu": get_current_menu_info(request)})
+    return render(request, 'guratorapp/select_restaurant.html', {"user": request.user, "num_surveyed_restaurants": num_surveyed_restaurants, "menu": get_current_menu_info(request)})
 
 
 @login_required
@@ -375,11 +372,9 @@ def select_group_restaurant(request):
         return HttpResponseRedirect('/group_restaurant_survey/?t=' + target_restaurant_id + '&g=' + group_id)
     else:  # GET request
         group_id = request.GET.get("g", "")
-
     group = Group.objects.get(id=group_id)
-    surveyed_count = get_group_restaurants(group)
-    num_remaining_restaurants = NUM_RESTAURANT_SURVEY - surveyed_count
-    return render(request, 'guratorapp/select_group_restaurant.html', {"user": request.user, "group": group, "num_remaining_restaurants": num_remaining_restaurants, "menu": get_current_menu_info(request)})
+    num_surveyed_restaurants = get_group_restaurants(group)
+    return render(request, 'guratorapp/select_group_restaurant.html', {"user": request.user, "group": group, "num_surveyed_restaurants": num_surveyed_restaurants, "menu": get_current_menu_info(request)})
 
 
 @login_required
