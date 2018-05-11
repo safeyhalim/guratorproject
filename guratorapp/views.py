@@ -423,6 +423,7 @@ def settings(request):
                 delete_picture = form.cleaned_data["delete_picture"]
                 _long = form.cleaned_data["gps_long"]
                 lat = form.cleaned_data["gps_lat"]
+                device_id = form.cleaned_data["device_id"]
 
                 if request.user.check_password(password_old):
                     if len(password_new) > 0:
@@ -441,6 +442,7 @@ def settings(request):
                         request.user.participant.picture = form.cleaned_data['picture']
                         request.user.participant.save()
 
+                    request.user.participant.device_id = device_id
                     request.user.participant.gps_long = _long
                     request.user.participant.gps_lat = lat
                     request.user.participant.country = country

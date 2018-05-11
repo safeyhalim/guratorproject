@@ -47,7 +47,10 @@
             <td>{{ form.password_new2 }}</td>
             <td class="error">{{ form.password_new2.errors.as_text }}</td>
         </tr>
-
+        <tr>
+            <td class="right">{{ form.device_id.label_tag }}</td>
+            <td>{{ form.device_id }}</td>
+        </tr>
          <tr>
             <td class="right">Please enter the coordinates of your main place of residence <span class="tiny"><a target="_blank" href="/static/doc/gps.html">How do I get this?</a></span></td>
             <td>Lat: {{ form.gps_lat }} Long: {{ form.gps_long }}</td>

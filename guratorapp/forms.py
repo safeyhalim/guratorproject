@@ -31,6 +31,7 @@ class PreferenceForm(forms.Form):
     delete_picture = BooleanField(label="Delete profile photo", required=False)
     gps_long = CharField(required=False)
     gps_lat = CharField(required=False)
+    device_id = CharField(max_length=200, label="Device ID", required=False)
 
     def clean(self):
         cleaned_data = super(PreferenceForm, self).clean()
@@ -38,6 +39,8 @@ class PreferenceForm(forms.Form):
         password_new2 = cleaned_data.get("password_new2")
         password_old = cleaned_data.get("password_old")
         email = cleaned_data.get("email")
+
+
         delete_picture = cleaned_data.get("delete_picture")
         long = cleaned_data.get("gps_long")
         lat = cleaned_data.get("gps_lat")
@@ -54,14 +57,16 @@ class PreferenceForm(forms.Form):
             except ValidationError as e:
                 self.add_error('email', "Please enter a valid e-mail address")
 
-        try:
-            z = float(long)
-        except ValueError:
-            self.add_error("gps_long", "Wrong format (long)")
-        try:
-            z = float(lat)
-        except ValueError:
-            self.add_error("gps_lat", "Wrong format (lat)")
+        if long == "":
+            try:
+                z = float(long)
+            except ValueError:
+                self.add_error("gps_long", "Wrong format (long)")
+
+            try:
+                z = float(lat)
+            except ValueError:
+                self.add_error("gps_lat", "Wrong format (lat)")
 
         if self.cleaned_data.get('picture') is not None:
             image_field = self.cleaned_data.get('picture')
