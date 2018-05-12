@@ -274,7 +274,7 @@ def select_restaurant(request):
         surveyed_restaurants = RestaurantSurvey.objects.filter(participant=request.user.participant)
         for restaurant in surveyed_restaurants:
             if restaurant.restaurant_id == target_restaurant_id:
-                return HttpResponseRedirect('/home/')
+                return render(request, 'guratorapp/basic_message.html', {"title": "Not Again", "message": "You already reviewed this restaurant. Please select another one.", "menu": get_current_menu_info(request)})
         return HttpResponseRedirect('/restaurant_survey/?t=' + target_restaurant_id)
     return render(request, 'guratorapp/select_restaurant.html', {"user": request.user, "num_surveyed_restaurants": num_surveyed_restaurants, "menu": get_current_menu_info(request)})
 
@@ -368,7 +368,7 @@ def select_group_restaurant(request):
         surveyed_restaurants = GroupRestaurantSurvey.objects.filter(group=group)
         for restaurant in surveyed_restaurants:
             if restaurant.restaurant_id == target_restaurant_id:
-                return HttpResponseRedirect('/home/')
+                return render(request, 'guratorapp/basic_message.html', {"title": "Not Again", "message": "You already reviewed this restaurant. Please select another one.", "menu": get_current_menu_info(request)})
         return HttpResponseRedirect('/group_restaurant_survey/?t=' + target_restaurant_id + '&g=' + group_id)
     else:  # GET request
         group_id = request.GET.get("g", "")
