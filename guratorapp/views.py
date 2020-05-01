@@ -20,7 +20,7 @@ import json
 NUM_SURVEY = 10 # shouldnt be needed anymore
 NUM_RESTAURANT_SURVEY = 5 # (set to 5) minimum number of restaurants a user has to review
 MAX_NUM_IN_GROUP = 10000  # Setting a very large number: effectively: a participant can add any number of participants in his group
-MIN_NUM_IN_GROUP = 02# (set to 2) at least 3 members in one group (creator of the group included)
+MIN_NUM_IN_GROUP = 2# (set to 2) at least 3 members in one group (creator of the group included)
 NUM_GROUPS_FOR_PARTICIPANT = 10000  # Setting a very large number: effectively: a participant can be in any number of groups
 
 # --------------------------- Utility Functions --------------------------- #

@@ -1,6 +1,6 @@
 # coding=utf-8
 
-import StringIO
+from io import BytesIO 
 from PIL import Image
 # imports html forms
 from django import forms
@@ -70,14 +70,14 @@ class PreferenceForm(forms.Form):
 
         if self.cleaned_data.get('picture') is not None:
             image_field = self.cleaned_data.get('picture')
-            image_file = StringIO.StringIO(image_field.read())
+            image_file = BytesIO(image_field.read())
             image = Image.open(image_file)
             w, h = image.size
             max_size = 200
             ratio = min(max_size / float(w), max_size / float(h))
             if ratio < 1:
                 image = image.resize((int(w * ratio), int(h * ratio)), Image.ANTIALIAS)
-                image_file = StringIO.StringIO()
+                image_file = BytesIO()
                 image.save(image_file, 'JPEG', quality=90)
                 image_field.file = image_file
 
@@ -114,9 +114,7 @@ class ParticipantEntryForm(ModelForm):
             name_clean = ''.join(name.split())
             if name_clean != name:
                 self.add_error("name", "Please do not use whitespaces (space, tab, etc.) in your username")
-            try:
-                name.decode("ascii")
-            except:
+            if not self._is_ascii(name_clean):
                 self.add_error("name", "Please only use ASCII in your username (i.e. no umlauts or other non-standard letters)")
                 
         if country is None:
@@ -168,7 +166,7 @@ class ParticipantEntryForm(ModelForm):
 
         if self.cleaned_data.get('picture') is not None:
             image_field = self.cleaned_data.get('picture')
-            image_file = StringIO.StringIO(image_field.read())
+            image_file = BytesIO(image_field.read())
             image = Image.open(image_file)
             w, h = image.size
             max_size = 200
@@ -176,9 +174,12 @@ class ParticipantEntryForm(ModelForm):
 
             if ratio < 1:
                 image = image.resize((int(w * ratio), int(h * ratio)), Image.ANTIALIAS)
-                image_file = StringIO.StringIO()
+                image_file = BytesIO()
                 image.save(image_file, 'JPEG', quality=90)
                 image_field.file = image_file
+    
+    def _is_ascii(self, str):
+        return len(str) == len(str.encode())   
                 
 
 class PersonalityQuestionForm(forms.Form):
